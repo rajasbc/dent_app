@@ -1,25 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nigdent/api/Apicall.dart';
 
-import 'Apicall.dart';
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-class loginscreen extends StatefulWidget {
-  const loginscreen({Key? key}) : super(key: key);
- 
   @override
-  State<loginscreen> createState() => _loginscreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
- 
-class _loginscreenState extends State<loginscreen> {
-  TextEditingController _email = TextEditingController();
+
+class _LoginScreenState extends State<LoginScreen> {
+    TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
   bool _isHidden = true;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -27,13 +24,6 @@ class _loginscreenState extends State<loginscreen> {
         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        
-            //              Positioned.fill(
-            //   child: Image(
-            //     image: AssetImage("assets/images/dental.png"),
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
                         Container(
                           padding: const EdgeInsets.all(10),
                           child: TextField(
@@ -100,12 +90,10 @@ class _loginscreenState extends State<loginscreen> {
         ),
       ),
     );
-        
   }
-    togglePasswordView() {
+      togglePasswordView() {
     setState(() {
         _isHidden = !_isHidden;
     });
 }
-  
 }
