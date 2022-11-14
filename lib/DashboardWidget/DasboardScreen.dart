@@ -1,24 +1,22 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
-class DashBoardpage extends StatefulWidget {
-
-  const DashBoardpage({ super.key });
+import 'package:nigdent/LoginWidget/LoginScreen.dart';
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  State<DashBoardpage> createState() => _DashBoardpageState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashBoardpageState extends State<DashBoardpage> {
-   final List<String> images = [
+class _DashboardScreenState extends State<DashboardScreen> {
+     final List<String> images = [
     'assets/images/add_customer.png',
     'assets/images/add_test.png',
     'assets/images/sync_data.png',
   ];
-
-   @override
-   Widget build(BuildContext context) {
-       return Scaffold(
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
            appBar: AppBar(title: const Text('Dashboard'),),
            body: Container(
           width: MediaQuery.of(context).size.width,
@@ -71,7 +69,7 @@ class _DashBoardpageState extends State<DashBoardpage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DashBoardpage()),
+                          builder: (context) => const LoginScreen()),
                     );
                   },
                 ),
