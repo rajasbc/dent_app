@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'package:niglabs/LoginScreen/modal/userdata.dart';
-// import 'MessageText.dart' as Message;
 import 'UrlPath.dart' as RequestPath;
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -24,7 +22,7 @@ class api {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-    return json.decode(response.body);
+      return json.decode(response.body);
     }
   }
 }
