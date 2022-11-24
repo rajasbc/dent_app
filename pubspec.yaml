@@ -47,7 +47,8 @@ dependencies:
   babylonjs_viewer: ^1.1.4
   flutter_native_splash: ^2.2.15
   flutter_switch: ^0.3.2
-  
+  country_state_city_picker: ^1.2.8
+  group_radio_button: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -9,6 +9,16 @@ import 'package:nigdent/PatientWidget/AddPatientWidget.dart';
 import 'package:nigdent/PatientWidget/CreatePatient.dart';
 import 'package:nigdent/PlanWidget/DentalPlanWidget.dart';
 
+import '../ReportWidget/CollectionReport.dart';
+import '../ReportWidget/PatientRegisterReport.dart';
+import '../ReportWidget/PatientReportSummary.dart';
+import '../ReportWidget/PaymentReport.dart';
+import '../ReportWidget/PerformanceSummary.dart';
+import '../ReportWidget/PlanSummary.dart';
+import '../ReportWidget/RevenueReport.dart';
+import '../ReportWidget/TopTreatmentDiagnosis.dart';
+import '../ReportWidget/Treatmentplan.dart';
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -61,6 +71,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
               child: Text('+ Add Patient'),
             ),
+            //  ElevatedButton(
+            //   onPressed: () {
+            //     // Navigator.push(
+            //     //   context,
+            //     //   MaterialPageRoute(
+            //     //       builder: (context) => const AddPatientWidget()),
+            //     // );
+            //         Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => const PatientRegisterReport()),
+            //     );
+            //   },
+            //   child: Text('+ patient register report'),
+            // ),
           ],
         ),
       ),
@@ -143,6 +168,135 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           builder: (context) => const AppointmentPage()),
                     );
                   },
+                ),
+                  ExpansionTile(
+                  title: Text('REPORTS',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                           leading: Icon(
+                  Icons.report_gmailerrorred,
+                  // color: Colors.green,
+                ),
+                  children: [
+                    ListTile(
+                      title: Text('Patient Register Report'),
+                      leading: Icon(Icons.report),
+                      onTap: (){
+                              Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PatientRegisterReport()),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Patient Summary Report'),
+                      leading: Icon(Icons.summarize),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientReportSummary()),
+                        );
+                      },
+                    ),
+                    ListTile(
+                        title: Text('Treatment Plan / History'),
+                        leading: Icon(Icons.history),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Treatmentplan()),
+                          );
+                        },
+                        ),
+                        
+                    ListTile(
+                      title: Text('Collection Report'),
+                      leading: Icon(Icons.collections),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CollectionReport())
+                          );
+                      },
+                    ),
+
+                    ListTile(
+                      title: Text('Performance Summary'),
+                      leading: Icon(Icons.summarize_sharp),
+                      onTap: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PerformanceSummary())
+                          );
+                      },
+                    ),
+
+                    ListTile(
+                      title: Text('Plan Summary'),
+                      leading: Icon(Icons.summarize_outlined),
+                      onTap: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PlanSummary())
+                          );
+                      },
+                    ),
+
+                    ListTile(
+                      title: Text('Top Treatment & Diagnosis'),
+                      leading: Icon(Icons.add_to_photos),
+                      onTap: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TopTreatmentDiagnosis())
+                          );
+                      },
+                    ),
+
+                    ListTile(
+                      title: Text('Revenue Report'),
+                      leading: Icon(Icons.reviews_rounded),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RevenueReport())
+                          );
+                      },
+                    ),
+
+                    ListTile(
+                      title: Text('Payment Report'),
+                      leading: Icon(Icons.payment),
+                      onTap: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentReport())
+                          );
+                      },
+                    ),
+
+                    // ListTile(
+                    //   title: Text('Collection Report'),
+                    //   leading: Icon(Icons.collections),
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => PaymentReport())
+                    //       );
+                    //   },
+                    // ),
+
+                  ],
                 ),
                 ListTile(
                   title: Text('Plan'),
