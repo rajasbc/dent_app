@@ -1,5 +1,5 @@
-   String base_url = "http://api.nigsoft.com:8080/api/";
-   String userLogin= 'auth/login';
+   String base_url = "https://sapi.nigsoft.com/api/";
+   String userLogin= 'auth/dentlogin';
    String signUpEndpoint= 'auth/sign_up';
    String patientListEndpoint= 'auth/patient';
    String labUpdateEndpoint= 'auth/lab';

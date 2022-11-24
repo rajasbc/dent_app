@@ -53,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 //   MaterialPageRoute(
                 //       builder: (context) => const AddPatientWidget()),
                 // );
-                    Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const CreatePatient()),
@@ -105,20 +105,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 UserAccountsDrawerHeader(
                   accountName: Text(
-                      '${Helper().isvalidElement(userResponse) ? userResponse['lab_profile']['name'] : ''}'),
+                      '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['name'] : ''}'),
                   accountEmail: Text(
-                      '${Helper().isvalidElement(userResponse) ? userResponse['lab_profile']['mobile_no'] : ''}'),
+                      '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['mobile_no'] : ''}'),
                   currentAccountPicture: CircleAvatar(
                     radius: 56,
                     backgroundImage: NetworkImage(
-                      "${Helper().isvalidElement(userResponse) ? userResponse["lab_logo"] : ''}",
+                      "${Helper().isvalidElement(userResponse) && Helper().isvalidElement(userResponse["clinic_logo"]) ? userResponse["clinic_logo"] : ''}",
                     ),
                     backgroundColor: Colors.white,
                   ),
                   otherAccountsPictures: <Widget>[
                     CircleAvatar(
                       backgroundColor: Colors.white,
-                      child: Text('${userResponse['lab_profile']['name'][0]}'),
+                      child: Text('${userResponse['clinic_profile']['name'][0]}'),
                     )
                   ],
                 ),
@@ -146,7 +146,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 ListTile(
                   title: Text('Plan'),
-                  leading: Icon(FontAwesome5.teeth_open),
+                  leading:
+                      // Icon(FontAwesome5.teeth_open),
+                      Image.asset(
+                    'assets/images/teeth.png',
+                    height: 28,
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,

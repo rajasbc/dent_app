@@ -42,7 +42,12 @@ dependencies:
   fluttericon: ^2.0.0
   localstorage: ^4.0.0+1
   hexcolor: ^3.0.1
-
+  flutter_svg: ^1.1.6
+  flutter_svg_provider: ^1.0.3
+  babylonjs_viewer: ^1.1.4
+  flutter_native_splash: ^2.2.15
+  flutter_switch: ^0.3.2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +76,45 @@ flutter:
     - assets/images/add_customer.png
     - assets/images/add_test.png
     - assets/images/sync_data.png
+    - assets/images/teeth.png
+    - assets/images/modal.png
+    - assets/images/11.png
+    - assets/images/12.png
+    - assets/images/13.png
+    - assets/images/14.png
+    - assets/images/15.png
+    - assets/images/16.png
+    - assets/images/17.png
+    - assets/images/18.png
+    - assets/images/21.png
+    - assets/images/22.png
+    - assets/images/23.png
+    - assets/images/24.png
+    - assets/images/25.png
+    - assets/images/26.png
+    - assets/images/27.png
+    - assets/images/28.png
+    - assets/images/31.png
+    - assets/images/32.png
+    - assets/images/33.png
+    - assets/images/34.png
+    - assets/images/35.png
+    - assets/images/36.png
+    - assets/images/37.png
+    - assets/images/38.png
+    - assets/images/41.png
+    - assets/images/42.png
+    - assets/images/43.png
+    - assets/images/44.png
+    - assets/images/45.png
+    - assets/images/46.png
+    - assets/images/47.png
+    - assets/images/48.png
+    - assets/images/left.png
+    - assets/images/down.png
+    - assets/images/right.png
+    - assets/images/launch_image.png
+    - assets/images/login_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/-and-images/#resolution-aware
