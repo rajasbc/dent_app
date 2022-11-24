@@ -42,6 +42,9 @@ dependencies:
   fluttericon: ^2.0.0
   localstorage: ^4.0.0+1
   hexcolor: ^3.0.1
+  group_radio_button: ^1.2.0
+  country_state_city_picker: ^1.2.8
+  syncfusion_flutter_datepicker: ^20.3.57
 
 dev_dependencies:
   flutter_test:

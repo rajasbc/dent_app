@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 // import 'package:country_state_city_picker/country_state_city_picker.dart';
 
@@ -17,7 +18,12 @@ class _CreatePatientState extends State<CreatePatient> {
 
   @override
 
-  String? _singleValue;
+  // String? _singleValue;
+//  int _radioSelected = 1;
+int? _radioSelected=1;
+String _radioVal ="";
+
+
   String? _vaccivalue;
 
   TextEditingController patientnameController = TextEditingController();
@@ -58,28 +64,25 @@ class _CreatePatientState extends State<CreatePatient> {
 
   
 
-   String titleDropdownvalue = 'Select title';
+   String titleDropdownvalue = 'Mr';
    String bloodDropdownvalue = 'Select Blood Group';
    String idDropdownvalue = 'Select ID Proof';
    String PCMDropdownvalue = 'Preferred Contact Method';
    String regtypeDropdownvalue = 'Register Type : ';
    String payDropdownvalue = 'Payment Type : ';
    String validateDropdownvalue = 'Validity : ';
-   String stateDropdownvalue = 'Select State : ';
-   String countryDropdownvalue = 'Select Country : ';
+   String stateDropdownvalue = 'State : ';
+   String countryDropdownvalue = 'Country : ';
 
 
 
   var title = [
-    'Select title',
     'Mr',
     'Mrs',
     'Master',
-    'Miss',
     'Ms',
     'Dr',
     'Baby',
-    'B/O',
   ];
   
    var blood = [
@@ -143,7 +146,7 @@ class _CreatePatientState extends State<CreatePatient> {
   ];
 
   var state = [
-    'Select State : ',
+    'State : ',
     'Tamil Nadu',
     'Andhrapradesh',
     'Karnatakka',
@@ -154,7 +157,7 @@ class _CreatePatientState extends State<CreatePatient> {
   ];
 
   var country = [
-    'Select Country : ',
+    'Country : ',
     'India',
     'Australia',
     'South Africa',
@@ -329,6 +332,12 @@ DateTime currentdate = DateTime.now();
                           onChanged: (String? newValue) {
                             setState(() {
                               titleDropdownvalue = newValue!;
+                              if(titleDropdownvalue=='Mr'){
+                                _radioSelected=1;
+                              }
+                              else if(titleDropdownvalue=='Mrs'){
+                                _radioSelected=2;
+                              }
                             });
                           },
                         ),
@@ -348,7 +357,7 @@ DateTime currentdate = DateTime.now();
                 decoration: new InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  labelText: 'first Name',
+                  labelText: 'First Name',
                   contentPadding: const EdgeInsets.only(
                     left: 14.0,bottom: 8.0,top: 8.0
                   ),
@@ -378,7 +387,7 @@ DateTime currentdate = DateTime.now();
                 decoration: new InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  labelText: 'last Name',
+                  labelText: 'Last Name',
                   contentPadding: const EdgeInsets.only(
                     left: 14.0,bottom: 8.0,top: 8.0
                   ),
@@ -438,7 +447,7 @@ DateTime currentdate = DateTime.now();
                         decoration: new InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          labelText: 'Date of birth',
+                          labelText: 'D O B',
                           contentPadding: const EdgeInsets.only(
                               left: 14.0, bottom: 8.0, top: 8.0),
                           focusedBorder: OutlineInputBorder(
@@ -462,7 +471,7 @@ DateTime currentdate = DateTime.now();
                         decoration: new InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          labelText: 'Mobile number',
+                          labelText: 'Mobile.No',
                           contentPadding: const EdgeInsets.only(
                               left: 14.0, bottom: 8.0, top: 8.0),
                           focusedBorder: OutlineInputBorder(
@@ -526,45 +535,62 @@ DateTime currentdate = DateTime.now();
 
               //  Padding(
               //           padding: EdgeInsets.only(left: 5, right: 5),),
-                         Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RadioButton(
-                  description: "Male",
-                  value: "Male",
-                  groupValue: _singleValue,
-                  onChanged: (value) => setState(
-                    () => _singleValue = value,
-                  ),
-                  // activeColor: Colors.red,
-                  textStyle: TextStyle(
-                    // fontSize: 30,
-                    // fontWeight: FontWeight.w600,
-                    // color: Colors.red
-                  ),
+                        Row(
+     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  value: 1,
+                  groupValue: _radioSelected,
+                  activeColor: Colors.blue,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioSelected = value as int;
+                      _radioVal = 'Male';
+                      print(_radioVal);
+                    });
+                  },
                 ),
-                RadioButton(
-                  description: "Female",
-                  value: "Female",
-
-                  groupValue: _singleValue,
-                  onChanged: (value) => setState(
-                    () => _singleValue = value,
-                  ),
-                  // textPosition: RadioButtonTextPosition.left,
-                ),
-                 RadioButton(
-                  description: "Other",
-                  value: "Other",
-
-                  groupValue: _singleValue,
-                  onChanged: (value) => setState(
-                    () => _singleValue = value,
-                  ),
-                  // textPosition: RadioButtonTextPosition.left,
-                ),
+                const Text("Male"),
               ],
             ),
+            Row(
+              children: [
+                Radio(
+                  value: 2,
+                  groupValue: _radioSelected,
+                  activeColor: Colors.blue,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioSelected = value as int;
+                      _radioVal = 'Female';
+                      print(_radioVal);
+                    });
+                  },
+                ),
+                const Text("Female"),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 3,
+                  groupValue: _radioSelected,
+                  activeColor: Colors.blue,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioSelected = value as int;
+                      _radioVal = 'Other';
+                      print(_radioVal);
+                    });
+                  },
+                ),
+                const Text("Other"),
+              ],
+            ),
+          ],
+        ),
 
 
               SizedBox(height: 10,),
@@ -580,7 +606,7 @@ DateTime currentdate = DateTime.now();
                 decoration: new InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  labelText: 'Address LIne 1',
+                  labelText: 'Address Line 1',
                   contentPadding: const EdgeInsets.only(
                     left: 14.0,bottom: 8.0,top: 8.0
                   ),
@@ -610,7 +636,7 @@ DateTime currentdate = DateTime.now();
                 decoration: new InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  labelText: 'Address LIne 2',
+                  labelText: 'Address Line 2',
                   contentPadding: const EdgeInsets.only(
                     left: 14.0,bottom: 8.0,top: 8.0
                   ),
@@ -797,7 +823,7 @@ DateTime currentdate = DateTime.now();
                 decoration: new InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  labelText: 'Nickname',
+                  labelText: 'Nick Name',
                   contentPadding: const EdgeInsets.only(
                     left: 14.0,bottom: 8.0,top: 8.0
                   ),
@@ -1175,7 +1201,7 @@ DateTime currentdate = DateTime.now();
                         decoration: new InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          labelText: 'Expires on',
+                          labelText: 'Expires On',
                           contentPadding: const EdgeInsets.only(
                               left: 14.0, bottom: 8.0, top: 8.0),
                           focusedBorder: OutlineInputBorder(
@@ -1416,7 +1442,59 @@ DateTime currentdate = DateTime.now();
                     width: MediaQuery.of(context).size.width / 2,
                     child: ElevatedButton(
                         onPressed: (){
-                           var patient_details={
+
+
+                          
+                          // //  var _radioVal;
+                         
+                                    
+
+
+
+                                   
+                          if(ageController.text.isEmpty){
+                              //  print('notok');
+
+                            Fluttertoast.showToast(msg: 'Please Enter Age',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                            
+                          }
+                          else if(patientnameController.text.isEmpty ){
+                            Fluttertoast.showToast(msg: 'Please Enter Name',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else if(titleDropdownvalue=='Select title'){
+                            Fluttertoast.showToast(msg: 'Please Select Title',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                          }
+                          else if(regfeeController.text.isEmpty){
+                            Fluttertoast.showToast(msg: 'Please Enter Reg Fees',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                          }
+                          else {
+                              var patient_details={
                                    'title': titleDropdownvalue,
                                    'first_name': patientnameController.text,
                                    'last_name': lastnameController.text,
@@ -1424,7 +1502,7 @@ DateTime currentdate = DateTime.now();
                                    'dob': dobController.text,
                                    'mobile_no': mobileController.text,
                                    'email': emailController.text,
-                                   'gender': _singleValue,
+                                   'gender':   _radioSelected,
                                    'address_line1': addrsline1Controller.text,
                                    'address_line2': addrsline2Controller.text,
                                    'street': streetnameController.text,
@@ -1458,8 +1536,12 @@ DateTime currentdate = DateTime.now();
 
 
                                    };
-                                   print('patient detalis: ******${patient_details}');
+                                       print('patient detalis: ******${patient_details}');
+                          }
+                          
 
+
+                              
                         }, child: Text('Save'))))
 
 
