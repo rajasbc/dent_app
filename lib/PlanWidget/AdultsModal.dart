@@ -226,13 +226,13 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: adultTopModal[index]['teeth_no'].toString()));
+                    t_no: adultTopModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = adultTopModal[index]['teeth_no'].toString();
                 adultTopModal[index]['top'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           adultTopModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'B' ||
                           selectedTeeth[i].position == 'C')) {
@@ -283,14 +283,14 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                     if (adultTopModal[index]['left'] == 'select') {
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'D',
-                          teeth: adultTopModal[index]['teeth_no'].toString()));
+                          t_no: adultTopModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
                           adultTopModal[index]['teeth_no'].toString();
                       adultTopModal[index]['left'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 adultTopModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'D') {
                           delete_index = i;
@@ -352,14 +352,14 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: position,
-                          teeth: adultTopModal[index]['teeth_no'].toString()));
+                          t_no: adultTopModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
                           adultTopModal[index]['teeth_no'].toString();
                       adultTopModal[index]['center'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 adultTopModal[index]['teeth_no'] &&
                             (selectedTeeth[i].position == 'O' ||
                                 selectedTeeth[i].position == 'B')) {
@@ -425,14 +425,14 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'M',
-                          teeth: adultTopModal[index]['teeth_no'].toString()));
+                          t_no: adultTopModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
                           adultTopModal[index]['teeth_no'].toString();
                       adultTopModal[index]['right'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 adultTopModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'M') {
                           delete_index = i;
@@ -497,13 +497,13 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: adultTopModal[index]['teeth_no'].toString()));
+                    t_no: adultTopModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = adultTopModal[index]['teeth_no'].toString();
                 adultTopModal[index]['down'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           adultTopModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'P' ||
                           selectedTeeth[i].position == 'I')) {
@@ -575,13 +575,13 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: adultBottomModal[index]['teeth_no'].toString()));
+                    t_no: adultBottomModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = adultBottomModal[index]['teeth_no'].toString();
                 adultBottomModal[index]['top'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           adultBottomModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'L' ||
                           selectedTeeth[i].position == 'I')) {
@@ -645,7 +645,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'D',
-                          teeth:
+                          t_no:
                               adultBottomModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
@@ -653,7 +653,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       adultBottomModal[index]['left'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 adultBottomModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'D') {
                           delete_index = i;
@@ -714,7 +714,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: position,
-                          teeth:
+                          t_no:
                               adultBottomModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
@@ -722,7 +722,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       adultBottomModal[index]['center'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 adultBottomModal[index]['teeth_no'] &&
                             (selectedTeeth[i].position == 'B' ||
                                 selectedTeeth[i].position == 'O')) {
@@ -784,7 +784,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'M',
-                          teeth:
+                          t_no:
                               adultBottomModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
@@ -792,7 +792,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       adultBottomModal[index]['right'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 adultBottomModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'M') {
                           delete_index = i;
@@ -854,13 +854,13 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: adultBottomModal[index]['teeth_no'].toString()));
+                    t_no: adultBottomModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = adultBottomModal[index]['teeth_no'].toString();
                 adultBottomModal[index]['down'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           adultBottomModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'B' ||
                           selectedTeeth[i].position == 'C')) {

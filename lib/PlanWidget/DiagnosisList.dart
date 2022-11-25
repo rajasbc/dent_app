@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/PlanWidget/DentalPlanWidget.dart';
+import 'package:nigdent/PlanWidget/modal/selectedteethmodal.dart';
 import 'package:nigdent/api/Apicall.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
@@ -34,6 +35,7 @@ class _DiagnosisListState extends State<DiagnosisList> {
     accessToken = storage.getItem('userResponse')['access_token'];
 selectedTeeth = storage.getItem('selectedTeethPosition');
    widget.option =='Diagnosis' ? getDiagnosisList(): getTreatmentList();
+   
     super.initState();
   }
   @override
@@ -187,14 +189,55 @@ selectedTeeth = storage.getItem('selectedTeethPosition');
                                                 // color: Colors.green,
                                               width: screenWidth*0.2,
                                               child: ElevatedButton(
-                                                                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
-onPressed: (){
-                                                
-                                                    if(Helper().isvalidElement(selectedTeeth) && selectedTeeth.length > 0){
-                                                   
-                                                      print(selectedTeeth);
-                                                      print(data[data_index]);
-                                                                    Fluttertoast.showToast(
+                                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+                                              onPressed: (){
+                                              if(Helper().isvalidElement(selectedTeeth) && selectedTeeth.length > 0){
+                                                   List<SelectedTeethModal> selected_teeth_values = [];
+                                                var selectedPatient = storage.getItem('selectedPatient');
+                                              print(selectedTeeth);
+                                              // print(storage.getItem('selectedPatient'));
+                                              print(data[data_index]);
+selectedTeeth.forEach((e) {
+  selected_teeth_values.add(SelectedTeethModal(
+                                      t_no: e.t_no,
+                                      position: e.position,));
+    print(e);
+});
+
+                                //                    for (final e
+                                //     in selectedTeeth) {
+                                //   selected_testlist.add(SelectedTeethModal(
+                                //       t_no: e.test_id,
+                                //       position: e.test_name,));
+                                //   // list.add(e);
+                                // }
+                                //                    var selectTestMap = selectedTeeth.map((e) {
+                                //   return {
+                                //     'test_id': e.test_id,
+                                //     'test_name': e.test_name,
+                                //     'test_amount': e.test_amount,
+                                //     'department': e.department,
+                                //     'group_id': e.group_id,
+                                //     'discount': "0"
+                                //   };
+                                // }).toList();
+
+        var selectTeethMap = selected_teeth_values.map((e) {
+                                  return {
+                                    't_no': e.t_no,
+                                    'position': e.position
+                                  };
+                                }).toList();
+                                              var planDetails = {
+                                                  "patient_id":selectedPatient['id'].toString(),
+                                                  "type":"treatment",
+                                                  "list":data[data_index]['treatment_name'],
+                                                  "treatment_amount":data[data_index]['Amount'].toString(),
+                                                  "list_id":data[data_index]['id'].toString(),
+                                                  "Items":selectTeethMap
+                                              };
+                                              print(planDetails);
+                                              Fluttertoast.showToast(
                                       msg:
                                           widget.option == 'Diagnosis' ? 'Diagnosis added successfully': 'Treatment added successfully',
                                       toastLength: Toast.LENGTH_SHORT,

@@ -202,13 +202,13 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: peadoTopModal[index]['teeth_no'].toString()));
+                    t_no: peadoTopModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = peadoTopModal[index]['teeth_no'].toString();
                 peadoTopModal[index]['top'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           peadoTopModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'B' ||
                           selectedTeeth[i].position == 'C')) {
@@ -258,14 +258,14 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
                     if (peadoTopModal[index]['left'] == 'select') {
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'D',
-                          teeth: peadoTopModal[index]['teeth_no'].toString()));
+                          t_no: peadoTopModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
                           peadoTopModal[index]['teeth_no'].toString();
                       peadoTopModal[index]['left'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 peadoTopModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'D') {
                           delete_index = i;
@@ -320,14 +320,14 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: position,
-                          teeth: peadoTopModal[index]['teeth_no'].toString()));
+                          t_no: peadoTopModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
                           peadoTopModal[index]['teeth_no'].toString();
                       peadoTopModal[index]['center'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 peadoTopModal[index]['teeth_no'] &&
                             (selectedTeeth[i].position == 'O' ||
                                 selectedTeeth[i].position == 'B')) {
@@ -392,14 +392,14 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'M',
-                          teeth: peadoTopModal[index]['teeth_no'].toString()));
+                          t_no: peadoTopModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
                           peadoTopModal[index]['teeth_no'].toString();
                       peadoTopModal[index]['right'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 peadoTopModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'M') {
                           delete_index = i;
@@ -456,13 +456,13 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: peadoTopModal[index]['teeth_no'].toString()));
+                    t_no: peadoTopModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = peadoTopModal[index]['teeth_no'].toString();
                 peadoTopModal[index]['down'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           peadoTopModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'P' ||
                           selectedTeeth[i].position == 'I')) {
@@ -530,13 +530,13 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: peadoBottomModal[index]['teeth_no'].toString()));
+                    t_no: peadoBottomModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = peadoBottomModal[index]['teeth_no'].toString();
                 peadoBottomModal[index]['top'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           peadoBottomModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'L' ||
                           selectedTeeth[i].position == 'I')) {
@@ -598,7 +598,7 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'D',
-                          teeth:
+                          t_no:
                               peadoBottomModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
@@ -606,7 +606,7 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
                       peadoBottomModal[index]['left'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 peadoBottomModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'D') {
                           delete_index = i;
@@ -663,7 +663,7 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: position,
-                          teeth:
+                          t_no:
                               peadoBottomModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
@@ -671,7 +671,7 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
                       peadoBottomModal[index]['center'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 peadoBottomModal[index]['teeth_no'] &&
                             (selectedTeeth[i].position == 'B' ||
                                 selectedTeeth[i].position == 'O')) {
@@ -731,7 +731,7 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                       selectedTeeth.add(SelectedTeethModal(
                           position: 'M',
-                          teeth:
+                          t_no:
                               peadoBottomModal[index]['teeth_no'].toString()));
                     } else {
                       var teeth_no =
@@ -739,7 +739,7 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
                       peadoBottomModal[index]['right'] = 'none';
                       int delete_index = 0;
                       for (var i = 0; i < selectedTeeth.length; i++) {
-                        if (selectedTeeth[i].teeth ==
+                        if (selectedTeeth[i].t_no ==
                                 peadoBottomModal[index]['teeth_no'] &&
                             selectedTeeth[i].position == 'M') {
                           delete_index = i;
@@ -797,13 +797,13 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
 
                 selectedTeeth.add(SelectedTeethModal(
                     position: position,
-                    teeth: peadoBottomModal[index]['teeth_no'].toString()));
+                    t_no: peadoBottomModal[index]['teeth_no'].toString()));
               } else {
                 var teeth_no = peadoBottomModal[index]['teeth_no'].toString();
                 peadoBottomModal[index]['down'] = 'none';
                 int delete_index = 0;
                 for (var i = 0; i < selectedTeeth.length; i++) {
-                  if (selectedTeeth[i].teeth ==
+                  if (selectedTeeth[i].t_no ==
                           peadoBottomModal[index]['teeth_no'] &&
                       (selectedTeeth[i].position == 'B' ||
                           selectedTeeth[i].position == 'C')) {
