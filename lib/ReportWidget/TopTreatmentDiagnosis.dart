@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:nigdent/Common/utils.dart';
+
+import '../api/Apicall.dart';
 
 class TopTreatmentDiagnosis extends StatefulWidget {
 
@@ -12,13 +16,24 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
 
 
  late DateTime date;
-  bool loading  = false;
+  bool isLoading  = false;
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
     end:
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
   );
+
+  var treatmentList =null;
+    var accessToken;
+    @override
+  void initState() {
+        accessToken = storage.getItem('userResponse')['access_token'];
+
+treatmentplanList();
+    // TODO: implement initState
+    super.initState();
+  }
 
 
    @override
@@ -68,9 +83,17 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
 
 
 
-                      Container(
+                     !isLoading ? Container(
                         height: screenHeight * 0.37,
-                        child:SingleChildScrollView(
+                         child: Helper().isvalidElement(treatmentList) &&
+                  treatmentList.length > 0 ?
+                  ListView.builder(
+                    itemCount:treatmentList.length ,
+                    itemBuilder: (BuildContext context, int index){
+                       var data = treatmentList[index];
+                       return Container(
+                         color:  index%2==0?Color.fromARGB(255, 167, 193, 216):Color.fromARGB(255, 246, 247, 248),
+                          child:SingleChildScrollView(
                           child: Column(
                              children: [
                               Row(
@@ -99,48 +122,28 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
                                   ],
                             ),
                                ],
-                             ),
-                             Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Ad'),
-                                )
-                              ],
-                             ),
-                             
-                              
+                             ),                                                    
                              ],
                           ),
                         ),
-                   ),
+                       );
+                    },
+                  ):  Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      ),
+                       
+                   ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          ),
                    Container(
                     height: screenHeight * 0.04,
                     // color: Colors.amber,
@@ -293,7 +296,7 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-    // getPendingList();
+    treatmentplanList();
     this.setState(() {});
   }
 
@@ -331,4 +334,29 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
 //   );
  
 //  }
+
+treatmentplanList() async{
+   var formatter = new DateFormat('yyyy-MM-dd');
+var data = {
+'from_date':  formatter.format(dateRange.start),
+'to_date': formatter.format(dateRange.end),
+'doctor':'All'
+};
+this.setState(() {
+   isLoading = true;
+});
+
+              treatmentList = await api(). treatmentplan(accessToken,data);
+              if(Helper().isvalidElement(treatmentList) && Helper().isvalidElement(treatmentList['status']) && treatmentList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          treatmentList = treatmentList['top_treatment_report'];
+  //  storage.setItem('diagnosisList', diagnosisList);
+                         this.setState(() {
+   isLoading = false;
+});
+
+ }
+ }
 }

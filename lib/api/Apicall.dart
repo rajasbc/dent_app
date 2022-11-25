@@ -78,8 +78,60 @@ class api {
     }
   }
    getpatientSummaryReport(access_token) async {
-    String patient_list_url = RequestPath.base_url + RequestPath.patientListEndpoint;
+    String patient_list_url = RequestPath.base_url + RequestPath.patientSummaryReportEndpoint;
     var response = await http.get(Uri.parse(patient_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+   treatmentplan(access_token, data) async {
+    String patient_list_url = RequestPath.base_url + RequestPath.treatmentplanEndpoint;
+    var response = await http.post(Uri.parse(patient_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  diagnosisplan(access_token) async {
+    String patient_list_url = RequestPath.base_url + RequestPath.diagnosisplanEndpoint;
+    var response = await http.get(Uri.parse(patient_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+  revenueReport(access_token, data) async {
+    String patient_list_url = RequestPath.base_url + RequestPath.revenueEndpoint;
+    var response = await http.post(Uri.parse(patient_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+   paymentReport(access_token, data) async {
+    String patient_list_url = RequestPath.base_url + RequestPath.paymentReportEndpoint;
+    var response = await http.post(Uri.parse(patient_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+  getTreatmentDetails(access_token, data) async {
+    String treatment_details_url = RequestPath.base_url + RequestPath.treatmentDetailsEndpoint;
+    var response = await http.get(Uri.parse(treatment_details_url),
         headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
       return json.decode(response.body);

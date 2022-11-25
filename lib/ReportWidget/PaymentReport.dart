@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../Common/utils.dart';
+import '../api/Apicall.dart';
 
 class PaymentReport extends StatefulWidget {
 
@@ -11,13 +15,24 @@ class PaymentReport extends StatefulWidget {
 class _PaymentReportState extends State<PaymentReport> {
 
   late DateTime date;
-  bool loading  = false;
+  bool isLoading  = false;
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
     end:
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
   );
+  var paymentRegisterList =null;
+    var accessToken;
+
+@override
+  void initState() {
+        accessToken = storage.getItem('userResponse')['access_token'];
+
+getpaymentRegisterList();
+    // TODO: implement initState
+    super.initState();
+  }
 
    @override
   Widget build(BuildContext context) {
@@ -69,7 +84,8 @@ class _PaymentReportState extends State<PaymentReport> {
     final start = dateRange.start;
     final end = dateRange.end;
     var screenWidth = MediaQuery.of(context).size.width;
-    return Container(
+    return
+     Container(
       // height: ,
      
       width: screenWidth,
@@ -134,16 +150,24 @@ class _PaymentReportState extends State<PaymentReport> {
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-    // getPendingList();
+    getpaymentRegisterList();
     this.setState(() {});
   }
 
   renderReportPending(){
   var screenheight= MediaQuery.of(context).size.height;
   var screenWidth= MediaQuery.of(context).size.width;
-  return Container(
+  return 
+  !isLoading ? Container(
     padding: EdgeInsets.all(10),
-       child: SingleChildScrollView(
+       child: Helper().isvalidElement(paymentRegisterList) &&
+                  paymentRegisterList.length > 0 ?
+                  ListView.builder(
+                    itemCount: paymentRegisterList.length,
+                    itemBuilder: (BuildContext context, int index){
+                      var data =  paymentRegisterList[index];
+                      return Container(
+                        child: SingleChildScrollView(
          child: Row(
           children: [
                     Container(
@@ -254,6 +278,45 @@ class _PaymentReportState extends State<PaymentReport> {
                   ],
          ),
        ),
-  );
+                      );
+                    },
+                  ):  Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      ),
+  ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          );
+ }
+ getpaymentRegisterList() async{
+   var formatter = new DateFormat('yyyy-MM-dd');
+var data = {
+'from_date':  formatter.format(dateRange.start),
+'to_date': formatter.format(dateRange.end),
+};
+this.setState(() {
+   isLoading = true;
+});
+
+              paymentRegisterList = await api().paymentReport(accessToken,data);
+              if(Helper().isvalidElement(paymentRegisterList) && Helper().isvalidElement(paymentRegisterList['status']) && paymentRegisterList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          paymentRegisterList = paymentRegisterList['reports'];
+  //  storage.setItem('diagnosisList', diagnosisList);
+                         this.setState(() {
+   isLoading = false;
+});
+
+ }
  }
 }
