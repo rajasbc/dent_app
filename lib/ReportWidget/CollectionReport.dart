@@ -47,6 +47,14 @@ class _CollectionReportState extends State<CollectionReport> {
                       //  height: screenHeight * 0.08,
                       child: renderDatePicker(),
                     ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        // borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      height: screenHeight * 0.92,
+                      child: renderReportPending(),
+                    ),
               ],
             ),
            
@@ -129,4 +137,133 @@ class _CollectionReportState extends State<CollectionReport> {
     // getPendingList();
     this.setState(() {});
   }
+
+   renderReportPending(){
+  return Container(
+       child: Row(
+        children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Column(
+                        children: [
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Date :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '5-2-1999'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Reg.No :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '382833'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Patient :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'riyaz'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Doctor :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'Riyaz'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Treatment :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'Abcde'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Amount :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '2234'),
+                                ],
+                          ),
+                             ],
+                           ),
+                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Paymentmode :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'Gpay'),
+                                ],
+                          ),
+                          //  Row(
+                          //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text(
+                          //             'Amount :',
+                          //             style: TextStyle(fontWeight: FontWeight.bold),
+                          //             ),
+                          //         Text(
+                          //             '2234'),
+                          //       ],
+                          // ),
+                             ],
+                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+       ),
+  );
+ }
 }

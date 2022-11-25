@@ -28,7 +28,7 @@ class _TreatmentplanState extends State<Treatmentplan> {
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
-            title: Text('Treatment Plan / History'),
+            title: Text('Treatment Plan Report'),
           ),
         ),
            body: Container( 
@@ -45,6 +45,14 @@ class _TreatmentplanState extends State<Treatmentplan> {
                       height: screenHeight * 0.08,
                       //  height: screenHeight * 0.08,
                       child: renderDatePicker(),
+                    ),
+                     Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        // borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      height: screenHeight * 0.92,
+                      child: renderReportPending(),
                     ),
               ],
             ),
@@ -128,4 +136,133 @@ class _TreatmentplanState extends State<Treatmentplan> {
     // getPendingList();
     this.setState(() {});
   }
+
+   renderReportPending(){
+  return Container(
+       child: Row(
+        children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Column(
+                        children: [
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Date :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '5-4-2000'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Patient :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'riyaz'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Doctor :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'riyaz'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Diagnosis :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'diagnosised'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Treatment :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'Abcde'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Fee :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '2014'),
+                                ],
+                          ),
+                             ],
+                           ),
+                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Paid :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '1500'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Pay Status :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'pending'),
+                                ],
+                          ),
+                             ],
+                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+       ),
+  );
+ }
 }
