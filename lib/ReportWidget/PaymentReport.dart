@@ -139,103 +139,120 @@ class _PaymentReportState extends State<PaymentReport> {
   }
 
   renderReportPending(){
+  var screenheight= MediaQuery.of(context).size.height;
+  var screenWidth= MediaQuery.of(context).size.width;
   return Container(
-       child: Row(
-        children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Column(
+    padding: EdgeInsets.all(10),
+       child: SingleChildScrollView(
+         child: Row(
+          children: [
+                    Container(
+                      width: screenWidth * 0.46,
+                      // color: Colors.amber,
+                      child:Column(
                         children: [
-                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               Row(
-                              
-                                children: [
-                                  Text(
-                                      'Date :',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                  Text(
-                                      '3-4-1999'),
-                                ],
-                          ),
-                           Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      'Patient Id :',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                  Text(
-                                      'sd233'),
-                                ],
-                          ),
-                             ],
-                           ),
-                          // Divider(),
+                         Row(
+                                
+                          children: [
+                            Text(
+                                'Date :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                '2-3-2000'),
+                          ],
+                            ),
+                             Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                'Patient Id :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                'ri398'),
+                          ],
+                            ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                'Patient Name :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                'riyaz'),
+                          ],
+                            ),
+                          //     Row(
+                          // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // children: [
+                          //   Text(
+                          //       ' :',
+                          //       style: TextStyle(fontWeight: FontWeight.bold),
+                          //       ),
+                          //   Text(
+                          //       'Abcdefghijklmnop'),
+                          // ],
+                          //   ),
+                        ],
+                      )
+                    ),
+                     Container(
+                      width: screenWidth *0.46,
+                      // color: Colors.black,
+                      // alignment: Alignment.centerRight,
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          
+                          Row(
+                            
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
                               
-                                children: [
-                                  Text(
-                                      'Patient Name :',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                  Text(
-                                      'riyaz'),
-                                ],
-                          ),
-                           Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      'Bill Amount :',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                  Text(
-                                      '10000'),
-                                ],
-                          ),
-                             ],
-                           ),
-                          // Divider(),
-                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               Row(
+                            Text(
                               
-                                children: [
-                                  Text(
-                                      'Paid :',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                  Text(
-                                      '6000'),
-                                ],
+                                'Bill Amount :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                '2500'),
+                          ],
                           ),
                            Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      'Balance :',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                  Text(
-                                      '4000'),
-                                ],
+                            
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              
+                            Text(
+                              
+                                'Paid :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                '2000'),
+                          ],
                           ),
-                             ],
-                           ),
+                           Row(
+                            
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              
+                            Text(
+                              
+                                'Balance :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                '500'),
+                          ],
+                          )
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+         ),
        ),
   );
  }

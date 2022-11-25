@@ -1,43 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/api/UrlPath.dart';
 
-import '../api/Apicall.dart';
+class MedicalReport extends StatefulWidget {
 
-class PatientReportSummary extends StatefulWidget {
-
-  const PatientReportSummary({ super.key });
+  const MedicalReport({ super.key });
 
   @override
-  State<PatientReportSummary> createState() => _PatientReportSummaryState();
+  State<MedicalReport> createState() => _MedicalReportState();
 }
 
-class _PatientReportSummaryState extends State<PatientReportSummary> {
-
-   late DateTime date;
-  bool isLoading  = false;
+class _MedicalReportState extends State<MedicalReport> {
+  late DateTime date;
+  bool loading  = false;
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
     end:
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
   );
-  var patientSummaryList =null;
-    var accessToken;
-
-@override
-  void initState() {
-        accessToken = storage.getItem('userResponse')['access_token'];
-
-getpatientSummaryReportList();
-    // TODO: implement initState
-    super.initState();
-  }
 
    @override
    Widget build(BuildContext context) {
-
-    double screenHeight = MediaQuery.of(context).size.height -
+       double screenHeight = MediaQuery.of(context).size.height -
         50 -
         MediaQuery.of(context).padding.top;
          var screenWidth = MediaQuery.of(context).size.width;
@@ -45,7 +29,7 @@ getpatientSummaryReportList();
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
-            title: Text('Patient Summary Report'),
+            title: Text('Patient Report Page'),
           ),
         ),
            body: Container( 
@@ -54,21 +38,22 @@ getpatientSummaryReportList();
            
             child: Column(
               children: [
-                  // Container(
-                  //     decoration: BoxDecoration(
-                  //       border: Border.all(color: Colors.blueAccent),
-                  //       // borderRadius: BorderRadius.all(Radius.circular(20))
-                  //     ),
-                  //     height: screenHeight * 0.08,
-                  //     //  height: screenHeight * 0.08,
-                  //     child: renderDatePicker(),
-                  //   ),
+                  Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        // borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      height: screenHeight * 0.08,
+                      //  height: screenHeight * 0.08,
+                      child: renderDatePicker(),
+                    ),
+
                      Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.blueAccent),
                         // borderRadius: BorderRadius.all(Radius.circular(20))
                       ),
-                      height: screenHeight ,
+                      height: screenHeight * 0.92,
                       child: renderReportPending(),
                     ),
               ],
@@ -150,29 +135,19 @@ getpatientSummaryReportList();
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-   patientSummaryList();
+    // getPendingList();
     this.setState(() {});
   }
+
  renderReportPending(){
   var screenheight= MediaQuery.of(context).size.height;
   var screenWidth= MediaQuery.of(context).size.width;
-  return 
-   !isLoading ? Container(
+  return Container(
     padding: EdgeInsets.all(10),
-       child: Helper().isvalidElement(patientSummaryList) &&
-                  patientSummaryList.length > 0 ?
-                  ListView.builder(
-                    itemCount: patientSummaryList.length,
-                    itemBuilder: (BuildContext context, int index){
-                       var data = patientSummaryList[index];
-                      return Container(
-                          color:  index%2==0?Colors.white:Color.fromARGB(255, 142, 194, 236),
-
-                         child: SingleChildScrollView(
+       child: SingleChildScrollView(
          child: Row(
           children: [
                     Container(
-                      
                       width: screenWidth * 0.46,
                       // color: Colors.amber,
                       child:Column(
@@ -180,37 +155,47 @@ getpatientSummaryReportList();
                          Row(
                                 
                           children: [
-                            
                             Text(
-                                'Name :',
+                                'Date :',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                             Text(
-                                "${data['title'].toString() + "." + data['p_name'].toString().toUpperCase()}"),
+                                '2-4-2000'),
                           ],
                             ),
                              Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                'Age :',
+                                'Reg.No. :',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                             Text(
-                                "${data['p_age'].toString()}"),
+                                '2323434'),
                           ],
                             ),
                             Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                'Gender :',
+                                'Patient :',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                             Text(
-                               "${data['gender'].toString().toUpperCase()}"),
+                                'riyaz'),
                           ],
                             ),
+                          //     Row(
+                          // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // children: [
+                          //   Text(
+                          //       'Treatment :',
+                          //       style: TextStyle(fontWeight: FontWeight.bold),
+                          //       ),
+                          //   Text(
+                          //       'Abcdefghijklmnop'),
+                          // ],
+                          //   ),
                         ],
                       )
                     ),
@@ -229,11 +214,11 @@ getpatientSummaryReportList();
                               
                             Text(
                               
-                                'Mobile.No :',
+                                'Paymentmode :',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                             Text(
-                                 "${data['p_phone'].toString()}"),
+                                'Riyaz'),
                           ],
                           ),
                            Row(
@@ -243,74 +228,33 @@ getpatientSummaryReportList();
                               
                             Text(
                               
-                                'DOB :',
+                                'Amount :',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                             Text(
-                                 "${data['p_dob'].toString()}"),
+                                '2500'),
                           ],
                           ),
-                           Row(
+                          //  Row(
                             
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
+                          // mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
                               
-                            Text(
+                          //   Text(
                               
-                                'Email :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                  "${data['p_email'].toString()}"),
-                          ],
-                          )
+                          //       'Paymentmode :',
+                          //       style: TextStyle(fontWeight: FontWeight.bold),
+                          //       ),
+                          //   Text(
+                          //       'cash'),
+                          // ],
+                          // )
                         ],
                       ),
                     ),
                   ],
          ),
        ),
-
-                      );
-                    },
-                  ): Image.asset(
-                        'assets/images/no_data_found.png',
-                        // height: screenheight * 0.3,
-                        // color: Colors.blue.shade100,
-                        // color: Colors.black12,
-                      ),
-  ): Align(
-            alignment: Alignment.center,
-            child: Image.asset(
-                  'assets/images/loading_image.png',
-                  // height: screenheight * 0.3,
-                  // color: Colors.blue.shade100,
-                  // color: Colors.black12,
-                ),
-          );
- }
-
- getpatientSummaryReportList() async{
-   var formatter = new DateFormat('yyyy-MM-dd');
-// var data = {
-// 'from_date':  formatter.format(dateRange.start),
-// 'to_date': formatter.format(dateRange.end),
-// };
-this.setState(() {
-   isLoading = true;
-});
-
-              patientSummaryList = await api().getpatientSummaryReport(accessToken);
-              if(Helper().isvalidElement(patientSummaryList) && Helper().isvalidElement(patientSummaryList['status']) && patientSummaryList['status'] == 'Token is Invalid'){
-               Helper().appLogoutCall(context, 'Session expeired');
-               }
-         else{
-          patientSummaryList = patientSummaryList['patient_list'];
-  //  storage.setItem('diagnosisList', diagnosisList);
-                         this.setState(() {
-   isLoading = false;
-});
-
- }
+  );
  }
 }

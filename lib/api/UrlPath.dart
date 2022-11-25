@@ -1,8 +1,13 @@
    String base_url = "https://sapi.nigsoft.com/api/";
    String userLogin= 'auth/dentlogin';
    String diagnosisEndpoint= 'auth/diagnosis_list';
-   String treatmentEndpoint= 'auth/dent_treatment_report';
+   String treatmentEndpoint= 'auth/dent_treatment_list';
    String patientListEndpoint= 'auth/dent_patient_list';
+   String patientRegReportEndpoint= 'auth/patient_register_report';
+   String billingCollectionReportEndpoint= 'auth/billing_collection_report';
+      String patientSummaryReportEndpoint= 'auth/patient_summary_report';
+
+
 
 
   //  String signUpEndpoint= 'auth/sign_up';

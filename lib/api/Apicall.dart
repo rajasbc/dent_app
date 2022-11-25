@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nigdent/ReportWidget/PatientRegisterReport.dart';
 import 'UrlPath.dart' as RequestPath;
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -46,6 +47,37 @@ class api {
     }
   }
        getPatientList(access_token) async {
+    String patient_list_url = RequestPath.base_url + RequestPath.patientListEndpoint;
+    var response = await http.get(Uri.parse(patient_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+    patientRegisterReport(access_token,data) async {
+    String url = RequestPath.base_url + RequestPath.patientRegReportEndpoint;
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  billingCollectionReport(access_token,data) async {
+    String url = RequestPath.base_url + RequestPath.patientRegReportEndpoint;
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+   getpatientSummaryReport(access_token) async {
     String patient_list_url = RequestPath.base_url + RequestPath.patientListEndpoint;
     var response = await http.get(Uri.parse(patient_list_url),
         headers: _setHeaders(access_token));

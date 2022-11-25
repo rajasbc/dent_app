@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/api/Apicall.dart';
 import 'package:nigdent/api/UrlPath.dart';
+import 'package:intl/intl.dart';
+
 
 class PatientRegisterReport extends StatefulWidget {
 
@@ -11,13 +15,24 @@ class PatientRegisterReport extends StatefulWidget {
 
 class _PatientRegisterReportState extends State<PatientRegisterReport> {
   late DateTime date;
-  bool loading  = false;
+  bool isLoading  = false;
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
     end:
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
   );
+var patientRegisterList =null;
+    var accessToken;
+
+@override
+  void initState() {
+        accessToken = storage.getItem('userResponse')['access_token'];
+
+getPatientRegisterReportList();
+    // TODO: implement initState
+    super.initState();
+  }
 
    @override
    Widget build(BuildContext context) {
@@ -135,7 +150,7 @@ class _PatientRegisterReportState extends State<PatientRegisterReport> {
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-    // getPendingList();
+     patientRegisterList();
     this.setState(() {});
   }
 
@@ -143,23 +158,156 @@ class _PatientRegisterReportState extends State<PatientRegisterReport> {
   var screenheight= MediaQuery.of(context).size.height;
   var screenWidth= MediaQuery.of(context).size.width;
   return Container(
-       child: SingleChildScrollView(
+    padding: EdgeInsets.all(10),
+      child: Helper().isvalidElement(patientRegisterList) &&
+                  patientRegisterList.length > 0 ?
+ListView.builder(
+  itemCount:patientRegisterList.length ,
+ itemBuilder: (BuildContext context, int index){
+  var data =  patientRegisterList[index];
+return Container(
+  color:  index%2==0?Color.fromARGB(255, 116, 133, 148):Color.fromARGB(255, 142, 194, 236),
+ child: SingleChildScrollView(
          child: Row(
           children: [
                     Container(
-                      width: screenWidth * 0.5,
+                      width: screenWidth * 0.46,
                       // color: Colors.amber,
-                      child: Text('Hi'),
+                      child:Column(
+                        children: [
+                         Row(
+                                
+                          children: [
+                            Text(
+                                'Reg.No :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text("${data['patient_id'].toString()}"),
+                          ],
+                            ),
+                             Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                'Patient :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                               "${data['p_name'].toString()}"),
+                          ],
+                            ),
+                            Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                'Mobile :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                               "${data['p_phone'].toString()}"),
+                          ],
+                            ),
+                          //     Row(
+                          // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // children: [
+                          //   Text(
+                          //       ' :',
+                          //       style: TextStyle(fontWeight: FontWeight.bold),
+                          //       ),
+                          //   Text(
+                          //       'Abcdefghijklmnop'),
+                          // ],
+                          //   ),
+                        ],
+                      )
                     ),
                      Container(
-                      width: screenWidth *0.48,
+                      width: screenWidth *0.46,
                       // color: Colors.black,
-                      alignment: Alignment.centerRight,
-                      child: Text('helo'),
+                      // alignment: Alignment.centerRight,
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          
+                          Row(
+                            
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              
+                            Text(
+                              
+                                'Email :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                 "${data['p_email'].toString()}"),
+                          ],
+                          ),
+                           Row(
+                            
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              
+                            Text(
+                              
+                                'DOB :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                               "${data['p_dob'].toString()}"),
+                          ],
+                          ),
+                           Row(
+                            
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              
+                            Text(
+                              
+                                'Reg.Date :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                            Text(
+                                "${data['preg_date'].toString()}"),
+                          ],
+                          )
+                        ],
+                      ),
                     ),
                   ],
          ),
        ),
+);
+ }
+):  Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      ),
   );
+ }
+ getPatientRegisterReportList() async{
+   var formatter = new DateFormat('yyyy-MM-dd');
+var data = {
+'from_date':  formatter.format(dateRange.start),
+'to_date': formatter.format(dateRange.end),
+};
+this.setState(() {
+   isLoading = true;
+});
+
+              patientRegisterList = await api().patientRegisterReport(accessToken,data);
+              if(Helper().isvalidElement(patientRegisterList) && Helper().isvalidElement(patientRegisterList['status']) && patientRegisterList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          patientRegisterList = patientRegisterList['reports'];
+  //  storage.setItem('diagnosisList', diagnosisList);
+                         this.setState(() {
+   isLoading = false;
+});
+
+ }
  }
 }
