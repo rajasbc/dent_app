@@ -159,4 +159,19 @@ class api {
       return json.decode(response.body);
     }
   }
+  
+  getAppointmentList(access_token, data) async {
+
+    String appointment_list_url = RequestPath.base_url + RequestPath.appointmentList;
+    var response = await http.post(Uri.parse(appointment_list_url),
+      body: jsonEncode(data), headers: _setHeaders(access_token));
+
+      if(response.statusCode == 200) {
+        return json.decode(response.body);
+      }else {
+        return json.decode(response.body);
+      }
+
+  }
+  
 }

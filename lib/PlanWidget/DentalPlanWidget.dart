@@ -203,11 +203,11 @@ var accessToken;
             )),
             SizedBox(height: screenHeight*0.01,),
             // Divider(color: Colors.white,),
-          Container(
+          !isLoading ? Container(
               height: screenHeight*0.85,
             // color: Colors.red,
 
-            child: Helper().isvalidElement(treatment_details) &&
+            child:  Helper().isvalidElement(treatment_details) &&
                   treatment_details.length > 0 ? 
                     ListView.builder(
           // padding: EdgeInsets.all(5.0),
@@ -282,7 +282,20 @@ var accessToken;
               )
             );
           },
-        ): Text('loading.....')
+        ): Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      )
+          ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
           ),
         ],
       ),);

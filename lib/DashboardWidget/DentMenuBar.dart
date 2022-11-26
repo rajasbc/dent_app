@@ -536,14 +536,6 @@ return Container(
               Container(width: screenWidth*0.6,height: screenHeight, child: 
               renderAutoComplete(screenWidth, screenHeight)
           ),
-              //  Container(width: screenWidth*0.1,height: screenHeight, child: 
-              //  IconButton(
-              // onPressed: () {
-              //   searchText.text = '';
-              //   // searchList = null;
-              //   this.setState(() {});
-              // },
-              // icon: Icon(Icons.close))),
             ],
           ),
 );
@@ -551,7 +543,6 @@ return Container(
   renderAutoComplete(screenWidth, screenHeight){
     return Autocomplete<List>(
       
-// displayStringForOption: (option) => 'sdsdsds',
       optionsBuilder: (TextEditingValue textEditingValue) {
 
          if (textEditingValue.text == '') {
@@ -569,49 +560,8 @@ return Container(
         });
         return [matches];
 
-
-  // searchList =  patientList
-  //     .where(( county)  { 
-  //     county['p_name'].toString().toLowerCase().contains(textEditingValue.text.toLowerCase());
-  //     return county;
-  //     }
-  // )
-  //     .toList();
-  //     return searchList;
     }
 },
-//   optionsBuilder: (TextEditingValue textEditingValue) {
-      
-//     if (textEditingValue.text == '') {
-//       return const Iterable<String>.empty();
-//     }
-//     else{
-
-  
-//             searchList = patientList.where((element) {
-//               // element = isSwitchOn == true
-//               //     ? new PatientListModal.fromMap(element)
-//               //     : element;
-//               final patientname = element?.p_name.toLowerCase();
-//               // final number = element?.mobile_no;
-//               return patientname.contains(textEditingValue.text.toLowerCase());
-//             }).toList();
-//             return searchList;
-
-
-// // return patientList.toList().where((item) {
-// //   return item.p_name.contains(textEditingValue.text.toLowerCase());
-// // });
-      
-//         // var matches = [];
-//         // matches.addAll(patientList);
-
-//         // matches.retainWhere((s){
-//         //    return s['p_name'].toString().toLowerCase().contains(textEditingValue.text.toLowerCase());
-//         // });
-//         // return matches;
-//     }
-//   },
   fieldViewBuilder: (BuildContext context, TextEditingController textEditingController,
         FocusNode focusNode,
         VoidCallback onFieldSubmitted) {
@@ -622,10 +572,7 @@ return Container(
             ),
             controller: textEditingController,
             focusNode: focusNode,
-            
-            // onSubmitted: (String value) {
-            // print(value);
-            // },
+      
           );
     },
   optionsViewBuilder: (
@@ -654,17 +601,11 @@ storage.setItem('selectedPatient', options.toList()[0][index]);
                     selectedPatient = options.toList()[0][index];
           showAutoComplete = false;
         });
-                // print(options.toList()[0][index]['p_name']);
-                // onSelected(option);
               },
-              // child: ListTile(
-              //   title: Text(options.toList()[0][index]['p_name'].toString().toUpperCase(), style: const TextStyle(color: Colors.black)),
-              // ),
               child: Container(
                 color: CustomColors.app_color,
                 child: 
               Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
@@ -680,10 +621,6 @@ storage.setItem('selectedPatient', options.toList()[0][index]);
     ),
   );
 },
-  // onSelected: (selection) {
-  //   storage.setItem('selectedPatient', selection);
-  //     print('You just selected $selection');
-  // },
 );
   }
 }
