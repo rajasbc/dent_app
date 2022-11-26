@@ -48,6 +48,14 @@ class _PatientReportSummaryState extends State<PatientReportSummary> {
                       //  height: screenHeight * 0.08,
                       child: renderDatePicker(),
                     ),
+                     Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        // borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      height: screenHeight * 0.92,
+                      child: renderReportPending(),
+                    ),
               ],
             ),
            
@@ -130,6 +138,106 @@ class _PatientReportSummaryState extends State<PatientReportSummary> {
     // getPendingList();
     this.setState(() {});
   }
-
+ renderReportPending(){
+  return Container(
+       child: Row(
+        children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width *0.8,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Column(
+                        children: [
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Name :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'rskdjksd'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Age :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '35'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Gender :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'Male'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Mobile.No :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '5666756678'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'DOB :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '27-7-1988'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Email :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'rs@gmail.com'),
+                                ],
+                          ),
+                             ],
+                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+       ),
+  );
+ }
 
 }

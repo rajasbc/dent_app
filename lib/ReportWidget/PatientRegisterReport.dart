@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nigdent/api/UrlPath.dart';
 
 class PatientRegisterReport extends StatefulWidget {
 
@@ -139,125 +140,25 @@ class _PatientRegisterReportState extends State<PatientRegisterReport> {
   }
 
  renderReportPending(){
+  var screenheight= MediaQuery.of(context).size.height;
+  var screenWidth= MediaQuery.of(context).size.width;
   return Container(
-       child: Row(
-        children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Bill no: 143'),
-                              Text(
-                                  'Date: 14-2-2000'),
-                              Text(
-                                  'Amount: 143'),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     Text(
-                          //         'Patient: ${pending_list[index]['patient_name'].toString()}'),
-                          //     Text(
-                          //         'Ref By: ${pending_list[index]['ref_by'].toString()}'),
-                          //     Text(
-                          //       'Status: ${pending_list[index]['status'].toString()}',
-                          //       style: TextStyle(
-                          //           color: pending_list[index]['status']
-                          //                       .toString() ==
-                          //                   'Pending'
-                          //               ? Colors.red
-                          //               : pending_list[index]['status']
-                          //                           .toString() ==
-                          //                       'Completed'
-                          //                   ? Colors.green
-                          //                   : Colors.blueAccent),
-                          //     ),
-                          //   ],
-                          // ),
-                            Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Patient: mumthaj'),
-                              // Text(
-                              //     'Ref By: ${pending_list[index]['ref_by'].toString()}'),
-                              // Text(
-                              //   'Status: ${pending_list[index]['status'].toString()}',
-                              //   style: TextStyle(
-                              //       color: pending_list[index]['status']
-                              //                   .toString() ==
-                              //               'Pending'
-                              //           ? Colors.red
-                              //           : pending_list[index]['status']
-                              //                       .toString() ==
-                              //                   'Completed'
-                              //               ? Colors.green
-                              //               : Colors.blueAccent),
-                              // ),
-                            ],
-                          ),
-                             SizedBox(
-                            height: 5,
-                          ),
-                            Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Text(
-                              //     'Patient: ${pending_list[index]['patient_name'].toString()}'),
-                              Text(
-                                  'Ref By: shajagan'),
-                              // Text(
-                              //   'Status: ${pending_list[index]['status'].toString()}',
-                              //   style: TextStyle(
-                              //       color: pending_list[index]['status']
-                              //                   .toString() ==
-                              //               'Pending'
-                              //           ? Colors.red
-                              //           : pending_list[index]['status']
-                              //                       .toString() ==
-                              //                   'Completed'
-                              //               ? Colors.green
-                              //               : Colors.blueAccent),
-                              // ),
-                            ],
-                          ),
-                             SizedBox(
-                            height: 5,
-                          ),
-                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Text(
-                              //     'Patient: ${pending_list[index]['patient_name'].toString()}'),
-                              // Text(
-                              //     'Ref By: ${pending_list[index]['ref_by'].toString()}'),
-                              Text(
-                                'Status: tajmahal'
-                              ),
-                            ],
-                          ),
-                             SizedBox(
-                            height: 5,
-                          ),
-                        ],
-                      ),
+       child: SingleChildScrollView(
+         child: Row(
+          children: [
+                    Container(
+                      width: screenWidth * 0.5,
+                      // color: Colors.amber,
+                      child: Text('Hi'),
                     ),
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      child:
-                          IconButton(onPressed: () {}, icon: Icon(Icons.menu)))
-                ],
+                     Container(
+                      width: screenWidth *0.48,
+                      // color: Colors.black,
+                      alignment: Alignment.centerRight,
+                      child: Text('helo'),
+                    ),
+                  ],
+         ),
        ),
   );
  }
