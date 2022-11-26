@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'modal/selectedteethmodal.dart';
+import 'package:localstorage/localstorage.dart';
 
 class AdultsModalWidget extends StatefulWidget {
   const AdultsModalWidget({super.key});
@@ -48,6 +49,7 @@ var adultBottomModal = [
 
 class _AdultsModalWidgetState extends State<AdultsModalWidget> {
   List<SelectedTeethModal> selectedTeeth = [];
+  final LocalStorage storage = new LocalStorage('nigdent_store');
 
   @override
   void initState() {
@@ -236,6 +238,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+               storage.setItem('selectedTeethPosition', selectedTeeth);
               this.setState(() {});
               print(selectedTeeth.length);
               //                  var selectTestMap = selectedTeeth.map((e) {
@@ -292,6 +295,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('left');
@@ -363,6 +367,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                     }
                     this.setState(() {});
                     print(selectedTeeth.length);
+                storage.setItem('selectedTeethPosition', selectedTeeth);
 
                     // print('center');
                     // if (adultTopModal[index]['center'] == 'select') {
@@ -432,6 +437,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                                    storage.setItem('selectedTeethPosition', selectedTeeth);
+
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('right');
@@ -502,6 +509,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+                              storage.setItem('selectedTeethPosition', selectedTeeth);
+
               this.setState(() {});
               print(selectedTeeth.length);
               // print('down');
@@ -578,6 +587,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+                              storage.setItem('selectedTeethPosition', selectedTeeth);
+
               this.setState(() {});
               print(selectedTeeth.length);
               // print('top');
@@ -647,6 +658,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                                    storage.setItem('selectedTeethPosition', selectedTeeth);
+
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('left');
@@ -715,6 +728,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                                    storage.setItem('selectedTeethPosition', selectedTeeth);
+
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('center');
@@ -782,6 +797,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                                    storage.setItem('selectedTeethPosition', selectedTeeth);
+
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('right');
@@ -849,6 +866,8 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+                              storage.setItem('selectedTeethPosition', selectedTeeth);
+
               this.setState(() {});
               print(selectedTeeth.length);
               // print('down');

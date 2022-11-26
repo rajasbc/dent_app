@@ -3,10 +3,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/api/Apicall.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/main.dart';
 import 'package:nigdent/Common/colors.dart' as appcolor;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
   bool showPassword = false;
+  bool isloading = false;
 
   @override
   void initState() {
@@ -146,13 +149,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     width: screenWidth * 0.88,
                     child: ElevatedButton(
+                    
                       //  style: ElevatedButton.styleFrom(primary: const Color(0xff032423)),
-                      child: const Text(
+                      child: isloading ? const 
+                      SpinKitWave(
+  color: Colors.white,
+  size: 20.0,
+) : const Text(
                         'LOGIN',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, letterSpacing: 1.5),
                       ),
                       onPressed: () async {
+                        this.setState(() {
+                          isloading = true;
+                        });
                         var user_input = {
                           'email': _email.text,
                           'password': _password.text
@@ -161,10 +172,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           var user_data =
                               await api().userLoginResponse(user_input);
                           storage.setItem('userResponse', user_data);
-                          if (user_data == 'Email_id and Password Incorrect') {
+                          if (Helper().isvalidElement(user_data) && 
+                          Helper().isvalidElement(user_data['error']) && 
+                          user_data['error'] == 'Email_id and Password Incorrect') {
                             Fluttertoast.showToast(
                                 msg:
-                                    'Please Enter Your Correct Username and Password',
+                                    'Incorrect Email & Password',
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.CENTER,
                                 timeInSecForIosWeb: 2,
@@ -176,6 +189,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             // await storeBox?.put('userResponse', user);
 
                             if (user_data['access_token'] != null) {
+                              _email.text = '';
+                              _password.text = '';
                               this.setState(() {});
                               Navigator.push(
                                 context,
@@ -217,6 +232,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               backgroundColor: Colors.red,
                               textColor: Colors.white);
                         }
+                          this.setState(() {
+                          isloading = false;
+                        });
                       },
                     ),
                   ),

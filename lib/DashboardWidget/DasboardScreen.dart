@@ -170,9 +170,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   },
                 ),
                   ExpansionTile(
-                  title: Text('REPORTS',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  title: Text('Reports'),
                            leading: Icon(
                   Icons.report_gmailerrorred,
                   // color: Colors.green,

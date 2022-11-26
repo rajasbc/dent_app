@@ -25,4 +25,14 @@ class api {
       return json.decode(response.body);
     }
   }
+    getDiagnosisList(access_token) async {
+    String diagnosis_url = RequestPath.base_url + RequestPath.diagnosisEndpoint;
+    var response = await http.get(Uri.parse(diagnosis_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
 }
