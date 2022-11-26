@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 class PerformanceSummary extends StatefulWidget {
 
   const PerformanceSummary({ super.key });
@@ -29,6 +29,7 @@ class _PerformanceSummaryState extends State<PerformanceSummary> {
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
+            backgroundColor: CustomColors.app_color,
             title: Text('Performance Summary'),
           ),
         ),
@@ -75,6 +76,7 @@ class _PerformanceSummaryState extends State<PerformanceSummary> {
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
                       onPressed: () {
                         pickDateRange();
                       },
@@ -85,7 +87,7 @@ class _PerformanceSummaryState extends State<PerformanceSummary> {
                 Container(
                   width: screenWidth / 6,
                   child: IconButton(
-                    color: Colors.blueAccent,
+                   color: CustomColors.app_color,
                     onPressed: () {
                       pickDateRange();
                     },
@@ -95,6 +97,7 @@ class _PerformanceSummaryState extends State<PerformanceSummary> {
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
                       onPressed: () {
                         pickDateRange();
                       },

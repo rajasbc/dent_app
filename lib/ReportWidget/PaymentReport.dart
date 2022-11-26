@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 import '../Common/utils.dart';
 import '../api/Apicall.dart';
 
@@ -44,6 +44,7 @@ getpaymentRegisterList();
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
+             backgroundColor: CustomColors.app_color,
             title: Text('Payment Report'),
           ),
         ),
@@ -99,6 +100,8 @@ getpaymentRegisterList();
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
                       onPressed: () {
                         pickDateRange();
                       },
@@ -109,7 +112,7 @@ getpaymentRegisterList();
                 Container(
                   width: screenWidth / 6,
                   child: IconButton(
-                    color: Colors.blueAccent,
+                   color: CustomColors.app_color,
                     onPressed: () {
                       pickDateRange();
                     },
@@ -119,6 +122,8 @@ getpaymentRegisterList();
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
                       onPressed: () {
                         pickDateRange();
                       },

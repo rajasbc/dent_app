@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nigdent/Common/utils.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 import '../api/Apicall.dart';
 
 class TopTreatmentDiagnosis extends StatefulWidget {
@@ -48,6 +48,7 @@ treatmentdiagnosisplanList();
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
+            backgroundColor: CustomColors.app_color,
             title: Text('Top Treatment & Diagnosis'),
           ),
         ),
@@ -83,6 +84,7 @@ treatmentdiagnosisplanList();
                     ),
                     Divider(),
                     Container(
+                      height: screenHeight * 0.02,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -95,7 +97,7 @@ treatmentdiagnosisplanList();
 
 
                      !isLoading ? Container(
-                        height: screenHeight * 0.37,
+                        height: screenHeight * 0.35,
                          child: Helper().isvalidElement(treatmentList) &&
                   treatmentList.length > 0 ?
                   ListView.builder(
@@ -116,10 +118,10 @@ treatmentdiagnosisplanList();
                                   children: [
                                     Column(
                                       children: [
-                                        Text(
-                                            'Treatment :',
-                                            style: TextStyle(fontWeight: FontWeight.bold),
-                                            ),
+                                        // Text(
+                                        //     'Treatment :',
+                                        //     style: TextStyle(fontWeight: FontWeight.bold),
+                                        //     ),
                                             Text( "${data["treatment_name"].toString()}")
                                       ],
                                     ),
@@ -130,12 +132,12 @@ treatmentdiagnosisplanList();
                              Row(
                                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                        'Count :',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                        ),
                                     // Text(
-                                    //     "${data["count"].toString()}"),
+                                    //     'Count :',
+                                    //     style: TextStyle(fontWeight: FontWeight.bold),
+                                    //     ),
+                                    Text(
+                                        "${data["count"].toString()}"),
                                   ],
                             ),
                                ],
@@ -261,6 +263,7 @@ treatmentdiagnosisplanList();
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
                       onPressed: () {
                         pickDateRange();
                       },
@@ -271,7 +274,7 @@ treatmentdiagnosisplanList();
                 Container(
                   width: screenWidth / 6,
                   child: IconButton(
-                    color: Colors.blueAccent,
+                    color: CustomColors.app_color,
                     onPressed: () {
                       pickDateRange();
                     },
@@ -281,6 +284,7 @@ treatmentdiagnosisplanList();
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
                       onPressed: () {
                         pickDateRange();
                       },
