@@ -48,6 +48,14 @@ class _RevenueReportState extends State<RevenueReport> {
                       //  height: screenHeight * 0.08,
                       child: renderDatePicker(),
                     ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        // borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      height: screenHeight * 0.92,
+                      child: renderReportPending(),
+                    ),
               ],
             ),
            
@@ -130,4 +138,105 @@ class _RevenueReportState extends State<RevenueReport> {
     // getPendingList();
     this.setState(() {});
   }
+   renderReportPending(){
+  return Container(
+       child: Row(
+        children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Column(
+                        children: [
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Date :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '4-9-1999'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Collection :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'Abcde'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Expenses :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '78372'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Revenue :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '100000'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                          //  Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //    children: [
+                          //      Row(
+                              
+                          //       children: [
+                          //         Text(
+                          //             'DOB :',
+                          //             style: TextStyle(fontWeight: FontWeight.bold),
+                          //             ),
+                          //         Text(
+                          //             '27-7-1988'),
+                          //       ],
+                          // ),
+                          //  Row(
+                          //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text(
+                          //             'Reg.Date :',
+                          //             style: TextStyle(fontWeight: FontWeight.bold),
+                          //             ),
+                          //         Text(
+                          //             '22-4-2014'),
+                          //       ],
+                          // ),
+                          //    ],
+                          //  ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+       ),
+  );
+ }
 }

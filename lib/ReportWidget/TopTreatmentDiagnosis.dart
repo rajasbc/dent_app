@@ -47,8 +47,172 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
                       ),
                       height: screenHeight * 0.08,
                       //  height: screenHeight * 0.08,
-                      child: renderDatePicker(),
+                      child:Column(
+                        children: [
+                           renderDatePicker(),
+                      ],
+                      )
+                      //  renderDatePicker(),
+
                     ),
+                    Container(
+                      height: screenHeight * 0.04,
+                      // color: Colors.black,
+                      child: Text('Treatment',
+                       style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20)
+                       ),
+
+                    ),
+                    Divider(),
+
+
+
+                      Container(
+                        height: screenHeight * 0.37,
+                        child:SingleChildScrollView(
+                          child: Column(
+                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: [
+                                 Row(
+                                
+                                  children: [
+                                    Text(
+                                        'Treatment :',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                    Text(
+                                        'Abcdef'),
+                                  ],
+                            ),
+                             Row(
+                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        'Count :',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                    Text(
+                                        '2'),
+                                  ],
+                            ),
+                               ],
+                             ),
+                             Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Ad'),
+                                )
+                              ],
+                             ),
+                             
+                              
+                             ],
+                          ),
+                        ),
+                   ),
+                   Container(
+                    height: screenHeight * 0.04,
+                    // color: Colors.amber,
+                     child: Text('Diagnosis',
+                       style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20)
+                       ),
+                   ),
+                   Divider(),
+                   Container(
+                    height: screenHeight * 0.38,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                           Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                   Row(
+                                  
+                                    children: [
+                                      Text(
+                                          'Diagnosis :',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                      Text(
+                                          'Abcdef'),
+                                    ],
+                              ),
+                               Row(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          'Count :',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                      Text(
+                                          '2'),
+                                    ],
+                              ),
+                                 ],
+                               ),
+                                 Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Adfdfd'),
+                                )
+                              ],
+                             ),
+                              Row(
+                              children: [
+                                Padding(padding: EdgeInsets.all(30),
+                                child: Text('Ad'),
+                                )
+                              ],
+                             ),
+                        ],
+                      ),
+                    ),
+
+                   )
               ],
             ),
            
@@ -131,4 +295,39 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
     // getPendingList();
     this.setState(() {});
   }
+
+//    renderReportPending(){
+//       var screenheight = MediaQuery.of(context).size.height;
+//         var screenWidth = MediaQuery.of(context).size.width;
+//   return Container(
+//     height: screenheight,
+//     width: screenWidth,
+//     child: SingleChildScrollView(
+//       child: Column(
+//         children: [
+//            Container(
+//             height: screenheight * 0.5,
+//             width: screenWidth,
+//             color: Colors.red,
+//             child: Text('Treatment',
+//                         textAlign: TextAlign.left,),
+    
+    
+    
+//                       ),
+//                     Container(
+//                       height: screenheight * 0.5,
+//                       width: screenWidth,
+//                       color: Colors.black,
+//                       child: Text('hi'),
+    
+    
+//                    )
+//         ],
+//       ),
+//     ),
+
+//   );
+ 
+//  }
 }

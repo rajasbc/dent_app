@@ -47,6 +47,14 @@ class _PaymentReportState extends State<PaymentReport> {
                       //  height: screenHeight * 0.08,
                       child: renderDatePicker(),
                     ),
+                       Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        // borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      height: screenHeight * 0.92,
+                      child: renderReportPending(),
+                    ),
               ],
             ),
            
@@ -129,4 +137,106 @@ class _PaymentReportState extends State<PaymentReport> {
     // getPendingList();
     this.setState(() {});
   }
+
+  renderReportPending(){
+  return Container(
+       child: Row(
+        children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      child: Column(
+                        children: [
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Date :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '3-4-1999'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Patient Id :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'sd233'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Patient Name :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      'riyaz'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Bill Amount :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '10000'),
+                                ],
+                          ),
+                             ],
+                           ),
+                          // Divider(),
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                              
+                                children: [
+                                  Text(
+                                      'Paid :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '6000'),
+                                ],
+                          ),
+                           Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      'Balance :',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                  Text(
+                                      '4000'),
+                                ],
+                          ),
+                             ],
+                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+       ),
+  );
+ }
 }
