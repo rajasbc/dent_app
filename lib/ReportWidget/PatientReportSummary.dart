@@ -152,7 +152,7 @@ getpatientSummaryReportList();
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-   patientSummaryList();
+   getpatientSummaryReportList();
     this.setState(() {});
   }
  renderReportPending(){
@@ -168,108 +168,122 @@ getpatientSummaryReportList();
                     itemBuilder: (BuildContext context, int index){
                        var data = patientSummaryList[index];
                       return Container(
-                          color:  index%2==0?Colors.white:Color.fromARGB(255, 142, 194, 236),
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
 
                          child: SingleChildScrollView(
-         child: Row(
-          children: [
-                    Container(
-                      
-                      width: screenWidth * 0.46,
-                      // color: Colors.amber,
-                      child:Column(
-                        children: [
-                         Row(
-                                
+         child: Padding(
+           padding: const EdgeInsets.all(3.0),
+           child: Row(
+            children: [
+                      Container(
+                        
+                        width: screenWidth * 0.46,
+                        // color: Colors.amber,
+                        child:Column(
+                          children: [
+                            Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Reg.No :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['patient_id'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                           Row(
+                                  
+                            children: [
+                              
+                              Text(
+                                  'Name :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['title'].toString() + "." + data['p_name'].toString().toUpperCase()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                               Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Age :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['p_age'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                              Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Gender :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                 "${data['gender'].toString().toUpperCase()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                          ],
+                        )
+                      ),
+                       Container(
+                        width: screenWidth *0.46,
+                        // color: Colors.black,
+                        // alignment: Alignment.centerRight,
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             
-                            Text(
-                                'Name :',
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
-                                ),
-                            Text(
-                                "${data['title'].toString() + "." + data['p_name'].toString().toUpperCase()}"),
-                          ],
+                            Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Mobile.No :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                   "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
                             ),
                              Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Age :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                "${data['p_age'].toString()}"),
-                          ],
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'DOB :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                   "${data['p_dob'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
                             ),
-                            Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Gender :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                               "${data['gender'].toString().toUpperCase()}"),
+                             Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Email :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                    "${data['p_email'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                            )
                           ],
-                            ),
-                        ],
-                      )
-                    ),
-                     Container(
-                      width: screenWidth *0.46,
-                      // color: Colors.black,
-                      // alignment: Alignment.centerRight,
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          
-                          Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'Mobile.No :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                 "${data['p_phone'].toString()}"),
-                          ],
-                          ),
-                           Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'DOB :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                 "${data['p_dob'].toString()}"),
-                          ],
-                          ),
-                           Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'Email :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                  "${data['p_email'].toString()}"),
-                          ],
-                          )
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+           ),
          ),
        ),
 
@@ -307,7 +321,7 @@ this.setState(() {
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{
-          patientSummaryList = patientSummaryList['patient_list'];
+          patientSummaryList = patientSummaryList['reports'];
   //  storage.setItem('diagnosisList', diagnosisList);
                          this.setState(() {
    isLoading = false;

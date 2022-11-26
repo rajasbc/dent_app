@@ -84,20 +84,20 @@ treatmentdiagnosisplanList();
                     ),
                     Divider(),
                     Container(
-                      height: screenHeight * 0.02,
+                      height: screenHeight * 0.03,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Treatment'),
-                          Text('Count'),
+                          Text('Treatment',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),
+                          Text('Count',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
                         ],
                       ),
                     ),
 
 
-
+SizedBox(height: 10,),
                      !isLoading ? Container(
-                        height: screenHeight * 0.35,
+                        height: screenHeight * 0.34,
                          child: Helper().isvalidElement(treatmentList) &&
                   treatmentList.length > 0 ?
                   ListView.builder(
@@ -105,43 +105,46 @@ treatmentdiagnosisplanList();
                     itemBuilder: (BuildContext context, int index){
                        var data = treatmentList[index];
                        return Container(
-                         color:  index%2==0?Color.fromARGB(255, 167, 193, 216):Color.fromARGB(255, 246, 247, 248),
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
                           child:SingleChildScrollView(
                           child: Column(
                              children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                
-                               children: [
-                                 Row(
-                                
-                                  children: [
-                                    Column(
-                                      children: [
-                                        // Text(
-                                        //     'Treatment :',
-                                        //     style: TextStyle(fontWeight: FontWeight.bold),
-                                        //     ),
-                                            Text( "${data["treatment_name"].toString()}")
-                                      ],
-                                    ),
-                                  //   Text(
-                                  //       "${data["treatment_name"].toString()}"),
-                                  ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  
+                                 children: [
+                                   Row(
+                                  
+                                    children: [
+                                      Column(
+                                        children: [
+                                          // Text(
+                                          //     'Treatment :',
+                                          //     style: TextStyle(fontWeight: FontWeight.bold),
+                                          //     ),
+                                              Text( "${data["treatment_name"].toString()}",style: TextStyle(fontSize: 13),)
+                                        ],
+                                      ),
+                                    //   Text(
+                                    //       "${data["treatment_name"].toString()}"),
+                                    ],
                             ),
                              Row(
-                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Text(
-                                    //     'Count :',
-                                    //     style: TextStyle(fontWeight: FontWeight.bold),
-                                    //     ),
-                                    Text(
-                                        "${data["count"].toString()}"),
-                                  ],
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Text(
+                                      //     'Count :',
+                                      //     style: TextStyle(fontWeight: FontWeight.bold),
+                                      //     ),
+                                      Text(
+                                          "${data["count"].toString()}",style: TextStyle(fontSize: 13),),
+                                    ],
                             ),
-                               ],
-                             ),                                                    
+                                 ],
+                             ),
+                              ),                                                    
                              ],
                           ),
                         ),
@@ -158,11 +161,12 @@ treatmentdiagnosisplanList();
             alignment: Alignment.center,
             child: Image.asset(
                   'assets/images/loading_image.png',
-                  height: screenHeight * 0.37,
+                  height: screenHeight * 0.34,
                   // color: Colors.blue.shade100,
                   // color: Colors.black12,
                 ),
           ),
+          
                    Container(
                     height: screenHeight * 0.04,
                     // color: Colors.amber,
@@ -171,8 +175,19 @@ treatmentdiagnosisplanList();
                        ),
                    ),
                    Divider(),
+                     Container(
+                      height: screenHeight * 0.03,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Diagnosis',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                          Text('Count',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10,),
                   !isLoading ? Container(
-                    height: screenHeight * 0.38,
+                    height: screenHeight * 0.33,
                      child: Helper().isvalidElement(diagnosisList) &&
                   diagnosisList.length > 0 ?
                   ListView.builder(
@@ -180,38 +195,41 @@ treatmentdiagnosisplanList();
                     itemBuilder: (BuildContext context, int index){
                        var data = diagnosisList[index];
                       return Container(
-          color:  index%2==0?Color.fromARGB(255, 167, 193, 216):Color.fromARGB(255, 246, 247, 248),
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
 
                          child: SingleChildScrollView(
                       child: Column(
                         children: [
-                           Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                 children: [
-                                   Row(
-                                  
-                                    children: [
-                                      Text(
-                                          'Diagnosis :',
-                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                          ),
-                                      Text(
-                                          "${data["diagnosis_name"].toString()}"),
-                                    ],
-                              ),
-                               Row(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                          'Count :',
-                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                          ),
-                                      Text(
-                                         "${data["count"].toString()}"),
-                                    ],
-                              ),
-                                 ],
-                               ),     
+                           Padding(
+                             padding: const EdgeInsets.all(8.0),
+                             child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Row(
+                                    
+                                      children: [
+                                        // Text(
+                                        //     'Diagnosis :',
+                                        //     style: TextStyle(fontWeight: FontWeight.bold),
+                                        //     ),
+                                        Text(
+                                            "${data["diagnosis_name"].toString()}",style: TextStyle(fontSize: 13),),
+                                      ],
+                                ),
+                                 Row(
+                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // Text(
+                                        //     'Count :',
+                                        //     style: TextStyle(fontWeight: FontWeight.bold),
+                                        //     ),
+                                        Text(
+                                           "${data["count"].toString()}",style: TextStyle(fontSize: 13),),
+                                      ],
+                                ),
+                                   ],
+                                 ),
+                           ),     
                         ],
                       ),
                     ),
@@ -230,7 +248,7 @@ treatmentdiagnosisplanList();
             alignment: Alignment.center,
             child: Image.asset(
                   'assets/images/loading_image.png',
-                  height: screenHeight * 0.37,
+                  height: screenHeight * 0.33,
                   // color: Colors.blue.shade100,
                   // color: Colors.black12,
                 ),
