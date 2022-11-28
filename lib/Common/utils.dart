@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:localstorage/localstorage.dart';
 import 'dart:developer' as developer;
 import '../main.dart';
-
+import 'colors.dart' as CustomColor;
 final LocalStorage storage = new LocalStorage('nigdent_store');
 
 class Helper {
@@ -31,7 +31,7 @@ class Helper {
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         backgroundColor:
-            action == 'logout' ? Color.fromARGB(255, 47, 172, 112) : Colors.red,
+            action == 'logout' ?CustomColor.success_color: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
     // Navigator.push(

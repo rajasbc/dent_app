@@ -1,24 +1,13 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
-import 'package:nigdent/AppointmentWidget/Appointment.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:nigdent/AppointmentWidget/CreateAppointment.dart';
+// import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:nigdent/PatientWidget/AddPatientWidget.dart';
+import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/PatientWidget/CreatePatient.dart';
-import 'package:nigdent/PlanWidget/DentalPlanWidget.dart';
-
-import '../ReportWidget/CollectionReport.dart';
-import '../ReportWidget/PatientRegisterReport.dart';
-import '../ReportWidget/PatientReportSummary.dart';
-import '../ReportWidget/PaymentReport.dart';
-import '../ReportWidget/PerformanceSummary.dart';
-import '../ReportWidget/PlanSummary.dart';
-import '../ReportWidget/RevenueReport.dart';
-import '../ReportWidget/TopTreatmentDiagnosis.dart';
-import '../ReportWidget/Treatmentplan.dart';
-
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -27,295 +16,244 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final LocalStorage storage = new LocalStorage('nigdent_store');
-  var userResponse;
-  final List<String> images = [
-    'assets/images/add_customer.png',
-    'assets/images/add_test.png',
-    'assets/images/sync_data.png',
-  ];
+  // final LocalStorage storage = new LocalStorage('nigdent_store');
+  // var userResponse;
   @override
   Widget build(BuildContext context) {
-    userResponse = storage.getItem('userResponse');
+    // userResponse = storage.getItem('userResponse');
+double screenHeight = MediaQuery.of(context).size.height-50;
+double screenwidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Helper().appLogoutCall(context, 'logout');
-              },
-              icon: Icon(WebSymbols.logout)),
-          // IconButton(onPressed: getAllCustomers, icon: Icon(Icons.category))
-        ],
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => const AddPatientWidget()),
-                // );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CreatePatient()),
-                );
-              },
-              child: Text('+ Add Patient'),
-            ),
-            //  ElevatedButton(
-            //   onPressed: () {
-            //     // Navigator.push(
-            //     //   context,
-            //     //   MaterialPageRoute(
-            //     //       builder: (context) => const AddPatientWidget()),
-            //     // );
-            //         Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => const PatientRegisterReport()),
-            //     );
-            //   },
-            //   child: Text('+ patient register report'),
-            // ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: AppBar(
+          backgroundColor: CustomColors.app_color,
+          title: const Text('Dashboard'),
+          
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Helper().appLogoutCall(context, 'logout');
+                },
+                icon: Icon(WebSymbols.logout)),
+            // IconButton(onPressed: getAllCustomers, icon: Icon(Icons.category))
           ],
         ),
       ),
-      //  body: Container(
-      // width: MediaQuery.of(context).size.width,
-      // child: SingleChildScrollView(
-      //   child: Column(
-      //     children: [
-      //       SizedBox(
-      //         height: 10,
-      //       ),
-      //       Container(
-      //         height: 200,
-      //         width: MediaQuery.of(context).size.width,
-      //         child: CarouselSlider.builder(
-      //           itemCount: images.length,
-      //           options: CarouselOptions(
-      //             autoPlay: true,
-      //             // aspectRatio: 2.0,
-      //             enlargeCenterPage: true,
-      //           ),
-      //           itemBuilder: (context, index, realIdx) {
-      //             return GestureDetector(
-      //               child: Center(
-      //                 child: Image(
-      //                   image: AssetImage(images[index]),
-      //                   fit: BoxFit.contain,
-      //                 ),
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // )),
+      body: SingleChildScrollView(
+        child: Container(
+          width: screenwidth,
+          height: screenHeight,
+          child: Column(
+            children: [
+                 // Appointment
+              Container(
+                 height: screenHeight*0.35,
+                   width: screenwidth,
+                //  color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    child: Column(
+                    children: [
+                         SizedBox(height: screenHeight*0.015,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.add, color: CustomColors.app_color,size: 20,),
+                                SizedBox(width: screenwidth*0.01,),
+                              Text('Appointments', style: TextStyle(fontSize: 20, letterSpacing: 1.42, fontWeight: FontWeight.bold, color: CustomColors.app_color),),
+                            ],
+                          ),
+                                                           Container( 
+                            // color: Colors.yellow,
+                            height: screenHeight*0.05,alignment: Alignment.topRight,
+                            child: IconButton(onPressed: (){
+                                         Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CreateAppointment()),
+                      );
+                            }, icon: Icon(Icons.add, color: CustomColors.app_color,size: 20,), ))
+                          // Icon(Icons.add, color: CustomColors.app_color,size: 25,)
+                        ],
+                      ),
+                      SizedBox(height: screenHeight*0.015,),
+                      Container(
+                        width: screenwidth*0.9,
+                        height: screenHeight*0.22,
+                        decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(10),
+        topRight: Radius.circular(10),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10)
+    ),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.5),
+        spreadRadius: 5,
+        blurRadius: 7,
+        offset: Offset(0, 3), // changes position of shadow
+      ),
+    ],
+  ),
+                        // color: Colors.green,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('0',style: TextStyle(fontSize: 20)),
+                                      SizedBox(width: screenwidth*0.02,),
+                                       Text('Today', style: TextStyle(fontSize: 18, letterSpacing: 1)),
+                                    ],
+                                  ),
+                                                                  Container( 
+                            // color: Colors.yellow,
+                            height: screenHeight*0.04,alignment: Alignment.topRight,
+                            child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                                  // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
+                                ],
+                              ),
+                            ),
+                               Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('0',style: TextStyle(fontSize: 20)),
+                                      SizedBox(width: screenwidth*0.02,),
+                                       Text('Upcoming', style: TextStyle(fontSize: 18, letterSpacing: 1)),
+                                    ],
+                                  ),
+                                                                  Container( 
+                            // color: Colors.yellow,
+                            height: screenHeight*0.04,alignment: Alignment.topRight,
+                            child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                                  // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+                ),
+              ),
+
+              // patient 
+              Container(
+                 height: screenHeight*0.25,
+                   width: screenwidth,
+                //  color: Colors.green,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    child: Column(
+                    children: [
+                        //  SizedBox(height: screenHeight*0.01,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.people, color: CustomColors.app_color,size: 20,),
+                              SizedBox(width: screenwidth*0.01,),
+                              Text('Patients', style: TextStyle(fontSize: 20, letterSpacing: 1.42, fontWeight: FontWeight.bold, color: CustomColors.app_color),),
+                            ],
+                          ),
+                          Container( 
+                            // color: Colors.yellow,
+                            height: screenHeight*0.05,alignment: Alignment.topRight,
+                            child: IconButton(onPressed: (){
+                                 Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CreatePatient()),
+                      );
+                            }, icon: Icon(Icons.add, color: CustomColors.app_color,size: 20,), ))
+                          
+                        ],
+                      ),
+                      SizedBox(height: screenHeight*0.015,),
+                      Container(
+                        width: screenwidth*0.9,
+                        height: screenHeight*0.1,
+                        decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(10),
+        topRight: Radius.circular(10),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10)
+    ),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.5),
+        spreadRadius: 5,
+        blurRadius: 7,
+        offset: Offset(0, 3), // changes position of shadow
+      ),
+    ],
+  ),
+                        // color: Colors.green,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('0',style: TextStyle(fontSize: 20)),
+                                      SizedBox(width: screenwidth*0.02,),
+                                       Text('Total Patients', style: TextStyle(fontSize: 18, letterSpacing: 1)),
+                                    ],
+                                  ),
+                                 Container( 
+                            // color: Colors.yellow,
+                            height: screenHeight*0.04,alignment: Alignment.topRight,
+                            child: IconButton(onPressed: (){
+                              // print('total patients');
+                            }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                                  // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+                ),
+              ),
+      
+            ],
+          ),
+        ),
+      ),
+     
       drawer: SafeArea(
         child: Drawer(
           elevation: 50,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                UserAccountsDrawerHeader(
-                  accountName: Text(
-                      '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['name'] : ''}'),
-                  accountEmail: Text(
-                      '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['mobile_no'] : ''}'),
-                  currentAccountPicture: CircleAvatar(
-                    radius: 56,
-                    backgroundImage: NetworkImage(
-                      "${Helper().isvalidElement(userResponse) && Helper().isvalidElement(userResponse["clinic_logo"]) ? userResponse["clinic_logo"] : ''}",
-                    ),
-                    backgroundColor: Colors.white,
-                  ),
-                  otherAccountsPictures: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Text('${userResponse['clinic_profile']['name'][0]}'),
-                    )
-                  ],
-                ),
-                ListTile(
-                  title: Text('Dashboard'),
-                  leading: Icon(Icons.menu),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DashboardScreen()),
-                    );
-                  },
-                ),
-                ListTile(
-                  title: Text('Appointment'),
-                  leading: Icon(Icons.note_add),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AppointmentPage()),
-                    );
-                  },
-                ),
-                  ExpansionTile(
-                  title: Text('Reports'),
-                           leading: Icon(
-                  Icons.report_gmailerrorred,
-                  // color: Colors.green,
-                ),
-                  children: [
-                    ListTile(
-                      title: Text('Patient Register Report'),
-                      leading: Icon(Icons.report),
-                      onTap: (){
-                              Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PatientRegisterReport()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: Text('Patient Summary Report'),
-                      leading: Icon(Icons.summarize),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PatientReportSummary()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                        title: Text('Treatment Plan / History'),
-                        leading: Icon(Icons.history),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Treatmentplan()),
-                          );
-                        },
-                        ),
-                        
-                    ListTile(
-                      title: Text('Collection Report'),
-                      leading: Icon(Icons.collections),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CollectionReport())
-                          );
-                      },
-                    ),
-
-                    ListTile(
-                      title: Text('Performance Summary'),
-                      leading: Icon(Icons.summarize_sharp),
-                      onTap: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PerformanceSummary())
-                          );
-                      },
-                    ),
-
-                    ListTile(
-                      title: Text('Plan Summary'),
-                      leading: Icon(Icons.summarize_outlined),
-                      onTap: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PlanSummary())
-                          );
-                      },
-                    ),
-
-                    ListTile(
-                      title: Text('Top Treatment & Diagnosis'),
-                      leading: Icon(Icons.add_to_photos),
-                      onTap: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TopTreatmentDiagnosis())
-                          );
-                      },
-                    ),
-
-                    ListTile(
-                      title: Text('Revenue Report'),
-                      leading: Icon(Icons.reviews_rounded),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RevenueReport())
-                          );
-                      },
-                    ),
-
-                    ListTile(
-                      title: Text('Payment Report'),
-                      leading: Icon(Icons.payment),
-                      onTap: () {
-                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PaymentReport())
-                          );
-                      },
-                    ),
-
-                    // ListTile(
-                    //   title: Text('Collection Report'),
-                    //   leading: Icon(Icons.collections),
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => PaymentReport())
-                    //       );
-                    //   },
-                    // ),
-
-                  ],
-                ),
-                ListTile(
-                  title: Text('Plan'),
-                  leading:
-                      // Icon(FontAwesome5.teeth_open),
-                      Image.asset(
-                    'assets/images/teeth.png',
-                    height: 28,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DentalPlan()),
-                    );
-                  },
-                ),
-              ],
-            ),
+       child: DentMenuBar(),
           ),
-        ),
+        // ),
       ),
     );
   }

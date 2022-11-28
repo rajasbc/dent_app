@@ -35,4 +35,14 @@ class api {
       return json.decode(response.body);
     }
   }
+     getTreatmentList(access_token) async {
+    String treatment_url = RequestPath.base_url + RequestPath.treatmentEndpoint;
+    var response = await http.get(Uri.parse(treatment_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'modal/selectedteethmodal.dart';
 import 'package:localstorage/localstorage.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 class AdultsModalWidget extends StatefulWidget {
   const AdultsModalWidget({super.key});
 
@@ -105,6 +105,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       Container(
                         width: screenwidth * 0.2,
                         child: ElevatedButton(
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
                             onPressed: () {
                               clearSelection();
                               this.setState(() {});
@@ -121,14 +122,16 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
               child: Container(
                 // color: Colors.red,
             
-                height: screenHeight * 0.342,
+                height: screenHeight * 0.38,
                 // child: SingleChildScrollView(
                 child: Container(
-                  height: screenHeight * 0.30,
+                  height: screenHeight * 0.38,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         // color: Colors.yellowAccent,
+                        alignment: Alignment.center,
                         height: screenHeight * 0.16,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
