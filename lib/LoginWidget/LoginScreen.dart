@@ -9,6 +9,7 @@ import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/main.dart';
 import 'package:nigdent/Common/colors.dart' as appcolor;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nigdent/Common/colors.dart' as CustomColor;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'LOGIN',
+                          'SIGN IN',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -156,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
   color: Colors.white,
   size: 20.0,
 ) : const Text(
-                        'LOGIN',
+                        'SIGN IN',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, letterSpacing: 1.5),
                       ),
@@ -209,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.green.shade400,
+                                  backgroundColor:CustomColor.success_color,
                                   textColor: Colors.white,
                                   fontSize: 16.0);
                             } else {

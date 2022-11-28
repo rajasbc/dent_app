@@ -12,7 +12,7 @@ import 'package:nigdent/PlanWidget/MixedModal.dart';
 import 'package:nigdent/PlanWidget/PeadoModal.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:localstorage/localstorage.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 class DentalPlan extends StatefulWidget {
   const DentalPlan({super.key});
 
@@ -52,6 +52,7 @@ class _DentalPlanState extends State<DentalPlan> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
+          backgroundColor: CustomColors.app_color,
           title: Text('Dent Plan'),
         ),
       ),
@@ -115,10 +116,13 @@ class _DentalPlanState extends State<DentalPlan> {
                 ),
               ),
               Container(
-                height: screenHeight * 0.5,
+                height: screenHeight * 0.58,
                 // color: Colors.blue,
                 child: defaultDropdownValue == 'Adult'
-                    ? AdultsModalWidget()
+                    ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AdultsModalWidget(),
+                    )
                     : defaultDropdownValue == 'Peado'
                         ? PeadoModalWidget()
                         : MixedModalWidget(),
@@ -242,8 +246,8 @@ class _DentalPlanState extends State<DentalPlan> {
             activeTextFontWeight: FontWeight.normal,
             inactiveText: "Treatment Based",
             inactiveTextFontWeight: FontWeight.normal,
-            activeColor: Colors.blueAccent,
-            inactiveColor: Colors.blueAccent,
+            activeColor: CustomColors.app_color,
+            inactiveColor: CustomColors.app_color,
 
             // activeIcon: networkConnection == 'none'
             //     ? Icon(
@@ -296,7 +300,7 @@ class _DentalPlanState extends State<DentalPlan> {
             height: MediaQuery.of(context).size.width * 0.085,
             child: 
             TextButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(CustomColors.app_color),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(18.0),
