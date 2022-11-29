@@ -122,17 +122,17 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
               child: Container(
                 // color: Colors.red,
             
-                height: screenHeight * 0.38,
+                height: screenHeight * 0.4,
                 // child: SingleChildScrollView(
                 child: Container(
-                  height: screenHeight * 0.38,
+                  height: screenHeight * 0.4,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         // color: Colors.yellowAccent,
                         alignment: Alignment.center,
-                        height: screenHeight * 0.16,
+                        height: screenHeight * 0.18,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
@@ -158,7 +158,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       ),
                       Container(
                         // color: Colors.red,
-                        height: screenHeight * 0.16,
+                          height: screenHeight * 0.18,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
@@ -257,7 +257,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 //         adultTopModal[index]['top'] == 'select'
                 //     ? 20
                 //     : 18,
-                height: 12,
+                height: 15,
                 color: adultTopModal[index]['top'] != null &&
                         adultTopModal[index]['top'] == 'select'
                     ? Colors.blueAccent
@@ -314,7 +314,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       //         adultTopModal[index]['left'] == 'select'
                       //     ? 20
                       //     : 18,
-                      height: 12,
+                      height: 15,
                       color: adultTopModal[index]['left'] != null &&
                               adultTopModal[index]['left'] == 'select'
                           ? Colors.blueAccent
@@ -457,7 +457,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       //         adultTopModal[index]['right'] == 'select'
                       //     ? 20
                       //     : 18,
-                      height: 12,
+                      height: 15,
                       color: adultTopModal[index]['right'] != null &&
                               adultTopModal[index]['right'] == 'select'
                           ? Colors.blueAccent
@@ -529,7 +529,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 //         adultTopModal[index]['down'] == 'select'
                 //     ? 20
                 //     : 18,
-                height: 12,
+                height: 15,
                 color: adultTopModal[index]['down'] != null &&
                         adultTopModal[index]['down'] == 'select'
                     ? Colors.blueAccent
@@ -608,7 +608,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 //         adultBottomModal[index]['top'] == 'select'
                 //     ? 20
                 //     : 18,
-                height: 12,
+                height: 15,
                 color: adultBottomModal[index]['top'] != null &&
                         adultBottomModal[index]['top'] == 'select'
                     ? Colors.blueAccent
@@ -678,7 +678,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       //         adultBottomModal[index]['left'] == 'select'
                       //     ? 20
                       //     : 18,
-                      height: 12,
+                      height: 15,
                       color: adultBottomModal[index]['left'] != null &&
                               adultBottomModal[index]['left'] == 'select'
                           ? Colors.blueAccent
@@ -817,7 +817,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                       //         adultBottomModal[index]['right'] == 'select'
                       //     ? 20
                       //     : 18,
-                      height: 12,
+                      height: 15,
                       color: adultBottomModal[index]['right'] != null &&
                               adultBottomModal[index]['right'] == 'select'
                           ? Colors.blueAccent
@@ -886,7 +886,7 @@ class _AdultsModalWidgetState extends State<AdultsModalWidget> {
                 //         adultBottomModal[index]['down'] == 'select'
                 //     ? 20
                 //     : 18,
-                height: 12,
+                height: 15,
                 color: adultBottomModal[index]['down'] != null &&
                         adultBottomModal[index]['down'] == 'select'
                     ? Colors.blueAccent

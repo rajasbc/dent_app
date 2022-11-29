@@ -41,6 +41,7 @@ class _DentMenuBarState extends State<DentMenuBar> {
   var autoCompleteLoader = false;
   var planLoader = false;
   var searchList;
+  var showAutoComplete = true;
   @override
   void initState() {
     this.setState(() {
@@ -112,7 +113,8 @@ class _DentMenuBarState extends State<DentMenuBar> {
   size: 20.0,
   itemCount: 6,
 ),
-                        ):renderSearchBar(screenWidth, screenHeight),
+                        ): showAutoComplete ?  renderSearchBar(screenWidth, screenHeight):
+                        renderSelectedPatientWidget(screenWidth, screenHeight),
                       ),
                     ),
                   // ),
@@ -300,32 +302,32 @@ class _DentMenuBarState extends State<DentMenuBar> {
                               // this.setState(() {
                               //   planLoader = true;
                               // });
-                                planLoader = true;
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const DentalPlan()),
-                            );
+                            //     planLoader = true;
+                            //   Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const DentalPlan()),
+                            // );
                               // planLoader = true;
                             //  this.setState(() {
                             //     planLoader = false;
                             //   });
-        //                     if(selectedPatient != null){
-        // Navigator.push(
-        //                       context,
-        //                       MaterialPageRoute(
-        //                           builder: (context) => const DentalPlan()),
-        //                     );
-        //                     }else{
-        //                                                             Fluttertoast.showToast(
-        //                               msg: 'Patient Not Selected',
-        //                               toastLength: Toast.LENGTH_SHORT,
-        //                               gravity: ToastGravity.CENTER,
-        //                               timeInSecForIosWeb: 2,
-        //                               backgroundColor: CustomColors.error_color,
-        //                               textColor: Colors.white,
-        //                               fontSize: 15.0);
-        //                     }
+                            if(selectedPatient != null){
+        Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DentalPlan()),
+                            );
+                            }else{
+                                      Fluttertoast.showToast(
+                                      msg: 'Patient Not Selected',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: CustomColors.error_color,
+                                      textColor: Colors.white,
+                                      fontSize: 15.0);
+                            }
                     
                           },
                   ),
@@ -475,9 +477,10 @@ child: Padding(
         child: Row(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Arunkumar', style: TextStyle(fontWeight: FontWeight.bold),),
-                Text('Reg No: 13'),
+                Text(Helper().isvalidElement(selectedPatient) ? "${selectedPatient['title'].toString() + ". " + selectedPatient['p_name'].toString().toUpperCase()}":'', style: TextStyle(fontWeight: FontWeight.bold),),
+                Text(Helper().isvalidElement(selectedPatient) ? "Reg.No ${selectedPatient['patient_id'].toString()}":''),
               ],
             ),
             
@@ -493,7 +496,9 @@ child: Padding(
              storage.setItem('selectedPatient', null);
              this.setState(() {
                selectedPatient = null;
+               showAutoComplete = true;
              });
+                             
           }, icon: Icon(Icons.close,),color: CustomColors.error_color,))
     ],
   ),
@@ -525,7 +530,8 @@ return Container(
   }
   renderAutoComplete(screenWidth, screenHeight){
     return Autocomplete<List>(
-      // displayStringForOption: (option)=>option'[p_name'],
+      
+// displayStringForOption: (option) => 'sdsdsds',
       optionsBuilder: (TextEditingValue textEditingValue) {
 
          if (textEditingValue.text == '') {
@@ -538,7 +544,11 @@ return Container(
         matches.retainWhere((s){
            return s['p_name'].toString().toLowerCase().contains(textEditingValue.text.toLowerCase());
         });
+        this.setState(() {
+          showAutoComplete = true;
+        });
         return [matches];
+
 
   // searchList =  patientList
   //     .where(( county)  { 
@@ -607,41 +617,42 @@ return Container(
     alignment: Alignment.topLeft,
     child: Material(
       child: Container(
-        decoration: BoxDecoration(
-    // color: Colors.white,
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(10),
-        topRight: Radius.circular(10),
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(10)
-    ),
-    // boxShadow: [
-    //   BoxShadow(
-    //     color: Colors.grey.withOpacity(0.5),
-    //     spreadRadius: 5,
-    //     blurRadius: 7,
-    //     offset: Offset(0, 3), // changes position of shadow
-    //   ),
-    // ],
-  ),
+        
         width: screenWidth*0.7,
-        height: screenHeight*0.3,
-        color: Colors.white,
+        height: screenHeight*0.4,
+        color: CustomColors.app_color,
         child: ListView.builder(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(5.0),
           itemCount: options.toList()[0].length,
           itemBuilder: (BuildContext context, int index) {
          final  option = options.toList()[0].elementAt(index);
 
             return GestureDetector(
               onTap: () {
-                onSelected(option);
+storage.setItem('selectedPatient', options.toList()[0][index]);
+                  this.setState(() {
+                    selectedPatient = options.toList()[0][index];
+          showAutoComplete = false;
+        });
+                // print(options.toList()[0][index]['p_name']);
+                // onSelected(option);
               },
-              child: ListTile(
-                // title: Text(option['p_name'].toString(), style: const TextStyle(color: Colors.white)),
-                                title: Text(options.toList()[0][index]['p_name'].toString().toUpperCase(), style: const TextStyle(color: Colors.black)),
-
-              ),
+              // child: ListTile(
+              //   title: Text(options.toList()[0][index]['p_name'].toString().toUpperCase(), style: const TextStyle(color: Colors.black)),
+              // ),
+              child: Container(
+                color: CustomColors.app_color,
+                child: 
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Divider(thickness: 1,)
+                ],
+              ),),
             );
           },
         ),
@@ -649,10 +660,10 @@ return Container(
     ),
   );
 },
-  onSelected: (selection) {
-    storage.setItem('selectedPatient', selection);
-      print('You just selected $selection');
-  },
+  // onSelected: (selection) {
+  //   storage.setItem('selectedPatient', selection);
+  //     print('You just selected $selection');
+  // },
 );
   }
 }

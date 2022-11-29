@@ -21,9 +21,11 @@ class MyApp extends StatelessWidget {
     userResponse = storage.getItem('userResponse');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      // initialRoute: 'LoginScreen',
       home: userResponse != null && userResponse['access_token'] != null
           ? DashboardScreen()
           : LoginScreen(),
+        // home: LoginScreen(),
     );
   }
 }

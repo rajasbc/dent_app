@@ -116,7 +116,7 @@ class _DentalPlanState extends State<DentalPlan> {
                 ),
               ),
               Container(
-                height: screenHeight * 0.58,
+                height: screenHeight * 0.6,
                 // color: Colors.blue,
                 child: defaultDropdownValue == 'Adult'
                     ? Padding(
@@ -141,7 +141,7 @@ class _DentalPlanState extends State<DentalPlan> {
                 // child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: renderPlanBasedWidget(screenHeight),
+                    child: isSwitchOn ? renderPlanBasedWidget(screenHeight): renderTreatmentBasedWidget(screenHeight *0.8, screenWidth),
                     // child: Column(
                     //   children: [
                     //   Helper().isvalidElement(diag_treat_list) && diag_treat_list.length > 0 ?  
@@ -173,6 +173,112 @@ class _DentalPlanState extends State<DentalPlan> {
         ),
       ),
     );
+  }
+  renderTreatmentBasedWidget(screenHeight, screenWidth){
+    return Container(
+      width: screenWidth,
+      height: screenHeight,
+      // color: Colors.red,
+      child: Column(
+        children: [
+          Container(
+           height: screenHeight*0.08,
+            color: Colors.black12,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Total Fees: 5000', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                 Text('Total Discount: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+                  Text('Total Balance: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+              ],
+          ),
+            )),
+            SizedBox(height: screenHeight*0.01,),
+            // Divider(color: Colors.white,),
+          Container(
+              height: screenHeight*0.88,
+            // color: Colors.red,
+
+            child: 
+                    ListView.builder(
+          // padding: EdgeInsets.all(5.0),
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            
+            return Container(
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
+                child: 
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(child: 
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('S.No: ${index+1}', style: TextStyle(fontSize: 12),),
+                            Text('Date: 06/11/2022', style: TextStyle(fontSize: 12),),
+                            Text('Visit: ${index}',style: TextStyle(fontSize: 12)),
+                            
+                          ],
+                        ),
+                      ),
+                             Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Teeth: 24-O,M,P	',style: TextStyle(fontSize: 12)),
+                            Text('Exam: ${index}',style: TextStyle(fontSize: 12)),                            
+                          ],
+                        ),
+                      ),
+                       Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Treatment: ORTHO SPLINT SINGLE ARCH',style: TextStyle(fontSize: 11)),
+                          
+                            
+                          ],
+                        ),
+                      ),
+ Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Fees: 50000',style: TextStyle(fontSize: 12)),
+                            Text('Discount: 0.00',style: TextStyle(fontSize: 12)),
+                            Text('Balance: 50000',style: TextStyle(fontSize: 12)),
+                            Text('Status: Pending',style: TextStyle(fontSize: 12)),
+                            
+                          ],
+                        ),
+                      ),
+
+                      
+                    ],
+                  )),
+                  // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  // Divider(thickness: 1,)
+                ],
+              )
+            );
+          },
+        )
+          ),
+        ],
+      ),);
   }
   renderPlanBasedWidget(screenHeight){
     return Column(

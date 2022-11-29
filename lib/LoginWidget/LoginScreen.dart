@@ -4,6 +4,7 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/api/Apicall.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/main.dart';
@@ -193,17 +194,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               _email.text = '';
                               _password.text = '';
                               this.setState(() {});
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyApp()),
-                              );
+                              
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => MyApp()),
+                              // );
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
                               //       builder: (context) =>
                               //           DashboardScreen()),
                               // );
+                                // Navigator.pop(context,true);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardScreen()),
+);
                               Fluttertoast.showToast(
                                   msg:
                                       "${user_data['clinic_profile']['name']} login successfully",
@@ -214,6 +219,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   textColor: Colors.white,
                                   fontSize: 16.0);
                             } else {
+                                                            // Navigator.pop(context,true);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardScreen()),
+);
+     this.setState(() {
+                          isloading = false;
+                        });
                               // Fluttertoast.showToast(
                               //     msg: "${user_data['lab_profile']['name']} ! login successfully",
                               //     toastLength: Toast.LENGTH_SHORT,

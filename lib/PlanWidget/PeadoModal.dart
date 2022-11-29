@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 import 'modal/selectedteethmodal.dart';
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 
 class PeadoModalWidget extends StatefulWidget {
   const PeadoModalWidget({super.key});
@@ -53,23 +53,53 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenwidth = MediaQuery.of(context).size.width;
     return Container(
-      height: screenHeight * 0.5,
+      // height: screenHeight * 0.5,
       //  color: Colors.yellow,
       child: Column(
         children: [
           Container(
-              height: screenHeight * 0.05,
+              // height: screenHeight * 0.05,
               width: screenwidth,
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        clearSelection();
-                        this.setState(() {});
-                      },
-                      child: Text('Clear')),
+                child: Container(
+                  // alignment: Alignment.center,
+                  width: screenwidth,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        // color: Colors.red,
+                        width: screenwidth * 0.7,
+                        child: TextFormField(
+                          minLines: 2,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            hintText: 'Chief Complaint',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8.0)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: screenwidth * 0.01,
+                      ),
+                      Container(
+                        width: screenwidth * 0.2,
+                        child: ElevatedButton(
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+                            onPressed: () {
+                              clearSelection();
+                              this.setState(() {});
+                            },
+                            child: Text('Clear')),
+                      ),
+                    ],
+                  ),
                 ),
               )),
           Padding(
@@ -77,10 +107,10 @@ class _PeadoModalWidgetState extends State<PeadoModalWidget> {
             child: Container(
               // color: Colors.red,
 
-              height: screenHeight * 0.44,
+              height: screenHeight * 0.4,
               // child: SingleChildScrollView(
               child: Container(
-                height: screenHeight * 0.30,
+                height: screenHeight * 0.4,
                 child: Column(
                   children: [
                     Container(

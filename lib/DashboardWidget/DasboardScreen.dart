@@ -1,13 +1,15 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:nigdent/AppointmentWidget/CreateAppointment.dart';
-import 'package:localstorage/localstorage.dart';
+// import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/PatientWidget/CreatePatient.dart';
+import 'package:nigdent/api/Apicall.dart';
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -16,10 +18,19 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final LocalStorage storage = new LocalStorage('nigdent_store');
-  // var userResponse;
-          TextEditingController searchText = TextEditingController();
 
+  // final LocalStorage storage = new LocalStorage('nigdent_store');
+  var userResponse = null;
+    var patientList = null;
+  var isPatientCountLoader = false;
+
+   @override
+  void initState() {
+    this.setState(() {
+         userResponse = storage.getItem('userResponse');
+    });
+    getPatientList();
+  }
   @override
   Widget build(BuildContext context) {
     // userResponse = storage.getItem('userResponse');
@@ -115,9 +126,9 @@ double screenwidth = MediaQuery.of(context).size.width;
                                 children: [
                                   Row(
                                     children: [
-                                      Text('0',style: TextStyle(fontSize: 20)),
+                                      Text('0',style: TextStyle(fontSize: 20,color: Colors.black26)),
                                       SizedBox(width: screenwidth*0.02,),
-                                       Text('Today', style: TextStyle(fontSize: 18, letterSpacing: 1)),
+                                       Text('Today', style: TextStyle(fontSize: 18, letterSpacing: 1,color: Colors.black26)),
                                     ],
                                   ),
                                                                   Container( 
@@ -135,9 +146,9 @@ double screenwidth = MediaQuery.of(context).size.width;
                                 children: [
                                   Row(
                                     children: [
-                                      Text('0',style: TextStyle(fontSize: 20)),
+                                      Text('0',style: TextStyle(fontSize: 20,color: Colors.black26)),
                                       SizedBox(width: screenwidth*0.02,),
-                                       Text('Upcoming', style: TextStyle(fontSize: 18, letterSpacing: 1)),
+                                       Text('Upcoming', style: TextStyle(fontSize: 18, letterSpacing: 1,color: Colors.black26)),
                                     ],
                                   ),
                                                                   Container( 
@@ -222,9 +233,14 @@ double screenwidth = MediaQuery.of(context).size.width;
                                 children: [
                                   Row(
                                     children: [
-                                      Text('0',style: TextStyle(fontSize: 20)),
+                                      isPatientCountLoader && patientList == null ? 
+                                      SpinKitDualRing(
+                                       size: 20,
+                                       color: CustomColors.app_color,
+                                      ): 
+                                      Text("${Helper().isvalidElement(patientList) ? patientList.length.toString():'0'}",style: TextStyle(fontSize: 20, color: Colors.black26)),
                                       SizedBox(width: screenwidth*0.02,),
-                                       Text('Total Patients', style: TextStyle(fontSize: 18, letterSpacing: 1)),
+                                       Text('Total Patients', style: TextStyle(fontSize: 18, letterSpacing: 1, color: Colors.black26)),
                                     ],
                                   ),
                                  Container( 
@@ -259,4 +275,23 @@ double screenwidth = MediaQuery.of(context).size.width;
       ),
     );
   }
+  getPatientList() async{
+  this.setState(() {
+    isPatientCountLoader = true;
+  }); 
+  // userResponse = storage.getItem('userResponse');
+    patientList = await api().getPatientList(userResponse['access_token']);
+           if(Helper().isvalidElement(patientList) && Helper().isvalidElement(patientList['status']) && patientList['status'] == 'Token is Expired'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          
+  //  storage.setItem('diagnosisList', diagnosisList);
+                          // isLoading = false;
+                          this.setState(() {
+                            patientList = patientList["patient_list"];
+                            isPatientCountLoader = false;
+                          });
+                              }
+}
 }
