@@ -23,7 +23,9 @@ class Helper {
 
   appLogoutCall(context, action) async {
     // StoreBoxActions().clearBoxKey('userResponse');
-    storage.setItem('userResponse', null);
+    // storage.setItem('userResponse', null);
+    // storage.setItem('selectedPatient', null);
+    storage.clear();
     Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
     Fluttertoast.showToast(
         msg: action == 'logout' ? 'Logout successfully' : 'Session expeired',

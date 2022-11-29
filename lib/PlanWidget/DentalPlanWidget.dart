@@ -304,7 +304,7 @@ class _DentalPlanState extends State<DentalPlan> {
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(18.0),
-      side: BorderSide(color: Colors.blueAccent)
+      side: BorderSide(color: CustomColors.app_color)
     )
   )
             ),

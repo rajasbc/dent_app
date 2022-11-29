@@ -2,6 +2,7 @@
    String userLogin= 'auth/dentlogin';
    String diagnosisEndpoint= 'auth/diagnosis_list';
    String treatmentEndpoint= 'auth/dent_treatment_report';
+   String patientListEndpoint= 'auth/dent_patient_list';
 
 
   //  String signUpEndpoint= 'auth/sign_up';

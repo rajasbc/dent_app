@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:nigdent/AppointmentWidget/CreateAppointment.dart';
-// import 'package:localstorage/localstorage.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
@@ -16,8 +16,10 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // final LocalStorage storage = new LocalStorage('nigdent_store');
+  final LocalStorage storage = new LocalStorage('nigdent_store');
   // var userResponse;
+          TextEditingController searchText = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // userResponse = storage.getItem('userResponse');
