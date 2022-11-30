@@ -13,6 +13,7 @@ import 'package:nigdent/PlanWidget/PeadoModal.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
+import 'package:nigdent/api/Apicall.dart';
 class DentalPlan extends StatefulWidget {
   const DentalPlan({super.key});
 
@@ -33,9 +34,10 @@ class _DentalPlanState extends State<DentalPlan> {
   // var map = new Map();
   // var val = [];
   bool isSwitchOn = true;
-
+bool isLoading = false;
   @override
   void initState() {
+   getTreatmentDetails();
     super.initState();
   }
 
@@ -488,5 +490,19 @@ class _DentalPlanState extends State<DentalPlan> {
         ],
       ),
     );
+  }
+  getTreatmentDetails() async {
+  //          isLoading = true;
+  //             diagnosisList = await api().getDiagnosisList(accessToken);
+  //             if(Helper().isvalidElement(diagnosisList) && Helper().isvalidElement(diagnosisList['status']) && diagnosisList['status'] == 'Token is Invalid'){
+  //              Helper().appLogoutCall(context, 'Session expeired');
+  //              }
+  //        else{
+  // //  storage.setItem('diagnosisList', diagnosisList);
+  //                         isLoading = false;
+  //                         this.setState(() {
+                            
+  //                         });
+  //                             }
   }
 }
