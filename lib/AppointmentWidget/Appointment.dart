@@ -322,6 +322,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     };
 
     this.setState(() {
+      
       loading = true;
     });
 //  var result =  await api().billingCollectionReport(accessToken, da);
