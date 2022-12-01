@@ -1,7 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nigdent/Common/colors.dart' as CustomColors;
+import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/api/Apicall.dart';
 
 class CreateAppointment extends StatefulWidget {
   const CreateAppointment({super.key});
@@ -17,10 +22,20 @@ class _CreateAppointmentState extends State<CreateAppointment> {
   TextEditingController ageController = TextEditingController();
   //TextEditingController TitleController = TextEditingController();
   // final _formKey = GlobalKey<FormState>();
+  var autoCompleteLoader = false;
+  var patientList = null;
+  var userResponse = null;
+ var selectedPatient = null;
+   var showAutoComplete = true;
 
   @override
   void initState() {
     super.initState();
+      this.setState(() {
+         userResponse = storage.getItem('userResponse');
+    });
+        getPatientList();
+
     dateController.text = "";
   }
 
@@ -81,6 +96,7 @@ class _CreateAppointmentState extends State<CreateAppointment> {
   static const orange = Color(0xFFFE9A75);
   static const dark = Color(0xFF333A47);
   static const double leftPadding = 50;
+
 
   @override
   Widget build(BuildContext context) {
@@ -144,23 +160,27 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 15),
-                  child: TextFormField(
-                    autovalidateMode: AutovalidateMode.always,
-                    controller: NameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'You Must Enter a Name';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      //icon: Icon(Icons.person),
-                      hintText: 'Name',
-                      labelText: 'Name *',
-                      contentPadding: EdgeInsets.all(15),
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
+                  child: 
+                  showAutoComplete ?  renderSearchBar(screenWidth, screenHeight):
+                        renderSelectedPatientWidget(screenWidth, screenHeight),
+                  // renderAutoComplete(screenHeight, screenWidth),
+                  // TextFormField(
+                  //   autovalidateMode: AutovalidateMode.always,
+                  //   controller: NameController,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'You Must Enter a Name';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: const InputDecoration(
+                  //     //icon: Icon(Icons.person),
+                  //     hintText: 'Name',
+                  //     labelText: 'Name *',
+                  //     contentPadding: EdgeInsets.all(15),
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  // ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 15),
@@ -530,10 +550,11 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                       var Appointment_details = {
                         'Name': NameController,
                         'age': ageController,
+
                         //'Title': TitleController
                       };
-                      print(
-                          'Appointment_details: ******${Appointment_details}');
+                      // print(
+                      //     'Appointment_details: ******${Appointment_details}');
                     }
                   },
                   child: const Text('Register'),
@@ -575,5 +596,213 @@ class _CreateAppointmentState extends State<CreateAppointment> {
         ),
       ),
     );
+  }
+
+  renderAutoComplete(screenWidth, screenHeight){
+    return Autocomplete<List>(
+      
+      optionsBuilder: (TextEditingValue textEditingValue) {
+
+         if (textEditingValue.text == '') {
+      return const Iterable<List>.empty();
+    }
+    else{
+
+ var matches = [];
+        matches.addAll(patientList);
+        matches.retainWhere((s){
+           return s['p_name'].toString().toLowerCase().contains(textEditingValue.text.toLowerCase());
+        });
+        // this.setState(() {
+        //   showAutoComplete = true;
+        // });
+        return [matches];
+
+    }
+},
+  fieldViewBuilder: (BuildContext context, TextEditingController textEditingController,
+        FocusNode focusNode,
+        VoidCallback onFieldSubmitted) {
+          return TextField(
+            decoration: InputDecoration(
+              //  border: OutlineInputBorder(),
+               hintText: 'Search Patient Name'
+            ),
+            controller: textEditingController,
+            focusNode: focusNode,
+      
+          );
+    },
+  optionsViewBuilder: (
+    BuildContext context,
+    AutocompleteOnSelected<List> onSelected,
+    Iterable<List> options
+    ) {
+  return options.toList()[0].length > 0 ?Align(
+    alignment: Alignment.topLeft,
+    child: Material(
+      child: Container(
+        
+        width: screenWidth*0.5,
+        height: screenHeight*0.5,
+        color: CustomColors.app_color,
+        child: ListView.builder(
+          padding: EdgeInsets.all(5.0),
+          itemCount: options.toList()[0].length,
+          itemBuilder: (BuildContext context, int index) {
+         final  option = options.toList()[0].elementAt(index);
+
+            return GestureDetector(
+              onTap: () {
+// storage.setItem('selectedPatient', options.toList()[0][index]);
+                  this.setState(() {
+                    selectedPatient = options.toList()[0][index];
+          showAutoComplete = false;
+        });
+              },
+              child: Container(
+                color: CustomColors.app_color,
+                child: 
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Divider(thickness: 1,)
+                ],
+              ),),
+            );
+          },
+        ),
+      ),
+    ),
+  ): Align(
+    alignment: Alignment.topLeft,
+    child: Material(
+      child: Container(
+        
+     width: screenWidth*0.5,
+        height: screenHeight*0.08,
+        color: CustomColors.app_color,
+        child: ListView.builder(
+          padding: EdgeInsets.all(5.0),
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) {
+        //  final  option = options.toList()[0].elementAt(index);
+
+            return GestureDetector(
+              onTap: () {
+// storage.setItem('selectedPatient', options.toList()[0][index]);
+                  this.setState(() {
+                    selectedPatient = options.toList()[0][index];
+          showAutoComplete = false;
+        });
+              },
+              child: Container(
+                color: CustomColors.app_color,
+                child: 
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Search List Empty', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                  Divider(thickness: 1,)
+                ],
+              ),),
+            );
+          },
+        ),
+      ),
+    ),
+  );
+},
+);
+  }
+  getPatientList() async{
+  this.setState(() {
+    autoCompleteLoader = true;
+  }); // userResponse = storage.getItem('userResponse');
+    patientList = await api().getPatientList(userResponse['access_token']);
+           if(Helper().isvalidElement(patientList) && Helper().isvalidElement(patientList['status']) && patientList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          
+  //  storage.setItem('diagnosisList', diagnosisList);
+                          // isLoading = false;
+                          this.setState(() {
+                            patientList = patientList["patient_list"];
+                            autoCompleteLoader = false;
+                          });
+                              }
+}
+renderSelectedPatientWidget(screenWidth, screenHeight){
+return Container(
+  decoration: BoxDecoration(
+    
+      border: Border.all(color: CustomColors.app_color),
+          borderRadius: BorderRadius.all(Radius.circular(8))
+    ),
+  // color: Colors.black38, 
+width: screenWidth,
+child: Padding(
+  padding: const EdgeInsets.all(8.0),
+  child:   Row(
+    // mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Container(
+        width: screenWidth*0.66,
+
+        // color: Colors.yellow,
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(Helper().isvalidElement(selectedPatient) ? "${selectedPatient['title'].toString() + ". " + selectedPatient['p_name'].toString().toUpperCase()}":'', style: TextStyle(fontWeight: FontWeight.bold),),
+                Text(Helper().isvalidElement(selectedPatient) ? "Reg.No ${selectedPatient['patient_id'].toString()}":''),
+              ],
+            ),
+            
+          ],
+        ),
+      ),
+      Container(
+        // height: screenHeight,
+            width: screenWidth*0.1,
+              // color: Colors.green,
+// width: screenWidth*0.2,
+          child: IconButton(onPressed: (){
+            //  storage.setItem('selectedPatient', null);
+             this.setState(() {
+               selectedPatient = null;
+               showAutoComplete = true;
+             });
+                             
+          }, icon: Icon(Icons.close,),color: CustomColors.error_color,))
+    ],
+  ),
+),);
+}
+  renderSearchBar(screenWidth, screenHeight){
+return Container(
+  // color: Colors.red,
+  height: screenHeight*0.08,
+   decoration: BoxDecoration(
+          // color: Colors.red,
+          border: Border.all(color: CustomColors.app_color),
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+          child: Row(
+            children: [
+              Container(width: screenWidth*0.1,height: screenHeight, child: Icon(Icons.search)),
+              Container(width: screenWidth*0.6,height: screenHeight, child: 
+              renderAutoComplete(screenWidth, screenHeight)
+          ),
+            ],
+          ),
+);
   }
 }
