@@ -328,6 +328,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 //  var result =  await api().billingCollectionReport(accessToken, da);
 
     var result = await api().getAppointmentList(accessToken, data);
+    
     if (Helper().isvalidElement(result) &&
         Helper().isvalidElement(result['status']) &&
         result['status'] == 'Token is Invalid') {
