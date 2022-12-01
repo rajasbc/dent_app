@@ -88,8 +88,8 @@ class api {
     }
   }
 
-   treatmentplan(access_token, data) async {
-    String patient_list_url = RequestPath.base_url + RequestPath.treatmentplanEndpoint;
+   treatmentDiagnosisplan(access_token, data) async {
+    String patient_list_url = RequestPath.base_url + RequestPath.topTreatmentDiagnosisEndpoint;
     var response = await http.post(Uri.parse(patient_list_url),
         headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
@@ -131,8 +131,28 @@ class api {
   }
   getTreatmentDetails(access_token, data) async {
     String treatment_details_url = RequestPath.base_url + RequestPath.treatmentDetailsEndpoint;
-    var response = await http.get(Uri.parse(treatment_details_url),
-        headers: _setHeaders(access_token));
+    var response = await http.post(Uri.parse(treatment_details_url),
+      body: jsonEncode(data),  headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+    getAppointmentCount(access_token) async {
+    String appointment_count_url = RequestPath.base_url + RequestPath.appointmentCountEndpoint;
+    var response = await http.get(Uri.parse(appointment_count_url),
+  headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+    addDentPlan(access_token, data) async {
+    String add_dent_plan_url = RequestPath.base_url + RequestPath.addDentPlanEndpoint;
+    var response = await http.post(Uri.parse(add_dent_plan_url),
+      body: jsonEncode(data),  headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

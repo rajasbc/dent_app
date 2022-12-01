@@ -66,13 +66,32 @@ class _DentMenuBarState extends State<DentMenuBar> {
               child: Column(
                 children: [
                   Container(
-                    height: screenHeight*0.22,
+                    height: screenHeight*0.25,
                     child: UserAccountsDrawerHeader(
                       decoration: BoxDecoration(color: CustomColors.app_color),
-                      accountName: Text(
-                          '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['name'].toString().toUpperCase() : ''}'),
-                      accountEmail: Text(
-                          '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['mobile_no'] : ''}'),
+                      accountName: Padding(
+                        padding: const EdgeInsets.only(right:8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                '${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['name'].toString().toUpperCase() : ''}', style: TextStyle(fontWeight: FontWeight.bold),),
+                                Text(
+                                'Clinic ID: ${Helper().isvalidElement(userResponse) ? userResponse['clinic_profile']['id'].toString().toUpperCase() : ''}'),
+                          ],
+                        ),
+                      ),
+                      accountEmail: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              '${Helper().isvalidElement(userResponse) && Helper().isvalidElement(userResponse['clinic_profile']) && Helper().isvalidElement(userResponse['clinic_profile']['email']) ? userResponse['clinic_profile']['email'] : ''}'),
+                          Text(
+                              '${Helper().isvalidElement(userResponse) && Helper().isvalidElement(userResponse['clinic_profile']) && Helper().isvalidElement(userResponse['clinic_profile']['mobile_no'])? userResponse['clinic_profile']['mobile_no'] : ''}'),
+                              Text(
+                              '${Helper().isvalidElement(userResponse) && Helper().isvalidElement(userResponse['clinic_profile']) && Helper().isvalidElement(userResponse['clinic_profile']['city'])? userResponse['clinic_profile']['city'] : ''}'),
+                        ],
+                      ),
                       currentAccountPicture: CircleAvatar(
                         radius: 56,
                         backgroundImage: NetworkImage(
@@ -90,7 +109,7 @@ class _DentMenuBarState extends State<DentMenuBar> {
                   ),
                   Container(
                     // height: 1000,
-                     height: screenHeight*0.65,
+                     height: screenHeight*0.7,
                     //  color: Colors.red,
                     child: Column(
                       children: [
@@ -121,7 +140,7 @@ class _DentMenuBarState extends State<DentMenuBar> {
                                   ),
                         Container(
                           //  color: Colors.green,
-                             height: screenHeight*0.54,
+                             height: screenHeight*0.62,
                           child: SingleChildScrollView(
 
 
@@ -340,16 +359,17 @@ class _DentMenuBarState extends State<DentMenuBar> {
                   SizedBox(
                      height: screenHeight*0.008,
                   ),
-                  Container(
-                  height: screenHeight*0.07,
-                   width: MediaQuery.of(context).size.width,
-                  // color: Colors.yellow,
-                  child:     Image.asset(
-                      'assets/images/nigsoft_logo.png',
-                    //  height: 20,
-                     fit: BoxFit.cover,
-                    ),
-                  ), SizedBox(
+                  // Container(
+                  // height: screenHeight*0.07,
+                  //  width: MediaQuery.of(context).size.width,
+                  // // color: Colors.yellow,
+                  // child:     Image.asset(
+                  //     'assets/images/nigsoft_logo.png',
+                  //   //  height: 20,
+                  //    fit: BoxFit.cover,
+                  //   ),
+                  // ), 
+                  SizedBox(
                      height: screenHeight*0.005,
                   ),
                  

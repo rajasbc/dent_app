@@ -33,9 +33,11 @@ class _DiagnosisListState extends State<DiagnosisList> {
 
     // TODO: implement initState
     accessToken = storage.getItem('userResponse')['access_token'];
-selectedTeeth = storage.getItem('selectedTeethPosition');
+     if(storage.getItem('selectedTeethPosition') !=null){
+ selectedTeeth = storage.getItem('selectedTeethPosition');
+    }
    widget.option =='Diagnosis' ? getDiagnosisList(): getTreatmentList();
-   
+
     super.initState();
   }
   @override
@@ -190,7 +192,7 @@ selectedTeeth = storage.getItem('selectedTeethPosition');
                                               width: screenWidth*0.2,
                                               child: ElevatedButton(
                                               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
-                                              onPressed: (){
+                                              onPressed: () async{
                                               if(Helper().isvalidElement(selectedTeeth) && selectedTeeth.length > 0){
                                                    List<SelectedTeethModal> selected_teeth_values = [];
                                                 var selectedPatient = storage.getItem('selectedPatient');
@@ -237,7 +239,10 @@ selectedTeeth.forEach((e) {
                                                   "Items":selectTeethMap
                                               };
                                               print(planDetails);
-                                              Fluttertoast.showToast(
+                                              var add_plan_result = await api().addDentPlan(accessToken, planDetails);
+                                              if(Helper().isvalidElement(add_plan_result) && Helper().isvalidElement(add_plan_result['Add_plan']
+)&& add_plan_result['Add_plan'] == "Add Plan succesfully"){
+           Fluttertoast.showToast(
                                       msg:
                                           widget.option == 'Diagnosis' ? 'Diagnosis added successfully': 'Treatment added successfully',
                                       toastLength: Toast.LENGTH_SHORT,
@@ -246,8 +251,30 @@ selectedTeeth.forEach((e) {
                                       backgroundColor: CustomColors.success_color,
                                       textColor: Colors.white,
                                       fontSize: 15.0);
-              //                                                 Navigator.pop(context,
+                                      
+                                      storage.setItem('selectedTeethPosition', null);
+              //                                    Navigator.pop(context,
               // MaterialPageRoute(builder: (context) => DentalPlan()));
+              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DentalPlan()),
+                            );
+                                              }else{
+        Fluttertoast.showToast(
+                                      msg:
+                                          widget.option == 'Diagnosis' ? 'Please try again': 'Please try again',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: CustomColors.error_color,
+                                      textColor: Colors.white,
+                                      fontSize: 15.0);
+
+                                              }
+                                            
+                                   
+             
 
                                                     }else{
                                       Fluttertoast.showToast(

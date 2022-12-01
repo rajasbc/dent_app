@@ -22,14 +22,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // final LocalStorage storage = new LocalStorage('nigdent_store');
   var userResponse = null;
     var patientList = null;
+        var appointmentCount = null;
   var isPatientCountLoader = false;
-
+var isAppointCountLoader = false;
    @override
   void initState() {
     this.setState(() {
          userResponse = storage.getItem('userResponse');
     });
     getPatientList();
+getAppointmentCount();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ double screenwidth = MediaQuery.of(context).size.width;
             children: [
                  // Appointment
               Container(
-                 height: screenHeight*0.35,
+                 height: screenHeight*0.25,
                    width: screenwidth,
                 //  color: Colors.red,
                 child: Padding(
@@ -97,7 +99,8 @@ double screenwidth = MediaQuery.of(context).size.width;
                       SizedBox(height: screenHeight*0.015,),
                       Container(
                         width: screenwidth*0.9,
-                        height: screenHeight*0.22,
+                        // height: screenHeight*0.22,
+                        height: screenHeight*0.1,
                         decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.only(
@@ -126,39 +129,43 @@ double screenwidth = MediaQuery.of(context).size.width;
                                 children: [
                                   Row(
                                     children: [
-                                      Text('0',style: TextStyle(fontSize: 20,color: Colors.black26)),
+                                      isAppointCountLoader ? 
+                                         SpinKitDualRing(
+                                       size: 20,
+                                       color: CustomColors.app_color,
+                                      ):
+                                      Text(Helper().isvalidElement(appointmentCount) ? appointmentCount['appoin_list'].toString():'0',style: TextStyle(fontSize: 20,color: Colors.black26)),
                                       SizedBox(width: screenwidth*0.02,),
                                        Text('Today', style: TextStyle(fontSize: 18, letterSpacing: 1,color: Colors.black26)),
                                     ],
                                   ),
-                                                                  Container( 
-                            // color: Colors.yellow,
-                            height: screenHeight*0.04,alignment: Alignment.topRight,
-                            child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                            //                                       Container( 
+                            // // color: Colors.yellow,
+                            // height: screenHeight*0.04,alignment: Alignment.topRight,
+                            // child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
                                   // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
                                 ],
                               ),
                             ),
-                               Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text('0',style: TextStyle(fontSize: 20,color: Colors.black26)),
-                                      SizedBox(width: screenwidth*0.02,),
-                                       Text('Upcoming', style: TextStyle(fontSize: 18, letterSpacing: 1,color: Colors.black26)),
-                                    ],
-                                  ),
-                                                                  Container( 
-                            // color: Colors.yellow,
-                            height: screenHeight*0.04,alignment: Alignment.topRight,
-                            child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
-                                  // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
-                                ],
-                              ),
-                            ),
+                            //    Padding(
+                            //   padding: const EdgeInsets.all(20.0),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       Row(
+                            //         children: [
+                            //           Text('0',style: TextStyle(fontSize: 20,color: Colors.black26)),
+                            //           SizedBox(width: screenwidth*0.02,),
+                            //            Text('Upcoming', style: TextStyle(fontSize: 18, letterSpacing: 1,color: Colors.black26)),
+                            //         ],
+                            //       ),
+                            //                                       Container( 
+                            // height: screenHeight*0.04,alignment: Alignment.topRight,
+                            // child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                            //       // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       )
@@ -169,7 +176,7 @@ double screenwidth = MediaQuery.of(context).size.width;
 
               // patient 
               Container(
-                 height: screenHeight*0.25,
+                 height: screenHeight*0.35,
                    width: screenwidth,
                 //  color: Colors.green,
                 child: Padding(
@@ -204,7 +211,7 @@ double screenwidth = MediaQuery.of(context).size.width;
                       SizedBox(height: screenHeight*0.015,),
                       Container(
                         width: screenwidth*0.9,
-                        height: screenHeight*0.1,
+                        height: screenHeight*0.22,
                         decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.only(
@@ -241,6 +248,33 @@ double screenwidth = MediaQuery.of(context).size.width;
                                       Text("${Helper().isvalidElement(patientList) ? patientList.length.toString():'0'}",style: TextStyle(fontSize: 20, color: Colors.black26)),
                                       SizedBox(width: screenwidth*0.02,),
                                        Text('Total Patients', style: TextStyle(fontSize: 18, letterSpacing: 1, color: Colors.black26)),
+                                    ],
+                                  ),
+                                 Container( 
+                            // color: Colors.yellow,
+                            height: screenHeight*0.04,alignment: Alignment.topRight,
+                            child: IconButton(onPressed: (){
+                              // print('total patients');
+                            }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                                  // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      isAppointCountLoader && patientList == null ? 
+                                      SpinKitDualRing(
+                                       size: 20,
+                                       color: CustomColors.app_color,
+                                      ): 
+                                      Text("${Helper().isvalidElement(appointmentCount) ? appointmentCount['count_list'].toString():'0'}",style: TextStyle(fontSize: 20, color: Colors.black26)),
+                                      SizedBox(width: screenwidth*0.02,),
+                                       Text('Today Patients', style: TextStyle(fontSize: 18, letterSpacing: 1, color: Colors.black26)),
                                     ],
                                   ),
                                  Container( 
@@ -291,6 +325,25 @@ double screenwidth = MediaQuery.of(context).size.width;
                           this.setState(() {
                             patientList = patientList["patient_list"];
                             isPatientCountLoader = false;
+                          });
+                              }
+}
+getAppointmentCount() async{
+  this.setState(() {
+    isAppointCountLoader = true;
+  }); 
+  // userResponse = storage.getItem('userResponse');
+    appointmentCount = await api().getAppointmentCount(userResponse['access_token']);
+           if(Helper().isvalidElement(appointmentCount) && Helper().isvalidElement(appointmentCount['status']) && appointmentCount['status'] == 'Token is Expired'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          
+  //  storage.setItem('diagnosisList', diagnosisList);
+                          // isLoading = false;
+                          this.setState(() {
+                            appointmentCount = appointmentCount;
+                            isAppointCountLoader = false;
                           });
                               }
 }

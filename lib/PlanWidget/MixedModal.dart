@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:localstorage/localstorage.dart';
 import 'modal/selectedteethmodal.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 
@@ -41,6 +42,7 @@ var mixedBottomModal = [
 
 class _MixedModalWidgetState extends State<MixedModalWidget> {
   List<SelectedTeethModal> selectedTeeth = [];
+  final LocalStorage storage = new LocalStorage('nigdent_store');
 
   @override
   void initState() {
@@ -221,6 +223,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                   }
                 }
                 selectedTeeth.removeAt(delete_index);
+                storage.setItem('selectedTeethPosition', selectedTeeth);
               }
               this.setState(() {});
               print(selectedTeeth.length);
@@ -278,6 +281,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('left');
@@ -343,6 +347,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
 
@@ -414,6 +419,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('right');
@@ -480,6 +486,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+              storage.setItem('selectedTeethPosition', selectedTeeth);
               this.setState(() {});
               print(selectedTeeth.length);
               // print('down');
@@ -556,6 +563,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+              storage.setItem('selectedTeethPosition', selectedTeeth);
               this.setState(() {});
               print(selectedTeeth.length);
               // print('top');
@@ -625,6 +633,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('left');
@@ -693,6 +702,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('center');
@@ -760,6 +770,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                       }
                       selectedTeeth.removeAt(delete_index);
                     }
+                    storage.setItem('selectedTeethPosition', selectedTeeth);
                     this.setState(() {});
                     print(selectedTeeth.length);
                     // print('right');
@@ -827,6 +838,7 @@ class _MixedModalWidgetState extends State<MixedModalWidget> {
                 }
                 selectedTeeth.removeAt(delete_index);
               }
+              storage.setItem('selectedTeethPosition', selectedTeeth);
               this.setState(() {});
               print(selectedTeeth.length);
               // print('down');

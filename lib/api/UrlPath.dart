@@ -5,12 +5,15 @@
    String patientListEndpoint= 'auth/dent_patient_list';
    String patientRegReportEndpoint= 'auth/patient_register_report';
    String billingCollectionReportEndpoint= 'auth/billing_collection_report';
-      String patientSummaryReportEndpoint= 'auth/patient_summary_report';
-      String treatmentplanEndpoint= 'auth/top_treatment_report';
+     String patientSummaryReportEndpoint= 'auth/patient_summary_report';
+      String topTreatmentDiagnosisEndpoint= 'auth/top_treatment_diagnosis_report';
       String diagnosisplanEndpoint= 'auth/top_diagnosis_report';
       String revenueEndpoint= 'auth/revenue_report';
       String paymentReportEndpoint= 'auth/payment_report';
       String treatmentDetailsEndpoint= 'auth/dent_plan_list';
+      String appointmentCountEndpoint= 'auth/appoin_total_count';
+      String addDentPlanEndpoint= 'auth/dent_add_plan';
+
 
 
 

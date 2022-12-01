@@ -33,10 +33,14 @@ class _DentalPlanState extends State<DentalPlan> {
   var diag_treat_list=  [];
   // var map = new Map();
   // var val = [];
-  bool isSwitchOn = true;
+  bool isSwitchOn = false;
 bool isLoading = false;
+var treatment_details = null;
+var accessToken;
   @override
   void initState() {
+        accessToken = storage.getItem('userResponse')['access_token'];
+
    getTreatmentDetails();
     super.initState();
   }
@@ -138,7 +142,7 @@ bool isLoading = false;
               ),
 
               Container(
-                height: screenHeight * 0.8,
+                height: screenHeight * 0.78,
                 // color: Colors.green,
                 // child: SingleChildScrollView(
                   child: Padding(
@@ -200,15 +204,16 @@ bool isLoading = false;
             SizedBox(height: screenHeight*0.01,),
             // Divider(color: Colors.white,),
           Container(
-              height: screenHeight*0.88,
+              height: screenHeight*0.85,
             // color: Colors.red,
 
-            child: 
+            child: Helper().isvalidElement(treatment_details) &&
+                  treatment_details.length > 0 ? 
                     ListView.builder(
           // padding: EdgeInsets.all(5.0),
-          itemCount: 10,
+          itemCount: treatment_details.length,
           itemBuilder: (BuildContext context, int index) {
-            
+            var data = treatment_details[index];
             return Container(
                 color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
                 child: 
@@ -236,7 +241,7 @@ bool isLoading = false;
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Teeth: 24-O,M,P	',style: TextStyle(fontSize: 12)),
+                            Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
                             Text('Exam: ${index}',style: TextStyle(fontSize: 12)),                            
                           ],
                         ),
@@ -246,7 +251,7 @@ bool isLoading = false;
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Treatment: ORTHO SPLINT SINGLE ARCH',style: TextStyle(fontSize: 11)),
+                            Text('Treatment: ${data['treatment']}',style: TextStyle(fontSize: 11)),
                           
                             
                           ],
@@ -257,7 +262,7 @@ bool isLoading = false;
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Fees: 50000',style: TextStyle(fontSize: 12)),
+                            Text('Fees: ${data['fees']}',style: TextStyle(fontSize: 12)),
                             Text('Discount: 0.00',style: TextStyle(fontSize: 12)),
                             Text('Balance: 50000',style: TextStyle(fontSize: 12)),
                             Text('Status: Pending',style: TextStyle(fontSize: 12)),
@@ -277,7 +282,7 @@ bool isLoading = false;
               )
             );
           },
-        )
+        ): Text('loading.....')
           ),
         ],
       ),);
@@ -356,7 +361,7 @@ bool isLoading = false;
             inactiveTextFontWeight: FontWeight.normal,
             activeColor: CustomColors.app_color,
             inactiveColor: CustomColors.app_color,
-
+            disabled : true,
             // activeIcon: networkConnection == 'none'
             //     ? Icon(
             //         Icons.cloud_off,
@@ -492,17 +497,24 @@ bool isLoading = false;
     );
   }
   getTreatmentDetails() async {
-  //          isLoading = true;
-  //             diagnosisList = await api().getDiagnosisList(accessToken);
-  //             if(Helper().isvalidElement(diagnosisList) && Helper().isvalidElement(diagnosisList['status']) && diagnosisList['status'] == 'Token is Invalid'){
-  //              Helper().appLogoutCall(context, 'Session expeired');
-  //              }
-  //        else{
-  // //  storage.setItem('diagnosisList', diagnosisList);
-  //                         isLoading = false;
-  //                         this.setState(() {
-                            
-  //                         });
-  //                             }
+           isLoading = true;
+            var selectedPatient = storage.getItem('selectedPatient');
+           var data = {
+            'type':'treatment',
+            "patient_id":selectedPatient['id'].toString(),
+           };
+              treatment_details = await api().getTreatmentDetails(accessToken, data);
+              if(Helper().isvalidElement(treatment_details) && Helper().isvalidElement(treatment_details['status']) && treatment_details['status'] == 'Token is Expired'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+                  
+
+  //  storage.setItem('diagnosisList', diagnosisList);
+                          isLoading = false;
+                          this.setState(() {
+                              treatment_details = treatment_details['treatment_list'];
+                          });
+                              }
   }
 }
