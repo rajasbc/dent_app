@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nigdent/Common/utils.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 import '../api/Apicall.dart';
 
 class CollectionReport extends StatefulWidget {
@@ -45,6 +45,7 @@ class _CollectionReportState extends State<CollectionReport> {
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
+            backgroundColor: CustomColors.app_color,
             title: Text('Collection Report'),
           ),
         ),
@@ -99,6 +100,8 @@ class _CollectionReportState extends State<CollectionReport> {
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
                       onPressed: () {
                         pickDateRange();
                       },
@@ -109,7 +112,7 @@ class _CollectionReportState extends State<CollectionReport> {
                 Container(
                   width: screenWidth / 6,
                   child: IconButton(
-                    color: Colors.blueAccent,
+                   color: CustomColors.app_color,
                     onPressed: () {
                       pickDateRange();
                     },
@@ -119,6 +122,8 @@ class _CollectionReportState extends State<CollectionReport> {
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
                       onPressed: () {
                         pickDateRange();
                       },
