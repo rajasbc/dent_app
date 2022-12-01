@@ -307,11 +307,11 @@ this.setState(() {
 });
 
               paymentRegisterList = await api().paymentReport(accessToken,data);
-              if(Helper().isvalidElement(paymentRegisterList) && Helper().isvalidElement(paymentRegisterList['status']) && paymentRegisterList['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement( paymentRegisterList) &&  paymentRegisterList.length >0 && Helper().isvalidElement( paymentRegisterList['status']) &&  paymentRegisterList['status'] == 'Token is Invalid'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{
-          paymentRegisterList = paymentRegisterList['reports'];
+          paymentRegisterList = paymentRegisterList;
   //  storage.setItem('diagnosisList', diagnosisList);
                          this.setState(() {
    isLoading = false;

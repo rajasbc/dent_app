@@ -30,10 +30,12 @@ class _TopTreatmentDiagnosisState extends State<TopTreatmentDiagnosis> {
   void initState() {
         accessToken = storage.getItem('userResponse')['access_token'];
 
-treatmentplanList();
+treatmentdiagnosisplanList();
     // TODO: implement initState
     super.initState();
   }
+   var diagnosisList =null;
+
 
 
    @override
@@ -80,6 +82,15 @@ treatmentplanList();
 
                     ),
                     Divider(),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Treatment'),
+                          Text('Count'),
+                        ],
+                      ),
+                    ),
 
 
 
@@ -98,16 +109,22 @@ treatmentplanList();
                              children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                
                                children: [
                                  Row(
                                 
                                   children: [
-                                    Text(
-                                        'Treatment :',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                        ),
-                                    Text(
-                                        'Abcdef'),
+                                    Column(
+                                      children: [
+                                        Text(
+                                            'Treatment :',
+                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                            ),
+                                            Text( "${data["treatment_name"].toString()}")
+                                      ],
+                                    ),
+                                  //   Text(
+                                  //       "${data["treatment_name"].toString()}"),
                                   ],
                             ),
                              Row(
@@ -117,8 +134,8 @@ treatmentplanList();
                                         'Count :',
                                         style: TextStyle(fontWeight: FontWeight.bold),
                                         ),
-                                    Text(
-                                        '2'),
+                                    // Text(
+                                    //     "${data["count"].toString()}"),
                                   ],
                             ),
                                ],
@@ -139,7 +156,7 @@ treatmentplanList();
             alignment: Alignment.center,
             child: Image.asset(
                   'assets/images/loading_image.png',
-                  // height: screenheight * 0.3,
+                  height: screenHeight * 0.37,
                   // color: Colors.blue.shade100,
                   // color: Colors.black12,
                 ),
@@ -152,9 +169,18 @@ treatmentplanList();
                        ),
                    ),
                    Divider(),
-                   Container(
+                  !isLoading ? Container(
                     height: screenHeight * 0.38,
-                    child: SingleChildScrollView(
+                     child: Helper().isvalidElement(diagnosisList) &&
+                  diagnosisList.length > 0 ?
+                  ListView.builder(
+                    itemCount: diagnosisList.length,
+                    itemBuilder: (BuildContext context, int index){
+                       var data = diagnosisList[index];
+                      return Container(
+          color:  index%2==0?Color.fromARGB(255, 167, 193, 216):Color.fromARGB(255, 246, 247, 248),
+
+                         child: SingleChildScrollView(
                       child: Column(
                         children: [
                            Row(
@@ -168,7 +194,7 @@ treatmentplanList();
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                           ),
                                       Text(
-                                          'Abcdef'),
+                                          "${data["diagnosis_name"].toString()}"),
                                     ],
                               ),
                                Row(
@@ -179,44 +205,34 @@ treatmentplanList();
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                           ),
                                       Text(
-                                          '2'),
+                                         "${data["count"].toString()}"),
                                     ],
                               ),
                                  ],
-                               ),
-                                 Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Adfdfd'),
-                                )
-                              ],
-                             ),
-                              Row(
-                              children: [
-                                Padding(padding: EdgeInsets.all(30),
-                                child: Text('Ad'),
-                                )
-                              ],
-                             ),
+                               ),     
                         ],
                       ),
                     ),
 
-                   )
+                      );
+                    },
+                  ):  Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      ),
+                   
+
+                   ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  height: screenHeight * 0.37,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          ),
               ],
             ),
            
@@ -296,46 +312,10 @@ treatmentplanList();
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-    treatmentplanList();
+    treatmentdiagnosisplanList();
     this.setState(() {});
   }
-
-//    renderReportPending(){
-//       var screenheight = MediaQuery.of(context).size.height;
-//         var screenWidth = MediaQuery.of(context).size.width;
-//   return Container(
-//     height: screenheight,
-//     width: screenWidth,
-//     child: SingleChildScrollView(
-//       child: Column(
-//         children: [
-//            Container(
-//             height: screenheight * 0.5,
-//             width: screenWidth,
-//             color: Colors.red,
-//             child: Text('Treatment',
-//                         textAlign: TextAlign.left,),
-    
-    
-    
-//                       ),
-//                     Container(
-//                       height: screenheight * 0.5,
-//                       width: screenWidth,
-//                       color: Colors.black,
-//                       child: Text('hi'),
-    
-    
-//                    )
-//         ],
-//       ),
-//     ),
-
-//   );
- 
-//  }
-
-treatmentplanList() async{
+treatmentdiagnosisplanList() async{
    var formatter = new DateFormat('yyyy-MM-dd');
 var data = {
 'from_date':  formatter.format(dateRange.start),
@@ -346,17 +326,35 @@ this.setState(() {
    isLoading = true;
 });
 
-              treatmentList = await api(). treatmentplan(accessToken,data);
-              if(Helper().isvalidElement(treatmentList) && Helper().isvalidElement(treatmentList['status']) && treatmentList['status'] == 'Token is Invalid'){
+             var  treatment_diagnosis_list = await api(). treatmentdiagnosisplan(accessToken,data);
+              if(Helper().isvalidElement( treatment_diagnosis_list) && Helper().isvalidElement( treatment_diagnosis_list['status']) &&  treatment_diagnosis_list['status'] == 'Token is Invalid'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{
-          treatmentList = treatmentList['top_treatment_report'];
   //  storage.setItem('diagnosisList', diagnosisList);
                          this.setState(() {
+                                    treatmentList = treatment_diagnosis_list['top_treatment_report'];
+          diagnosisList = treatment_diagnosis_list['top_diagnosis_report'];
+
    isLoading = false;
 });
 
  }
+//  diagnosisList = await api(). diagnosisplan(accessToken,data);
+//               if(Helper().isvalidElement(diagnosisList) && Helper().isvalidElement(diagnosisList['status']) && diagnosisList['status'] == 'Token is Invalid'){
+//                Helper().appLogoutCall(context, 'Session expeired');
+//                }
+//          else{
+//   //  storage.setItem('diagnosisList', diagnosisList);
+//                          this.setState(() {
+//    isLoading = false;
+// });
+
+//  }
  }
 }
+
+
+
+
+

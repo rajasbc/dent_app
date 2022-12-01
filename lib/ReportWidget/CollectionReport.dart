@@ -150,7 +150,7 @@ class _CollectionReportState extends State<CollectionReport> {
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-   billingCollectionlist();
+   getbillingCollectionReportList();
     this.setState(() {});
   }
 
