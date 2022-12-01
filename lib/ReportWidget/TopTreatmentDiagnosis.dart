@@ -326,7 +326,7 @@ this.setState(() {
    isLoading = true;
 });
 
-             var  treatment_diagnosis_list = await api(). treatmentdiagnosisplan(accessToken,data);
+             var  treatment_diagnosis_list = await api().treatmentDiagnosisplan(accessToken,data);
               if(Helper().isvalidElement( treatment_diagnosis_list) && Helper().isvalidElement( treatment_diagnosis_list['status']) &&  treatment_diagnosis_list['status'] == 'Token is Invalid'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
