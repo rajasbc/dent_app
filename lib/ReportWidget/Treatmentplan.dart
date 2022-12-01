@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:nigdent/Common/colors.dart' as CustomColors;
 class Treatmentplan extends StatefulWidget {
 
   const Treatmentplan({ super.key });
@@ -28,6 +28,7 @@ class _TreatmentplanState extends State<Treatmentplan> {
             appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
+            backgroundColor: CustomColors.app_color,
             title: Text('Treatment Plan Report'),
           ),
         ),
@@ -82,6 +83,8 @@ class _TreatmentplanState extends State<Treatmentplan> {
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
                       onPressed: () {
                         pickDateRange();
                       },
@@ -92,7 +95,7 @@ class _TreatmentplanState extends State<Treatmentplan> {
                 Container(
                   width: screenWidth / 6,
                   child: IconButton(
-                    color: Colors.blueAccent,
+                    color: CustomColors.app_color,
                     onPressed: () {
                       pickDateRange();
                     },
@@ -102,6 +105,8 @@ class _TreatmentplanState extends State<Treatmentplan> {
                 Container(
                     width: screenWidth / 3,
                     child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
                       onPressed: () {
                         pickDateRange();
                       },
