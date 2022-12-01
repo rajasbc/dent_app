@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:localstorage/localstorage.dart';
 import 'dart:developer' as developer;
 import '../main.dart';
@@ -26,6 +27,7 @@ class Helper {
     // storage.setItem('userResponse', null);
     // storage.setItem('selectedPatient', null);
     storage.clear();
+    await Hive.box('userResponse').delete(userResponse);
     Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
     Fluttertoast.showToast(
         msg: action == 'logout' ? 'Logout successfully' : 'Session expeired',

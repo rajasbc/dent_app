@@ -195,16 +195,16 @@ double screenwidth = MediaQuery.of(context).size.width;
                               Text('Patients', style: TextStyle(fontSize: 20, letterSpacing: 1.42, fontWeight: FontWeight.bold, color: CustomColors.app_color),),
                             ],
                           ),
-                          Container( 
-                            // color: Colors.yellow,
-                            height: screenHeight*0.05,alignment: Alignment.topRight,
-                            child: IconButton(onPressed: (){
-                                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CreatePatient()),
-                      );
-                            }, icon: Icon(Icons.add, color: CustomColors.app_color,size: 20,), ))
+                      //     Container( 
+                      //       // color: Colors.yellow,
+                      //       height: screenHeight*0.05,alignment: Alignment.topRight,
+                      //       child: IconButton(onPressed: (){
+                      //            Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => const CreatePatient()),
+                      // );
+                      //       }, icon: Icon(Icons.add, color: CustomColors.app_color,size: 20,), ))
                           
                         ],
                       ),
@@ -250,12 +250,12 @@ double screenwidth = MediaQuery.of(context).size.width;
                                        Text('Total Patients', style: TextStyle(fontSize: 18, letterSpacing: 1, color: Colors.black26)),
                                     ],
                                   ),
-                                 Container( 
-                            // color: Colors.yellow,
-                            height: screenHeight*0.04,alignment: Alignment.topRight,
-                            child: IconButton(onPressed: (){
-                              // print('total patients');
-                            }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                            //      Container( 
+                            // // color: Colors.yellow,
+                            // height: screenHeight*0.04,alignment: Alignment.topRight,
+                            // child: IconButton(onPressed: (){
+                            //   // print('total patients');
+                            // }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
                                   // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
                                 ],
                               ),
@@ -277,12 +277,12 @@ double screenwidth = MediaQuery.of(context).size.width;
                                        Text('Today Patients', style: TextStyle(fontSize: 18, letterSpacing: 1, color: Colors.black26)),
                                     ],
                                   ),
-                                 Container( 
-                            // color: Colors.yellow,
-                            height: screenHeight*0.04,alignment: Alignment.topRight,
-                            child: IconButton(onPressed: (){
-                              // print('total patients');
-                            }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
+                            //      Container( 
+                            // // color: Colors.yellow,
+                            // height: screenHeight*0.04,alignment: Alignment.topRight,
+                            // child: IconButton(onPressed: (){
+                            //   // print('total patients');
+                            // }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
                                   // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
                                 ],
                               ),
