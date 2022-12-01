@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../Common/utils.dart';
+import '../api/Apicall.dart';
 
 class RevenueReport extends StatefulWidget {
 
@@ -11,13 +15,24 @@ class RevenueReport extends StatefulWidget {
 class _RevenueReportState extends State<RevenueReport> {
 
   late DateTime date;
-  bool loading  = false;
+  bool isLoading  = false;
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
     end:
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
   );
+  var revenueReportList =null;
+    var accessToken;
+
+@override
+  void initState() {
+        accessToken = storage.getItem('userResponse')['access_token'];
+
+revenueRegisterReportList();
+    // TODO: implement initState
+    super.initState();
+  }
 
 
    @override
@@ -135,7 +150,7 @@ class _RevenueReportState extends State<RevenueReport> {
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-    // getPendingList();
+    revenueRegisterReportList();
     this.setState(() {});
   }
   renderReportPending(){
@@ -143,7 +158,14 @@ class _RevenueReportState extends State<RevenueReport> {
   var screenWidth= MediaQuery.of(context).size.width;
   return Container(
     padding: EdgeInsets.all(10),
-       child: SingleChildScrollView(
+        child: Helper().isvalidElement(revenueReportList) &&
+                  revenueReportList.length > 0 ?
+                  ListView.builder(
+                    itemCount: revenueReportList.length,
+                    itemBuilder: (BuildContext context, int index){
+                       var data =  revenueReportList[index];
+                       return Container(
+                        child: SingleChildScrollView(
          child: Row(
           children: [
                     Container(
@@ -254,6 +276,37 @@ class _RevenueReportState extends State<RevenueReport> {
                   ],
          ),
        ),
+
+                       );
+                    },
+                  ):  Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      ),
   );
+ }
+ revenueRegisterReportList() async{
+   var formatter = new DateFormat('yyyy-MM-dd');
+var data = {
+'from_date':  formatter.format(dateRange.start),
+'to_date': formatter.format(dateRange.end),
+};
+this.setState(() {
+   isLoading = true;
+});
+              revenueReportList = await api().revenueReport(accessToken,data);
+              if(Helper().isvalidElement(revenueReportList) && revenueReportList.length >0 && Helper().isvalidElement(revenueReportList['status']) && revenueReportList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+         revenueReportList = revenueReportList;
+  //  storage.setItem('diagnosisList', diagnosisList);
+                         this.setState(() {
+   isLoading = false;
+});
+
+ }
  }
 }

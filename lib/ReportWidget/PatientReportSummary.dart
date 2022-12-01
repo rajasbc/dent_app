@@ -183,7 +183,7 @@ getpatientSummaryReportList();
                             
                             Text(
                                 'Name :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
                                 ),
                             Text(
                                 "${data['title'].toString() + "." + data['p_name'].toString().toUpperCase()}"),

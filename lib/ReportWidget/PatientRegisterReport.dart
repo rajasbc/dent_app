@@ -150,14 +150,15 @@ getPatientRegisterReportList();
       // if (newDateRange == null) return;
       // setState(() => dateRange = newDateRange);
     });
-     patientRegisterList();
+    getPatientRegisterReportList();
     this.setState(() {});
   }
 
  renderReportPending(){
   var screenheight= MediaQuery.of(context).size.height;
   var screenWidth= MediaQuery.of(context).size.width;
-  return Container(
+  return 
+   !isLoading ? Container(
     padding: EdgeInsets.all(10),
       child: Helper().isvalidElement(patientRegisterList) &&
                   patientRegisterList.length > 0 ?
@@ -166,7 +167,7 @@ ListView.builder(
  itemBuilder: (BuildContext context, int index){
   var data =  patientRegisterList[index];
 return Container(
-  color:  index%2==0?Color.fromARGB(255, 116, 133, 148):Color.fromARGB(255, 142, 194, 236),
+  color:  index%2==0?Color.fromARGB(255, 167, 193, 216):Color.fromARGB(255, 246, 247, 248),
  child: SingleChildScrollView(
          child: Row(
           children: [
@@ -285,7 +286,15 @@ return Container(
                         // color: Colors.blue.shade100,
                         // color: Colors.black12,
                       ),
-  );
+  ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          );
  }
  getPatientRegisterReportList() async{
    var formatter = new DateFormat('yyyy-MM-dd');

@@ -1,8 +1,8 @@
 class SelectedTeethModal {
   String position;
-  String teeth;
+  String t_no;
   SelectedTeethModal({
     required this.position,
-    required this.teeth,
+    required this.t_no,
   });
 }
