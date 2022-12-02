@@ -204,9 +204,21 @@ class api {
 
       if(response.statusCode == 200) {
         return json.decode(response.body);
-      }else {
-        return json.decode(response.body);
-      }
+    } else {
+      return json.decode(response.body);
+    }
+  }
 
+  add_patient_call(String access_token, patient_details) async {
+    String add_patient_url =
+        RequestPath.base_url + RequestPath.addPatientEndpoint;
+    var response = await http.post(Uri.parse(add_patient_url),
+        body: jsonEncode(patient_details), headers: _setHeaders(access_token));
+        
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
   }
 }
