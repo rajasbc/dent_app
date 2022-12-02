@@ -27,7 +27,7 @@ class Helper {
     // storage.setItem('userResponse', null);
     // storage.setItem('selectedPatient', null);
     storage.clear();
-    await Hive.box('userResponse').delete('userResponse');
+        await Hive.box('userResponse').delete(userResponse);
     Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
     Fluttertoast.showToast(
         msg: action == 'logout' ? 'Logout successfully' : 'Session expeired',

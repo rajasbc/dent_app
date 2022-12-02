@@ -4,7 +4,7 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive/hive.dart';
-import 'package:nigdent/Common/storeBox.dart';
+// import 'package:nigdent/Common/storeBox.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/api/Apicall.dart';
@@ -22,8 +22,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+    // late final Box? storeBox;
+
   final LocalStorage storage = new LocalStorage('nigdent_store');
-  // late final Box? storeBox;
 
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
@@ -34,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // patient_data = storage.getItem('selectedPatient');
     // print('object');
-    // storeBox = Hive.box('userResponse');
+        // storeBox = Hive.box(StoreBoxActions().userResponseBox);
+
     FlutterNativeSplash.remove();
   }
 
@@ -179,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               await api().userLoginResponse(user_input);
                           storage.setItem('userResponse', user_data);
 
-                          // await storeBox?.put('userResponse', user_data);
                           if (Helper().isvalidElement(user_data) && 
                           Helper().isvalidElement(user_data['error']) && 
                           user_data['error'] == 'Email_id and Password Incorrect') {
@@ -194,13 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize: 15.0);
                           } else {
                             // var user = UserData.fromMap(user_data);
-                            // await storeBox?.put('userResponse', user);
 
                             if (user_data['access_token'] != null) {
                               _email.text = '';
                               _password.text = '';
-                                                              await storeBox?.put('userResponse', user_data);
-
+                            // await storeBox?.put('userResponse', user_data);
                               this.setState(() {});
                               
                               // Navigator.push(
