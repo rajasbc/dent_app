@@ -32,8 +32,9 @@ class _CreateAppointmentState extends State<CreateAppointment> {
   var userResponse = null;
  var selectedPatient = null;
    var showAutoComplete = true;
-var isLoading = false;
 
+var isLoading = false;
+var doctorList = null;
   @override
   void initState() {
     super.initState();
@@ -50,7 +51,7 @@ var isLoading = false;
         
     });
         getPatientList();
-
+        getDoctorList();
     
   }
 
@@ -77,9 +78,9 @@ var isLoading = false;
   // ];
   // String? selectedValue;
 
-  // final List<String> time = [
-  //   '5:00 PM to 11:00 PM',
-  // ];
+var slot_time = [
+    {'slot_time':"5:00 PM to 11:00 PM"},
+  ];
   // String? selectedValue2;
 
   // String dropdownvalue = 'Item 1';
@@ -111,6 +112,8 @@ String _radioGenderVal ="";
   int? _AdultSelected = 1;
   String _AdultVal = "";
 
+var selectedDoctor = null;
+var selectedSlot = null;
   static const orange = Color(0xFFFE9A75);
   static const dark = Color(0xFF333A47);
   static const double leftPadding = 50;
@@ -208,6 +211,7 @@ String _radioGenderVal ="";
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormField(
+                        maxLength: 10,
                         controller: contactController,
                         decoration: const InputDecoration(
                           labelText: 'Contact No',
@@ -385,6 +389,7 @@ String _radioGenderVal ="";
                         //icon: Icon(Icons.numbers),
                       ),
                       autovalidateMode: AutovalidateMode.always,
+                      
                       controller: ageController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -481,37 +486,90 @@ String _radioGenderVal ="";
                   ),
                 ),
                 Container(
-                  // child: DropdownButton2(
-                  //   hint: Text(
-                  //     'Select Docter',
-                  //     style: TextStyle(
-                  //       fontSize: 17,
-                  //       color: Theme.of(context).hintColor,
-                  //     ),
-                  //   ),
-                  //   items: docter
-                  //       .map((docter) => DropdownMenuItem<String>(
-                  //             value: docter,
-                  //             child: Text(
-                  //               docter,
-                  //               style: const TextStyle(
-                  //                 fontSize: 18,
-                  //               ),
-                  //             ),
-                  //           ))
-                  //       .toList(),
-                  //   value: selectedValue,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedValue = value as String;
-                  //     });
-                  //   },
-                  //   buttonHeight: 70,
-                  //   buttonWidth: 300,
-                  //   itemHeight: 40,
-                  // ),
+//  padding: EdgeInsets.only(top: 15),
+//                   child: 
+//                   showDocAutoComplete ?  renderSearchBar(screenWidth, screenHeight):
+//                         renderSelectedPatientWidget(screenWidth, screenHeight),
+
+                  child: 
+                   Helper().isvalidElement(doctorList) && doctorList.length > 0 ? 
+                   DropdownButtonFormField(
+              // validator: (value) => validateDrops(value),
+              isExpanded: true,
+              hint: Text('Select Doctor'),
+              // value:' _selectedState[i]',
+              onChanged: (doctor) {
+                setState(() {
+                  selectedDoctor = doctor;
+                  // print("Stae value");
+                  // print(newValue);
+                  // _selectedState[i]= newValue;
+                  // getMyDistricts(newValue, i);
+                });
+        
+              },
+              items: doctorList.map<DropdownMenuItem<String>>((item) {
+                return new DropdownMenuItem(
+                  child: new Text(
+                    item['username'].toString(),
+                  ),
+                  value: item['id'].toString(),
+                );
+              }).toList(),
+            ): DropdownButtonFormField(
+              // validator: (value) => validateDrops(value),
+              // isExpanded: true,
+              hint: Text('Select Doctor'),
+              // value:' _selectedState[i]',
+              onChanged: (selectedDoctor) {
+                setState(() {
+                  // selectedDoctor = selectedDoctor;
+                  // print("Stae value");
+                  // print(newValue);
+                  // _selectedState[i]= newValue;
+                  // getMyDistricts(newValue, i);
+                });
+        
+              },
+              items: [].map<DropdownMenuItem<String>>((item) {
+                return new DropdownMenuItem(
+                  child: new Text('' ),
+                  value: '',
+                );
+              }).toList(),
+            )
+
+
+                
                 ),
                 Container(
+                  child: DropdownButtonFormField(
+              // validator: (value) => validateDrops(value),
+              isExpanded: true,
+              hint: Text('Slot Time'),
+              // value:' _selectedState[i]',
+              onChanged: (slot) {
+                setState(() {
+                  selectedSlot = slot;
+                  // print("Stae value");
+                  // print(newValue);
+                  // _selectedState[i]= newValue;
+                  // getMyDistricts(newValue, i);
+                });
+        
+              },
+              items: slot_time.map<DropdownMenuItem<String>>((item) {
+                return new DropdownMenuItem(
+                  child: new Text(
+                    item['slot_time'].toString(),
+                  ),
+                  value: item['slot_time'].toString(),
+                );
+              }).toList(),
+            )
+
+
+
                   // child: DropdownButton2(
                   //   hint: Text(
                   //     'Slot Time',
@@ -609,7 +667,7 @@ String _radioGenderVal ="";
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.CENTER,
                           timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
+                          backgroundColor: CustomColors.error_color,
                           textColor: Colors.white,
                           fontSize: 16.0);
                       // Validate returns true if the form is valid, or false otherwise.
@@ -621,10 +679,34 @@ String _radioGenderVal ="";
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.CENTER,
                           timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
+                          backgroundColor: CustomColors.error_color,
                           textColor: Colors.white,
                           fontSize: 16.0);
-                    } else {
+                    } else if (!Helper().isvalidElement(selectedSlot)) {
+                      //  print('notok');
+
+                      Fluttertoast.showToast(
+                          msg: 'Please select slot',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: CustomColors.error_color,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    } 
+                    else if (!Helper().isvalidElement(selectedDoctor)) {
+                      //  print('notok');
+
+                      Fluttertoast.showToast(
+                          msg: 'Please select doctor',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: CustomColors.error_color,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    } 
+                    else {
                       var access_token = userResponse['access_token'];
                       var appointment_details = {
     "patientName":NameController.text,
@@ -635,7 +717,7 @@ String _radioGenderVal ="";
     "age":ageController.text.toString(),
     "code":"",
     "dob":dobController.text,
-    "doctor_id":"14",
+    "doctor_id":selectedDoctor.toString().isEmpty ?'':selectedDoctor.toString(),
     "patientID":Helper().isvalidElement(selectedPatient) ? selectedPatient['id'].toString():"",
     "emailId":Helper().isvalidElement(selectedPatient) ? selectedPatient['p_email']:"",
     "appointment_date":dateController.text,
@@ -765,6 +847,7 @@ var addAppointment = await api().addNewAppointment(access_token, appointment_det
     else{
 
  var matches = [];
+ NameController.text =  textEditingValue.text;
         matches.addAll(patientList);
         matches.retainWhere((s){
            return s['p_name'].toString().toLowerCase().contains(textEditingValue.text.toLowerCase());
@@ -908,6 +991,24 @@ patient['title'].toString();
                           this.setState(() {
                             patientList = patientList["patient_list"];
                             autoCompleteLoader = false;
+                          });
+                              }
+}
+getDoctorList() async{
+  // this.setState(() {
+  //   autoCompleteLoader = true;
+  // }); 
+    doctorList = await api().getDoctorList(userResponse['access_token']);
+           if(Helper().isvalidElement(doctorList) && Helper().isvalidElement(doctorList['status']) && doctorList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          
+  //  storage.setItem('diagnosisList', diagnosisList);
+                          // isLoading = false;
+                          this.setState(() {
+                            doctorList = doctorList["doctor_list"];
+                            // autoCompleteLoader = false;
                           });
                               }
 }
