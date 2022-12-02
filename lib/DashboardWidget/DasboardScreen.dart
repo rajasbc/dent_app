@@ -54,7 +54,7 @@ double screenwidth = MediaQuery.of(context).size.width;
      } else if (Platform.isIOS) {
       exit(0);
     }
-        return true;
+        return false;
       },
 
  child: new Scaffold(
