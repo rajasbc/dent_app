@@ -12,10 +12,9 @@
       String paymentReportEndpoint= 'auth/payment_report';
       String treatmentDetailsEndpoint= 'auth/dent_plan_list';
       String appointmentCountEndpoint= 'auth/appoin_total_count';
-      String addDentPlanEndpoint= 'auth/dent_add_plan';
-
-      
+      String addDentPlanEndpoint= 'auth/dent_add_plan';     
       String appointmentList = 'auth/dent_appointment_list';
+      String addAppointmentEndpoint = 'auth/dent_add_appointment';
 
 
 

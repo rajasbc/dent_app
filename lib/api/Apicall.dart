@@ -173,5 +173,18 @@ class api {
       }
 
   }
+      addNewAppointment(access_token, data) async {
+
+    String add_appointment_url = RequestPath.base_url + RequestPath.addAppointmentEndpoint;
+    var response = await http.post(Uri.parse(add_appointment_url),
+      body: jsonEncode(data), headers: _setHeaders(access_token));
+
+      if(response.statusCode == 200) {
+        return json.decode(response.body);
+      }else {
+        return json.decode(response.body);
+      }
+
+  }
   
 }
