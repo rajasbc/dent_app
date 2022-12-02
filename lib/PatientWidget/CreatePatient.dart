@@ -4,6 +4,10 @@ import 'package:group_radio_button/group_radio_button.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/api/Apicall.dart';
+import 'package:nigdent/Common/colors.dart' as CustomColors;
+
+import '../DashboardWidget/DasboardScreen.dart';
+
 // import 'package:country_state_city_picker/country_state_city_picker.dart';
 
 class CreatePatient extends StatefulWidget {
@@ -23,8 +27,7 @@ class _CreatePatientState extends State<CreatePatient> {
     show_information = 'Basic Information';
     accessToken = storage.getItem('userResponse')['access_token'];
 
-
-    add_patient();
+    // add_patient();
 
     super.initState();
   }
@@ -217,6 +220,7 @@ class _CreatePatientState extends State<CreatePatient> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
+            backgroundColor: CustomColors.app_color,
             title: Text('Add Patient'),
           ),
         ),
@@ -237,6 +241,9 @@ class _CreatePatientState extends State<CreatePatient> {
                       Container(
                         width: screenWidth * 0.33,
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  CustomColors.app_color)),
                           onPressed: () {
                             this.setState(() {
                               show_information = 'Basic Information';
@@ -250,6 +257,9 @@ class _CreatePatientState extends State<CreatePatient> {
                       Container(
                         width: screenWidth * 0.33,
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  CustomColors.app_color)),
                           onPressed: () {
                             this.setState(() {
                               show_information = 'Personal Information';
@@ -263,6 +273,9 @@ class _CreatePatientState extends State<CreatePatient> {
                       Container(
                         width: screenWidth * 0.33,
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  CustomColors.app_color)),
                           onPressed: () {
                             this.setState(() {
                               show_information = 'Other Information';
@@ -1368,6 +1381,9 @@ class _CreatePatientState extends State<CreatePatient> {
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width / 2,
                     child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                CustomColors.app_color)),
                         onPressed: () {
                           // //  var _radioVal;
 
@@ -1546,6 +1562,8 @@ class _CreatePatientState extends State<CreatePatient> {
                               // 'collect_here': check1,
                             };
                             print('patient detalis: ******${patient_details}');
+
+                            add_patient(patient_details);
                           }
                         },
                         child: Text('Save'))))
@@ -1555,25 +1573,41 @@ class _CreatePatientState extends State<CreatePatient> {
     );
   }
 
-//   add_patient() async {
-//     this.setState(() {
-//       loading = true;
-//     });
+  add_patient(patient_details) async {
+    this.setState(() {
+      loading = true;
+    });
 
-//     var result = await api().add_patient_call(accessToken, patient_details);
+    var result = await api().add_patient_call(accessToken, patient_details);
 
-//      if (Helper().isvalidElement(result) &&
-//         Helper().isvalidElement(result['status']) &&
-//         result['status'] == 'Token is Invalid') {
-//       Helper().appLogoutCall(context, 'Session expeired');
-//     } else {
-//       this.setState(() {
-//         appointment_list = result['appointment_list'];
-//       });
-//     }
-//     this.setState(() {
-//       loading = false;
-//     });
-//   }
+    if (Helper().isvalidElement(result) &&
+        Helper().isvalidElement(result['status']) &&
+        result['status'] == 'Token is Invalid') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      if (Helper().isvalidElement(result) &&
+          Helper().isvalidElement(result['status']) &&
+          result['status'] == 'Add patient successfully') {
+        Fluttertoast.showToast(
+            msg: 'Add patient successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 2,
+            backgroundColor: CustomColors.success_color,
+            textColor: Colors.white,
+            fontSize: 15.0);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+        );
+      }
+      this.setState(() {
+        // appointment_list = result['appointment_list'];
+      });
+    }
+    this.setState(() {
+      loading = false;
+    });
+  }
 }
-
