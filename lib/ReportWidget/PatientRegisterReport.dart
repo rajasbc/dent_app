@@ -173,115 +173,118 @@ ListView.builder(
  itemBuilder: (BuildContext context, int index){
   var data =  patientRegisterList[index];
 return Container(
-  color:  index%2==0?Color.fromARGB(255, 167, 193, 216):Color.fromARGB(255, 246, 247, 248),
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
  child: SingleChildScrollView(
-         child: Row(
-          children: [
-                    Container(
-                      width: screenWidth * 0.46,
-                      // color: Colors.amber,
-                      child:Column(
-                        children: [
-                         Row(
-                                
+         child: Padding(
+           padding: const EdgeInsets.all(3.0),
+           child: Row(
+            children: [
+                      Container(
+                        width: screenWidth * 0.46,
+                        // color: Colors.amber,
+                        child:Column(
                           children: [
-                            Text(
-                                'Reg.No :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text("${data['patient_id'].toString()}"),
+                           Row(
+                                  
+                            children: [
+                              Text(
+                                  'Reg.No :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text("${data['patient_id'].toString()}", style:TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                               Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Patient :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                 "${data['p_name'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                              Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Mobile :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                 "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                            //     Row(
+                            // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // children: [
+                            //   Text(
+                            //       ' :',
+                            //       style: TextStyle(fontWeight: FontWeight.bold),
+                            //       ),
+                            //   Text(
+                            //       'Abcdefghijklmnop'),
+                            // ],
+                            //   ),
                           ],
+                        )
+                      ),
+                       Container(
+                        width: screenWidth *0.46,
+                        // color: Colors.black,
+                        // alignment: Alignment.centerRight,
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            
+                            Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Email :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                   "${data['p_email'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
                             ),
                              Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Patient :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                               "${data['p_name'].toString()}"),
-                          ],
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'DOB :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                 "${data['p_dob'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
                             ),
-                            Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Mobile :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                               "${data['p_phone'].toString()}"),
+                             Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Reg.Date :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['preg_date'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                            )
                           ],
-                            ),
-                          //     Row(
-                          // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // children: [
-                          //   Text(
-                          //       ' :',
-                          //       style: TextStyle(fontWeight: FontWeight.bold),
-                          //       ),
-                          //   Text(
-                          //       'Abcdefghijklmnop'),
-                          // ],
-                          //   ),
-                        ],
-                      )
-                    ),
-                     Container(
-                      width: screenWidth *0.46,
-                      // color: Colors.black,
-                      // alignment: Alignment.centerRight,
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          
-                          Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'Email :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                 "${data['p_email'].toString()}"),
-                          ],
-                          ),
-                           Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'DOB :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                               "${data['p_dob'].toString()}"),
-                          ],
-                          ),
-                           Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'Reg.Date :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                "${data['preg_date'].toString()}"),
-                          ],
-                          )
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+           ),
          ),
        ),
 );

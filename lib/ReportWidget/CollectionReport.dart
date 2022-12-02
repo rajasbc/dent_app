@@ -162,7 +162,8 @@ class _CollectionReportState extends State<CollectionReport> {
   renderReportPending(){
   var screenheight= MediaQuery.of(context).size.height;
   var screenWidth= MediaQuery.of(context).size.width;
-  return Container(
+  return 
+  !isLoading ? Container(
     padding: EdgeInsets.all(10),
        child: Helper().isvalidElement(billingCollectionlist) &&
                  billingCollectionlist.length > 0 ?
@@ -171,7 +172,7 @@ class _CollectionReportState extends State<CollectionReport> {
                   itemBuilder: (BuildContext context, int index){
                      var data =  billingCollectionlist[index];
                      return Container(
-                        color:  index%2==0?Color.fromARGB(255, 116, 133, 148):Color.fromARGB(255, 142, 194, 236),
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
 
                       child: SingleChildScrollView(
          child: Row(
@@ -186,10 +187,10 @@ class _CollectionReportState extends State<CollectionReport> {
                           children: [
                             Text(
                                 'Reg.No :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(
-                                 "${data['preg_no'].toString()}"),
+                                 "${data['preg_no'].toString()}",style: TextStyle(fontSize: 13),),
                           ],
                             ),
                              Row(
@@ -197,10 +198,10 @@ class _CollectionReportState extends State<CollectionReport> {
                           children: [
                             Text(
                                 'Patient :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(
-                               "${data['p_name'].toString()}"),
+                               "${data['p_name'].toString()}",style: TextStyle(fontSize: 13),),
                           ],
                             ),
                             Row(
@@ -208,10 +209,10 @@ class _CollectionReportState extends State<CollectionReport> {
                           children: [
                             Text(
                                 'Mobile :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(
-                                "${data['p_phone'].toString()}"),
+                                "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
                           ],
                             ),
                         ],
@@ -233,10 +234,10 @@ class _CollectionReportState extends State<CollectionReport> {
                             Text(
                               
                                 'Email :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize:13 ),
                                 ),
                             Text(
-                                "${data['p_email'].toString()}"),
+                                "${data['p_email'].toString()}",style: TextStyle(fontSize: 13),),
                           ],
                           ),
                            Row(
@@ -247,10 +248,10 @@ class _CollectionReportState extends State<CollectionReport> {
                             Text(
                               
                                 'DOB :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(
-                               "${data['p_dob'].toString()}"),
+                               "${data['p_dob'].toString()}",style: TextStyle(fontSize: 13),),
                           ],
                           ),
                            Row(
@@ -261,10 +262,10 @@ class _CollectionReportState extends State<CollectionReport> {
                             Text(
                               
                                 'Reg.Date :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(
-                               "${data['preg_date'].toString()}"),
+                               "${data['preg_date'].toString()}",style: TextStyle(fontSize: 13),),
                           ],
                           )
                         ],
@@ -282,7 +283,15 @@ class _CollectionReportState extends State<CollectionReport> {
                         // color: Colors.blue.shade100,
                         // color: Colors.black12,
                       ),
-  );
+  ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          );
  }
 
   getbillingCollectionReportList() async{

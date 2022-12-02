@@ -159,7 +159,8 @@ revenueRegisterReportList();
   renderReportPending(){
   var screenheight= MediaQuery.of(context).size.height;
   var screenWidth= MediaQuery.of(context).size.width;
-  return Container(
+  return
+     !isLoading ? Container(
     padding: EdgeInsets.all(10),
         child: Helper().isvalidElement(revenueReportList) &&
                   revenueReportList.length > 0 ?
@@ -168,115 +169,119 @@ revenueRegisterReportList();
                     itemBuilder: (BuildContext context, int index){
                        var data =  revenueReportList[index];
                        return Container(
+                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
                         child: SingleChildScrollView(
-         child: Row(
-          children: [
-                    Container(
-                      width: screenWidth * 0.46,
-                      // color: Colors.amber,
-                      child:Column(
-                        children: [
-                         Row(
-                                
+         child: Padding(
+           padding: const EdgeInsets.all(3.0),
+           child: Row(
+            children: [
+                      Container(
+                        width: screenWidth * 0.46,
+                        // color: Colors.amber,
+                        child:Column(
                           children: [
-                            Text(
-                                'Date :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                '2-4-2000'),
+                           Row(
+                                  
+                            children: [
+                              Text(
+                                  'Date :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['date'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                               Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Collection :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['collection'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                            //   Row(
+                            // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // children: [
+                            //   Text(
+                            //       'Patient :',
+                            //       style: TextStyle(fontWeight: FontWeight.bold),
+                            //       ),
+                            //   Text(
+                            //       'riyaz'),
+                            // ],
+                            //   ),
+                            //     Row(
+                            // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // children: [
+                            //   Text(
+                            //       'Treatment :',
+                            //       style: TextStyle(fontWeight: FontWeight.bold),
+                            //       ),
+                            //   Text(
+                            //       'Abcdefghijklmnop'),
+                            // ],
+                            //   ),
                           ],
+                        )
+                      ),
+                       Container(
+                        width: screenWidth *0.46,
+                        // color: Colors.black,
+                        // alignment: Alignment.centerRight,
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            
+                            Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Expenses :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['expense'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
                             ),
                              Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Collection :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                '200000'),
-                          ],
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Revenue :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['revenue'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
                             ),
-                          //   Row(
-                          // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // children: [
-                          //   Text(
-                          //       'Patient :',
-                          //       style: TextStyle(fontWeight: FontWeight.bold),
-                          //       ),
-                          //   Text(
-                          //       'riyaz'),
-                          // ],
-                          //   ),
-                          //     Row(
-                          // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // children: [
-                          //   Text(
-                          //       'Treatment :',
-                          //       style: TextStyle(fontWeight: FontWeight.bold),
-                          //       ),
-                          //   Text(
-                          //       'Abcdefghijklmnop'),
-                          // ],
-                          //   ),
-                        ],
-                      )
-                    ),
-                     Container(
-                      width: screenWidth *0.46,
-                      // color: Colors.black,
-                      // alignment: Alignment.centerRight,
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          
-                          Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
+                            //  Row(
                               
-                            Text(
-                              
-                                'Expenses :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                '100000'),
+                            // mainAxisAlignment: MainAxisAlignment.end,
+                            //   children: [
+                                
+                            //   Text(
+                                
+                            //       'Paymentmode :',
+                            //       style: TextStyle(fontWeight: FontWeight.bold),
+                            //       ),
+                            //   Text(
+                            //       'cash'),
+                            // ],
+                            // )
                           ],
-                          ),
-                           Row(
-                            
-                          mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              
-                            Text(
-                              
-                                'Revenue :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                            Text(
-                                '100000'),
-                          ],
-                          ),
-                          //  Row(
-                            
-                          // mainAxisAlignment: MainAxisAlignment.end,
-                          //   children: [
-                              
-                          //   Text(
-                              
-                          //       'Paymentmode :',
-                          //       style: TextStyle(fontWeight: FontWeight.bold),
-                          //       ),
-                          //   Text(
-                          //       'cash'),
-                          // ],
-                          // )
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+           ),
          ),
        ),
 
@@ -288,7 +293,15 @@ revenueRegisterReportList();
                         // color: Colors.blue.shade100,
                         // color: Colors.black12,
                       ),
-  );
+  ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          );
  }
  revenueRegisterReportList() async{
    var formatter = new DateFormat('yyyy-MM-dd');
@@ -304,7 +317,7 @@ this.setState(() {
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{
-         revenueReportList = revenueReportList;
+         revenueReportList = revenueReportList['revenue_list'];
   //  storage.setItem('diagnosisList', diagnosisList);
                          this.setState(() {
    isLoading = false;
