@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nigdent/AppointmentWidget/Appointment.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/api/Apicall.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CreateAppointment extends StatefulWidget {
   const CreateAppointment({super.key});
@@ -20,6 +22,9 @@ class _CreateAppointmentState extends State<CreateAppointment> {
   TextEditingController dobController = TextEditingController();
   TextEditingController NameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+    TextEditingController contactController = TextEditingController();
+
+  
   //TextEditingController TitleController = TextEditingController();
   // final _formKey = GlobalKey<FormState>();
   var autoCompleteLoader = false;
@@ -27,16 +32,26 @@ class _CreateAppointmentState extends State<CreateAppointment> {
   var userResponse = null;
  var selectedPatient = null;
    var showAutoComplete = true;
+var isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    // defaultTitleDropdownValue = 'Mr';
+    // NameController.text = '';
+    contactController.text = '';
+    _radioGenderSelected = 1;
+    dobController.text = 'YYYY-MM-DD';
+    _AdultSelected = 1;
+    dateController.text = new DateTime.now().toString().substring(0,10);
+  _AppointmentSelected = 1;
       this.setState(() {
          userResponse = storage.getItem('userResponse');
+        
     });
         getPatientList();
 
-    dateController.text = "";
+    
   }
 
   DateTime currentDate = DateTime.now();
@@ -53,41 +68,44 @@ class _CreateAppointmentState extends State<CreateAppointment> {
     dobController.text = pickedDate.toString().split(' ')[0];
   }
 
-  final List<String> docter = [
-    'Riyaz',
-    'Docter 1',
-    'Docter 2',
-    'Docter 3',
-    'Docter 4',
-  ];
-  String? selectedValue;
+  // final List<String> docter = [
+  //   'Riyaz',
+  //   'Docter 1',
+  //   'Docter 2',
+  //   'Docter 3',
+  //   'Docter 4',
+  // ];
+  // String? selectedValue;
 
-  final List<String> time = [
-    '5:00 PM to 11:00 PM',
-  ];
-  String? selectedValue2;
+  // final List<String> time = [
+  //   '5:00 PM to 11:00 PM',
+  // ];
+  // String? selectedValue2;
 
   // String dropdownvalue = 'Item 1';
 
   // List of items in our dropdown menu
-  final List<String> title = [
-    'Mr',
+
+    var titledropdownValues = ['Mr',
     'Mrs',
     'Ms',
     'Master',
     'Miss',
     'Smt',
     'Dr',
-    'Baby',
-  ];
-  String? Title;
+    'Baby'];
+      String defaultTitleDropdownValue = 'Mr';
+
+int? _radioGenderSelected=1;
+String _radioGenderVal ="";
+
 
   String? Appointment;
-  String? gender;
-  String? Adult;
+  // String? gender;
+  // String? Adult;
 
-  int? _genderSelected = 1;
-  String _genderVal = "";
+  // int? _genderSelected = 1;
+  // String _genderVal = "";
   int? _AppointmentSelected = 1;
   String _AppointmentVal = "";
   int? _AdultSelected = 1;
@@ -111,10 +129,10 @@ class _CreateAppointmentState extends State<CreateAppointment> {
           preferredSize: Size.fromHeight(50),
           child: AppBar(
             title: Text("New Appointment"),
-            //backgroundColor: Colors.redAccent,
+            backgroundColor: CustomColors.app_color,
           ),
         ),
-        body: SingleChildScrollView(
+        body:  isLoading ? Align(alignment: Alignment.center, child: SpinKitCircle(size: 30, color: CustomColors.app_color,)):  SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(15),
             //height: screenHeight,
@@ -122,7 +140,9 @@ class _CreateAppointmentState extends State<CreateAppointment> {
             child: Column(
               children: [
                 Container(
-                  child: DropdownButton2(
+                width: screenWidth*0.9,
+                height: screenHeight*0.08,
+                  child: DropdownButtonFormField(
                     //controller: TitleController,
                     hint: Text(
                       'Title',
@@ -131,31 +151,31 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                         color: Theme.of(context).hintColor,
                       ),
                     ),
-                    items: title
-                        .map((title) => DropdownMenuItem<String>(
-                              value: title,
-                              child: Text(
-                                title,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: Title,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        Title = newValue!;
-                        if (Title == 'Mr') {
-                          _genderSelected = 1;
-                        } else if (Title == 'Mrs') {
-                          _genderSelected = 2;
-                        }
-                      });
-                    },
-                    buttonHeight: 60,
-                    buttonWidth: 300,
-                    itemHeight: 40,
+                       items: titledropdownValues.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                    value: defaultTitleDropdownValue,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              defaultTitleDropdownValue = newValue!;
+                            });
+                          },
+                    // onChanged: (String? newValue) {
+                    //   setState(() {
+                    //     Title = newValue!;
+                    //     if (Title == 'Mr') {
+                    //       _genderSelected = 1;
+                    //     } else if (Title == 'Mrs') {
+                    //       _genderSelected = 2;
+                    //     }
+                    //   });
+                    // },
+                    // buttonHeight: 60,
+                    // buttonWidth: 300,
+                    // itemHeight: 40,
                   ),
                 ),
                 Container(
@@ -188,6 +208,7 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormField(
+                        controller: contactController,
                         decoration: const InputDecoration(
                           labelText: 'Contact No',
                           border: OutlineInputBorder(),
@@ -200,70 +221,127 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Gender :",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: 1,
-                            groupValue: _genderSelected,
-                            activeColor: Colors.blue,
-                            onChanged: (value) {
-                              setState(() {
-                                _genderSelected = value as int;
-                                _genderVal = 'Male';
-                                print(_genderVal);
-                              });
-                            },
-                          ),
-                          const Text("Male"),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: 2,
-                            groupValue: _genderSelected,
-                            activeColor: Colors.blue,
-                            onChanged: (value) {
-                              setState(() {
-                                _genderSelected = value as int;
-                                _genderVal = 'Female';
-                                print(_genderVal);
-                              });
-                            },
-                          ),
-                          const Text("Female"),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: 3,
-                            groupValue: _genderSelected,
-                            activeColor: Colors.blue,
-                            onChanged: (value) {
-                              setState(() {
-                                _genderSelected = value as int;
-                                _genderVal = 'Other';
-                                print(_genderVal);
-                              });
-                            },
-                          ),
-                          const Text("Other"),
-                        ],
-                      ),
-                    ],
-                  ),
+                  child: 
+                Row(
+     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  value: 1,
+                  groupValue: _radioGenderSelected,
+                  activeColor: Colors.blue,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioGenderSelected = value as int;
+                      _radioGenderVal = 'Male';
+                      print(_radioGenderVal);
+                    });
+                  },
+                ),
+                const Text("Male"),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 2,
+                  groupValue: _radioGenderSelected,
+                  activeColor: Colors.blue,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioGenderSelected = value as int;
+                      _radioGenderVal = 'Female';
+                      print(_radioGenderVal);
+                    });
+                  },
+                ),
+                const Text("Female"),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 3,
+                  groupValue: _radioGenderSelected,
+                  activeColor: Colors.blue,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioGenderSelected = value as int;
+                      _radioGenderVal = 'Other';
+                      print(_radioGenderVal);
+                    });
+                  },
+                ),
+                const Text("Other"),
+              ],
+            ),
+          ],
+        ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     Row(
+                  //       children: [
+                  //         Text(
+                  //           "Gender :",
+                  //           style: TextStyle(fontSize: 18),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     Row(
+                  //       children: [
+                  //         Radio(
+                  //           value: 1,
+                  //           groupValue: _genderSelected,
+                  //           activeColor: Colors.blue,
+                  //           onChanged: (value) {
+                  //             setState(() {
+                  //               _genderSelected = value as int;
+                  //               _genderVal = 'Male';
+                  //               print(_genderVal);
+                  //             });
+                  //           },
+                  //         ),
+                  //         const Text("Male"),
+                  //       ],
+                  //     ),
+                  //     Row(
+                  //       children: [
+                  //         Radio(
+                  //           value: 2,
+                  //           groupValue: _genderSelected,
+                  //           activeColor: Colors.blue,
+                  //           onChanged: (value) {
+                  //             setState(() {
+                  //               _genderSelected = value as int;
+                  //               _genderVal = 'Female';
+                  //               print(_genderVal);
+                  //             });
+                  //           },
+                  //         ),
+                  //         const Text("Female"),
+                  //       ],
+                  //     ),
+                  //     Row(
+                  //       children: [
+                  //         Radio(
+                  //           value: 3,
+                  //           groupValue: _genderSelected,
+                  //           activeColor: Colors.blue,
+                  //           onChanged: (value) {
+                  //             setState(() {
+                  //               _genderSelected = value as int;
+                  //               _genderVal = 'Other';
+                  //               print(_genderVal);
+                  //             });
+                  //           },
+                  //         ),
+                  //         const Text("Other"),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 15),
@@ -403,66 +481,66 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                   ),
                 ),
                 Container(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'Select Docter',
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: docter
-                        .map((docter) => DropdownMenuItem<String>(
-                              value: docter,
-                              child: Text(
-                                docter,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                    buttonHeight: 70,
-                    buttonWidth: 300,
-                    itemHeight: 40,
-                  ),
+                  // child: DropdownButton2(
+                  //   hint: Text(
+                  //     'Select Docter',
+                  //     style: TextStyle(
+                  //       fontSize: 17,
+                  //       color: Theme.of(context).hintColor,
+                  //     ),
+                  //   ),
+                  //   items: docter
+                  //       .map((docter) => DropdownMenuItem<String>(
+                  //             value: docter,
+                  //             child: Text(
+                  //               docter,
+                  //               style: const TextStyle(
+                  //                 fontSize: 18,
+                  //               ),
+                  //             ),
+                  //           ))
+                  //       .toList(),
+                  //   value: selectedValue,
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       selectedValue = value as String;
+                  //     });
+                  //   },
+                  //   buttonHeight: 70,
+                  //   buttonWidth: 300,
+                  //   itemHeight: 40,
+                  // ),
                 ),
                 Container(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'Slot Time',
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: time
-                        .map((time) => DropdownMenuItem<String>(
-                              value: time,
-                              child: Text(
-                                time,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedValue2,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue2 = value as String;
-                      });
-                    },
-                    buttonHeight: 60,
-                    buttonWidth: 300,
-                    itemHeight: 40,
-                  ),
+                  // child: DropdownButton2(
+                  //   hint: Text(
+                  //     'Slot Time',
+                  //     style: TextStyle(
+                  //       fontSize: 17,
+                  //       color: Theme.of(context).hintColor,
+                  //     ),
+                  //   ),
+                  //   items: time
+                  //       .map((time) => DropdownMenuItem<String>(
+                  //             value: time,
+                  //             child: Text(
+                  //               time,
+                  //               style: const TextStyle(
+                  //                 fontSize: 18,
+                  //               ),
+                  //             ),
+                  //           ))
+                  //       .toList(),
+                  //   value: selectedValue2,
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       selectedValue2 = value as String;
+                  //     });
+                  //   },
+                  //   buttonHeight: 60,
+                  //   buttonWidth: 300,
+                  //   itemHeight: 40,
+                  // ),
                 ),
                 Container(
                   padding: EdgeInsets.only(
@@ -522,9 +600,9 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
+                    primary: CustomColors.success_color,
                   ),
-                  onPressed: () {
+                  onPressed: () async{
                     if (NameController.text.isEmpty) {
                       Fluttertoast.showToast(
                           msg: 'Please Enter Name',
@@ -547,12 +625,90 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                           textColor: Colors.white,
                           fontSize: 16.0);
                     } else {
-                      var Appointment_details = {
-                        'Name': NameController,
-                        'age': ageController,
+                      var access_token = userResponse['access_token'];
+                      var appointment_details = {
+    "patientName":NameController.text,
+    "title":defaultTitleDropdownValue,
+    "alternateMobileNo": Helper().isvalidElement(selectedPatient) ? selectedPatient['p_phone'].toString():'',
+    "mobileNo":contactController.text.toString(),
+    "gender":_radioGenderSelected ==1 ? 'Male': _radioGenderSelected ==2 ? 'Female':'Other',
+    "age":ageController.text.toString(),
+    "code":"",
+    "dob":dobController.text,
+    "doctor_id":"14",
+    "patientID":Helper().isvalidElement(selectedPatient) ? selectedPatient['id'].toString():"",
+    "emailId":Helper().isvalidElement(selectedPatient) ? selectedPatient['p_email']:"",
+    "appointment_date":dateController.text,
+    "tkn_type": _AppointmentSelected == 1? 'Call':'Visit',
+    "slot_time":"05:00 PM to 11:00 PM"
+};
+print(appointment_details);
+this.setState(() {
+   isLoading = true;
+});
+var addAppointment = await api().addNewAppointment(access_token, appointment_details);
+                         this.setState(() {
+   isLoading = false;
+});
+           if(Helper().isvalidElement(addAppointment) && Helper().isvalidElement(addAppointment['status']) && addAppointment['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+           
+           if(Helper().isvalidElement(addAppointment) && Helper().isvalidElement(addAppointment['status']) && (addAppointment['status'] == 'Add appointment Successfully' || addAppointment['status'] == 'Update Successfully')){
+                                                this.setState(() {
+               selectedPatient = null;
+               showAutoComplete = true;
+                  defaultTitleDropdownValue ='Mr';
+                  NameController.text = '';
+                      contactController.text ='';
+                      _radioGenderSelected = 1;
+                      // gender
+                      dobController.text ='';
+                    ageController.text = '';
+                    //  _radioVal ='Male';
+                     
+                     _AdultSelected = 1;
+                                         _AppointmentSelected = 1;
 
-                        //'Title': TitleController
-                      };
+                    // dateController.text = '';
+                    
+             });
+                                                Fluttertoast.showToast(
+                                      msg:
+                                         'Appointment added successfully',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: CustomColors.success_color,
+                                      textColor: Colors.white,
+                                      fontSize: 15.0);               
+                                      
+                                        Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AppointmentPage()),
+                  );
+
+                                      }
+                                      else{
+                                                     Fluttertoast.showToast(
+                                      msg:
+                                         'Please try again',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: CustomColors.error_color,
+                                      textColor: Colors.white,
+                                      fontSize: 15.0);  
+                                      }
+        
+  //  storage.setItem('diagnosisList', diagnosisList);
+
+  
+ }
+
+
                       // print(
                       //     'Appointment_details: ******${Appointment_details}');
                     }
@@ -655,9 +811,26 @@ class _CreateAppointmentState extends State<CreateAppointment> {
             return GestureDetector(
               onTap: () {
 // storage.setItem('selectedPatient', options.toList()[0][index]);
+var patient = options.toList()[0][index];
                   this.setState(() {
-                    selectedPatient = options.toList()[0][index];
-          showAutoComplete = false;
+                    selectedPatient = patient;
+                    defaultTitleDropdownValue = patient['title'].toString().isEmpty ? 'Mr':  titledropdownValues.toList().contains(patient['title'].toString())? patient['title'].toString():'Mr';
+patient['title'].toString();
+                    NameController.text = patient['p_name'].toString();
+                    contactController.text =patient['p_phone'].toString();
+                    _radioGenderSelected = patient['gender'].toString().toLowerCase() == 'male' ? 1: patient['gender'].toString().toLowerCase() == 'female'? 2:3;
+                    dobController.text = patient['p_dob'].toString();
+                    ageController.text = patient['p_age'].toString();
+                      showAutoComplete = false;
+                      
+                      
+                      // _radioVal = patient['gender'].toString();
+                    
+                      
+                    
+                    // _AppointmentSelected = 1;
+                    // adult
+                    
         });
               },
               child: Container(
@@ -754,7 +927,7 @@ child: Padding(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Container(
-        width: screenWidth*0.66,
+        width: screenWidth*0.76,
 
         // color: Colors.yellow,
         child: Row(
@@ -763,7 +936,7 @@ child: Padding(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(Helper().isvalidElement(selectedPatient) ? "${selectedPatient['title'].toString() + ". " + selectedPatient['p_name'].toString().toUpperCase()}":'', style: TextStyle(fontWeight: FontWeight.bold),),
-                Text(Helper().isvalidElement(selectedPatient) ? "Reg.No ${selectedPatient['patient_id'].toString()}":''),
+                // Text(Helper().isvalidElement(selectedPatient) ? "Reg.No ${selectedPatient['patient_id'].toString()}":''),
               ],
             ),
             
@@ -777,9 +950,26 @@ child: Padding(
 // width: screenWidth*0.2,
           child: IconButton(onPressed: (){
             //  storage.setItem('selectedPatient', null);
+
+
+
              this.setState(() {
                selectedPatient = null;
                showAutoComplete = true;
+                  // defaultTitleDropdownValue ='Mr';
+                  NameController.text = '';
+                      contactController.text ='';
+                      _radioGenderSelected = 1;
+                      // gender
+                      dobController.text ='';
+                    ageController.text = '';
+                    //  _radioVal ='Male';
+                     
+                     _AdultSelected = 1;
+                                         _AppointmentSelected = 1;
+
+                    // dateController.text = '';
+                    
              });
                              
           }, icon: Icon(Icons.close,),color: CustomColors.error_color,))
@@ -794,7 +984,8 @@ return Container(
    decoration: BoxDecoration(
           // color: Colors.red,
           border: Border.all(color: CustomColors.app_color),
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+          borderRadius: BorderRadius.all(Radius.circular(5))
+          ),
           child: Row(
             children: [
               Container(width: screenWidth*0.1,height: screenHeight, child: Icon(Icons.search)),

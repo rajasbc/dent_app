@@ -36,8 +36,8 @@ class _DiagnosisListState extends State<DiagnosisList> {
      if(storage.getItem('selectedTeethPosition') !=null){
  selectedTeeth = storage.getItem('selectedTeethPosition');
     }
-   widget.option =='Diagnosis' ? getDiagnosisList(): getTreatmentList();
-
+  //  widget.option =='Diagnosis' ? getDiagnosisList(): getTreatmentList();
+getTreatmentList();
     super.initState();
   }
   @override
@@ -54,6 +54,13 @@ class _DiagnosisListState extends State<DiagnosisList> {
         child: AppBar(
           backgroundColor: CustomColors.app_color,
           title: Text('${widget.option} List'),
+                 leading: IconButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DentalPlan()),
+                  );
+            }, icon: Icon(Icons.arrow_back)),
         ),
       ),
               resizeToAvoidBottomInset: false,
@@ -83,7 +90,6 @@ class _DiagnosisListState extends State<DiagnosisList> {
                   Helper().isvalidElement(diagnosisList.values.toList()[0].length) && 
                   diagnosisList.values.toList()[0].length > 0 ?  
                   ListView.builder(
-                                  // itemCount:diagnosisList.values.toList()[0].length,
 
                                    itemCount: searchText.text.isEmpty
                       ? diagnosisList.values.toList()[0].length

@@ -23,7 +23,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final LocalStorage storage = new LocalStorage('nigdent_store');
-  late final Box? storeBox;
+  // late final Box? storeBox;
 
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // patient_data = storage.getItem('selectedPatient');
     // print('object');
-    storeBox = Hive.box(StoreBoxActions().userResponseBox);
+    // storeBox = Hive.box('userResponse');
     FlutterNativeSplash.remove();
   }
 
@@ -178,7 +178,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           var user_data =
                               await api().userLoginResponse(user_input);
                           storage.setItem('userResponse', user_data);
-                                await storeBox?.put('userResponse', user_data);
 
                           // await storeBox?.put('userResponse', user_data);
                           if (Helper().isvalidElement(user_data) && 
@@ -200,6 +199,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (user_data['access_token'] != null) {
                               _email.text = '';
                               _password.text = '';
+                                                              await storeBox?.put('userResponse', user_data);
+
                               this.setState(() {});
                               
                               // Navigator.push(

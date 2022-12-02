@@ -1,5 +1,6 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:nigdent/AppointmentWidget/CreateAppointment.dart';
@@ -10,6 +11,9 @@ import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/PatientWidget/CreatePatient.dart';
 import 'package:nigdent/api/Apicall.dart';
+import 'package:nigdent/main.dart';
+import 'dart:io' show Platform, exit;
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -38,8 +42,23 @@ getAppointmentCount();
     // userResponse = storage.getItem('userResponse');
 double screenHeight = MediaQuery.of(context).size.height-50;
 double screenwidth = MediaQuery.of(context).size.width;
+    return new WillPopScope(
+            onWillPop: () async {
+                  // Navigator.push(
+                  //                   context,
+                  //                   MaterialPageRoute(
+                  //                       builder: (context) => MyApp()),
+                  //                 );
+                    if (Platform.isAndroid) {
+ exit(0);
+     } else if (Platform.isIOS) {
+      exit(0);
+    }
+        return true;
+      },
 
-    return Scaffold(
+ child: new Scaffold(
+    // return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
@@ -307,6 +326,7 @@ double screenwidth = MediaQuery.of(context).size.width;
           ),
         // ),
       ),
+    )
     );
   }
   getPatientList() async{

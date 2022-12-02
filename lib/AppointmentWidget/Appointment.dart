@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/AppointmentWidget/CreateAppointment.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/api/Apicall.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -51,7 +54,15 @@ class _AppointmentPageState extends State<AppointmentPage> {
           child: AppBar(
             title: Text("Appointment List"),
             backgroundColor: CustomColors.app_color,
+            leading: IconButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DashboardScreen()),
+                  );
+            }, icon: Icon(Icons.arrow_back)),
             actions: [
+            
               IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {

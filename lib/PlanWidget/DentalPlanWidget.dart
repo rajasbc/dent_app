@@ -6,6 +6,7 @@ import 'package:fluttericon/fontelico_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:babylonjs_viewer/babylonjs_viewer.dart';
 import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/PlanWidget/AdultsModal.dart';
 import 'package:nigdent/PlanWidget/DiagnosisList.dart';
 import 'package:nigdent/PlanWidget/MixedModal.dart';
@@ -60,6 +61,13 @@ var accessToken;
         child: AppBar(
           backgroundColor: CustomColors.app_color,
           title: Text('Dent Plan'),
+                 leading: IconButton(onPressed: (){
+                        Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DashboardScreen()),
+                  );
+            }, icon: Icon(Icons.arrow_back)),
         ),
       ),
       body: Container(
