@@ -198,20 +198,20 @@ var treatment_discount = 0;
       // color: Colors.red,
       child: Column(
         children: [
-          Container(
-           height: screenHeight*0.08,
-            color: Colors.black12,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment:MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Total Fees: 500', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-                 Text('Total Discount: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
-                  Text('Total Balance: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
-              ],
-          ),
-            )),
+          // Container(
+          //  height: screenHeight*0.08,
+          //   color: Colors.black12,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Row(
+          //       mainAxisAlignment:MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text('Total Fees: 500', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+          //        Text('Total Discount: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+          //         Text('Total Balance: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+          //     ],
+          // ),
+          //   )),
             SizedBox(height: screenHeight*0.01,),
             // Divider(color: Colors.white,),
           !isLoading ? Container(
