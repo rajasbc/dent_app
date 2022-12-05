@@ -4,11 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as developer;
 import '../main.dart';
 import 'colors.dart' as CustomColor;
 final LocalStorage storage = new LocalStorage('nigdent_store');
-
+  late SharedPreferences pref;
 class Helper {
   isvalidElement(data) {
     return data != null;
@@ -26,9 +27,16 @@ class Helper {
     // StoreBoxActions().clearBoxKey('userResponse');
     // storage.setItem('userResponse', null);
     // storage.setItem('selectedPatient', null);
+    pref = await SharedPreferences.getInstance();
+
     storage.clear();
-    await Hive.box('userResponse').delete('userResponse');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+    //  pref.setString('access_token', user_data['access_token']);
+    //                         pref.setBool('isLogin', true);
+    await pref.remove('access_token');
+     await pref.remove('isLogin');
+
+        // await Hive.box('userResponse').delete(userResponse);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DentWrapper()));
     Fluttertoast.showToast(
         msg: action == 'logout' ? 'Logout successfully' : 'Session expeired',
         toastLength: Toast.LENGTH_SHORT,

@@ -16,7 +16,11 @@
       String appointmentList = 'auth/dent_appointment_list';
       String addAppointmentEndpoint = 'auth/dent_add_appointment';
        String addDoctorEndpoint = 'auth/dent_add_doctor';
+      String treatmentPlanEndpoint = 'auth/plan_summary_report';
 
+
+      String doctorListEndpoint = 'auth/dent_get_doctors';
+      String addPatientEndpoint = 'auth/dent_add_patient';
 
 
 

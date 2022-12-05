@@ -121,7 +121,7 @@ class _DentMenuBarState extends State<DentMenuBar> {
                     //                  Padding(
                     // padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      width: screenWidth,
+                      width: screenWidth*0.8,
                       // color: Colors.red,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -491,7 +491,7 @@ child: Padding(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Container(
-        width: screenWidth*0.66,
+        width: screenWidth*0.6,
 
         // color: Colors.yellow,
         child: Row(

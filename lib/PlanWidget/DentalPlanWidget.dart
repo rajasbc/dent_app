@@ -38,6 +38,9 @@ class _DentalPlanState extends State<DentalPlan> {
 bool isLoading = false;
 var treatment_details = null;
 var accessToken;
+int treatment_total = 0;
+var treatment_balance = 0;
+var treatment_discount = 0;
   @override
   void initState() {
         accessToken = storage.getItem('userResponse')['access_token'];
@@ -195,20 +198,20 @@ var accessToken;
       // color: Colors.red,
       child: Column(
         children: [
-          Container(
-           height: screenHeight*0.08,
-            color: Colors.black12,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment:MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Total Fees: 5000', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-                 Text('Total Discount: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
-                  Text('Total Balance: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
-              ],
-          ),
-            )),
+          // Container(
+          //  height: screenHeight*0.08,
+          //   color: Colors.black12,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Row(
+          //       mainAxisAlignment:MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text('Total Fees: 500', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+          //        Text('Total Discount: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+          //         Text('Total Balance: 5000', style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold)),
+          //     ],
+          // ),
+          //   )),
             SizedBox(height: screenHeight*0.01,),
             // Divider(color: Colors.white,),
           !isLoading ? Container(
@@ -238,22 +241,23 @@ var accessToken;
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('S.No: ${index+1}', style: TextStyle(fontSize: 12),),
-                            Text('Date: 06/11/2022', style: TextStyle(fontSize: 12),),
-                            Text('Visit: ${index}',style: TextStyle(fontSize: 12)),
+                            Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
+                            // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
+                            Text('Visit:  ${data['visit']}',style: TextStyle(fontSize: 12)),
                             
                           ],
                         ),
                       ),
-                             Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
-                            Text('Exam: ${index}',style: TextStyle(fontSize: 12)),                            
-                          ],
-                        ),
-                      ),
+                      //        Padding(
+                      //   padding: const EdgeInsets.all(2.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
+                      //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),                            
+                      //     ],
+                      //   ),
+                      // ),
                        Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Row(
@@ -270,10 +274,10 @@ var accessToken;
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Fees: ${data['fees']}',style: TextStyle(fontSize: 12)),
-                            Text('Discount: 0.00',style: TextStyle(fontSize: 12)),
-                            Text('Balance: 50000',style: TextStyle(fontSize: 12)),
-                            Text('Status: Pending',style: TextStyle(fontSize: 12)),
+                            Text('Fees: ${data['fees'].toString()}',style: TextStyle(fontSize: 12)),
+                            Text('Discount: ${data['discount'].toString()}',style: TextStyle(fontSize: 12)),
+                            Text('Balance: ${data['balance'].toString()}',style: TextStyle(fontSize: 12)),
+                            Text('Status: ${data['pay_status'].toString()}',style: TextStyle(fontSize: 12)),
                             
                           ],
                         ),
