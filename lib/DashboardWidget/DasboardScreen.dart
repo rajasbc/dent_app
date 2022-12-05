@@ -11,12 +11,16 @@ import 'package:nigdent/Common/utils.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
+// import 'package:nigdent/DashboardWidget/staff/Stafflist.dart';
 import 'package:nigdent/PatientWidget/CreatePatient.dart';
 import 'package:nigdent/api/Apicall.dart';
 import 'package:nigdent/main.dart';
 import 'dart:io' show Platform, exit;
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../DoctorWidget/DoctorsList.dart';
+import '../StaffWidget/StaffList.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -382,6 +386,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       )),
                     ),
                   ),
+                  // ElevatedButton(onPressed: (){
+                  //   Navigator.push(context, MaterialPageRoute(
+                  //     builder: (context) => const DoctorsList(),));
+                  // }, child: Text('Doctor')),
+                  //  ElevatedButton(onPressed: (){
+                  //   Navigator.push(context, MaterialPageRoute(
+                  //     builder: (context) => const StaffList(),));
+                  // }, child: Text('Staff'))
                 ],
               ),
             ),

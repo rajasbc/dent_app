@@ -261,8 +261,19 @@ class _CreatePatientState extends State<CreatePatient> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   CustomColors.app_color)),
                           onPressed: () {
-                           if(patientnameController.text.isEmpty && ageController.text.isEmpty ){
-                            Fluttertoast.showToast(msg: 'Please Enter Name And Age',
+                           if(patientnameController.text.isEmpty  ){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor:  Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                         else if(ageController.text.isEmpty  ){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Age',
                              toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
                              timeInSecForIosWeb: 1,
@@ -272,6 +283,29 @@ class _CreatePatientState extends State<CreatePatient> {
                             );
                             
                           }
+                          else  if(mobileController.text.isEmpty){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else if(mobileController.text.length<10){
+                              Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+
+                          }
+                          
                           else{
                              this.setState(() {
                               show_information = 'Personal Information';
@@ -293,9 +327,55 @@ class _CreatePatientState extends State<CreatePatient> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   CustomColors.app_color)),
                           onPressed: () {
-                            this.setState(() {
+                             if(patientnameController.text.isEmpty  ){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor:  Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                         else if(ageController.text.isEmpty  ){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Age',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else  if(mobileController.text.isEmpty){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else if(mobileController.text.length<10){
+                              Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+
+                          }
+                          else{
+                              this.setState(() {
                               show_information = 'Other Information';
                             });
+                          }
                           },
                           child: Align(
                               alignment: Alignment.center,

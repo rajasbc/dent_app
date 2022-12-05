@@ -186,10 +186,21 @@ class api {
       }
 
   }
-  addDoctor(access_token, data) async {
-    String diagnosis_url = RequestPath.base_url + RequestPath.addDoctorEndpoint;
-    var response = await http.post(Uri.parse(diagnosis_url),
-        body: jsonEncode(data), headers: _setHeaders(access_token));
+  addDoctor(access_token, doctor_details) async {
+    String addDoctor_url = RequestPath.base_url + RequestPath.addDoctorEndpoint;
+    var response = await http.post(Uri.parse(addDoctor_url),
+        body: jsonEncode(doctor_details), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  getdoctorlist(access_token) async {
+    String doctor_list_url = RequestPath.base_url + RequestPath.doctorListEndpoint;
+    var response = await http.get(Uri.parse(doctor_list_url),
+        headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

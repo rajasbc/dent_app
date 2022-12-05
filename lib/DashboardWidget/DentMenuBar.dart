@@ -21,6 +21,9 @@ import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/api/Apicall.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../DoctorWidget/DoctorsList.dart';
+import '../StaffWidget/StaffList.dart';
+
 class DentMenuBar extends StatefulWidget {
   const DentMenuBar({Key? key}) : super(key: key);
 
@@ -348,6 +351,28 @@ class _DentMenuBarState extends State<DentMenuBar> {
                                       fontSize: 15.0);
                             }
                     
+                          },
+                  ),
+                   ListTile(
+                          title: Text('Doctors'),
+                          leading: Icon(Icons.local_hospital_outlined),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DoctorsList()),
+                            );
+                          },
+                  ),
+                   ListTile(
+                          title: Text('Staffs'),
+                          leading: Icon(Icons.groups_rounded),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const StaffList()),
+                            );
                           },
                   ),
                 ])

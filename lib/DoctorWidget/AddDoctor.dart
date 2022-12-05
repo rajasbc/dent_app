@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nigdent/Common/colors.dart' as CustomColors;
+import '../Common/utils.dart';
+import '../api/Apicall.dart';
+import 'DoctorsList.dart';
 
 class AddDoctor extends StatefulWidget {
 
@@ -32,6 +36,7 @@ class _AddDoctorState extends State<AddDoctor> {
     _passwordVisible = false;
     _passwordVisible2 = false;
   }
+    var storeBox;
    
   //   void initState() {
   //   _passwordVisible2 = false;
@@ -41,7 +46,9 @@ class _AddDoctorState extends State<AddDoctor> {
    ];
    Widget build(BuildContext context) {
        return Scaffold(
-           appBar: AppBar(title: const Text('Add Doctor'),),
+           appBar: AppBar(title: const Text('Add Doctor'),
+                       backgroundColor: CustomColors.app_color,
+),
            body: Padding(
              padding: const EdgeInsets.all(8.0),
              child: Container(
@@ -230,16 +237,23 @@ class _AddDoctorState extends State<AddDoctor> {
                    _passwordVisible2 = !_passwordVisible2;
                });
              },
+           
             ),
           ),
+          // onEditingComplete: (){
+          //   print('333333333333333333');
+          // },
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 15,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
               // width: MediaQuery.of(context).size.width / 2,
-              child: ElevatedButton(onPressed: (){
+              child: ElevatedButton(
+    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+
+                onPressed: () async{
                 if(nameController.text.isEmpty){
                    Fluttertoast.showToast(msg: 'Please Enter Doctor Name',
                             toastLength: Toast.LENGTH_SHORT,
@@ -322,41 +336,71 @@ class _AddDoctorState extends State<AddDoctor> {
                                     fontSize: 16.0);
                 }
                 else{
+                  
                   var doctor_details={
-                    'title':doctorDropdownvalue,
-                    'doctor_name':nameController.text,
-                    'deignation':designationController.text,
-                    'profession':professionController.text,
-                    'mobile_No':mobileController.text,
-                    'email':emailController.text,
-                    'address':addressController.text,
-                    'password':passwordController.text,
-                    'confirm_password':conpasswordController.text
+                    // "referral_name":nameController.text,
+                    "doctor_name":nameController.text,
+                    "mobile_number":mobileController.text,
+                    "email_id":emailController.text,
+                    // "rtype":"Doctor",
+                    "password":passwordController.text,
+                    "designation":designationController.text,
+                    // "page_type":"doctor",
+                    // "usertype":professionController.text,
+                    "address":addressController.text,
+                    "doctor_id":""
                   };
+                 
+                   String access_token = storage.getItem('userResponse')['access_token'];
+
+                          var result=  await api().addDoctor(access_token, doctor_details);
+                          print(result);
+                          if(result['status'] == "Doctor Added  Successfully"){
+                              Fluttertoast.showToast(msg: 'Doctor Added Successfully',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder:  (context) => const DoctorsList()));
+
+                          }
+                          else{
+                             Fluttertoast.showToast(msg: 'Please Try Again Later',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                          }
                 }
 
               }, child: Text('Save')),
             ),
-             SizedBox(
-              // width: MediaQuery.of(context).size.width / 2,
-              child: ElevatedButton(
-                  child: const Text('Reset'),
-                  onPressed: () {
-                   nameController.clear();
-                   designationController.clear();
-                   professionController.clear();
-                   mobileController.clear();
-                   emailController.clear();
-                   addressController.clear();
-                   passwordController.clear();
-                   conpasswordController.clear();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepOrangeAccent,
-                    //onPrimary: Colors.black,
-                  ),
-                ),
-            ),
+            //  SizedBox(
+            //   // width: MediaQuery.of(context).size.width / 2,
+            //   child: ElevatedButton(
+            //       child: const Text('Reset'),
+            //       onPressed: () {
+            //        nameController.clear();
+            //        designationController.clear();
+            //        professionController.clear();
+            //        mobileController.clear();
+            //        emailController.clear();
+            //        addressController.clear();
+            //        passwordController.clear();
+            //        conpasswordController.clear();
+            //       },
+            //       style: ElevatedButton.styleFrom(
+            //         primary: Colors.deepOrangeAccent,
+            //         //onPrimary: Colors.black,
+            //       ),
+            //     ),
+            // ),
           ],
         )
                   ],

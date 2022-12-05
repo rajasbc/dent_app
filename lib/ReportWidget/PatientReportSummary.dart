@@ -307,7 +307,6 @@ getpatientSummaryReportList();
  }
 
  getpatientSummaryReportList() async{
-   var formatter = new DateFormat('yyyy-MM-dd');
 // var data = {
 // 'from_date':  formatter.format(dateRange.start),
 // 'to_date': formatter.format(dateRange.end),

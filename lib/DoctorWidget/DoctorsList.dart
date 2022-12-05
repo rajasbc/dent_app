@@ -17,18 +17,21 @@ class DoctorsList extends StatefulWidget {
 }
 
 class _DoctorsListState extends State<DoctorsList> {
+    bool isLoading  = false;
 
-var doctorlist =null;
+  var DoctorList =null;
     var accessToken;
 
-    @override
+@override
   void initState() {
         accessToken = storage.getItem('userResponse')['access_token'];
 
- getdoctortList();
+getDoctorList();
     // TODO: implement initState
     super.initState();
   }
+
+
    @override
    Widget build(BuildContext context) {
        var screenWidth= MediaQuery.of(context).size.width;
@@ -36,155 +39,240 @@ var doctorlist =null;
            appBar: AppBar(title: const Text('Doctors List'),
             backgroundColor: CustomColors.app_color,
              actions: [
-           ElevatedButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AddDoctor(),));
-
-           }, child: const Text('Add Doctor'))
-            // IconButton(onPressed: getAllCustomers, icon: Icon(Icons.category))
+          
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddDoctor()),
+                  );
+                },
+                // child: Text("New"),
+              )
           ],
             // leading: ElevatedButton(onPressed: (){
 
             // }, child: const Text('Add Doctor')),
             ),
-           body: Container(
-        
-
-             child: SingleChildScrollView(
+           body: 
+             !isLoading ? Container(
+        padding: EdgeInsets.all(10),
+         child: Helper().isvalidElement(DoctorList) &&
+                  DoctorList.length > 0 ?
+                  ListView.builder(
+                    itemCount: DoctorList.length ,
+                    itemBuilder: (BuildContext context, int index){
+                      var data =DoctorList[index];
+                      return Container(
+                         color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
+                                   child: SingleChildScrollView(
          child: Padding(
            padding: const EdgeInsets.all(8.0),
-           child: Row(
-            children: [
-                      Container(
-                        width: screenWidth * 0.46,
-                        // color: Colors.amber,
-                        child:Column(
-                          children: [
-                           Row(
-                                  
-                            children: [
-                              Text(
-                                  'Name :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                   'Riyaz'),
-                            ],
-                              ),
-                               Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Mobile.No :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                '5645643456'),
-                            ],
-                              ),
-                              Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Email.Id :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                'rs@gmail.com'),
-                            ],
-                              ),
-                          ],
-                        )
-                      ),
-                       Container(
-                        width: screenWidth *0.46,
-                        // color: Colors.black,
-                        // alignment: Alignment.centerRight,
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
-                              
-                            mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                
-                              Text(
-                                
-                                  'Address :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize:13 ),
-                                  ),
-                              Text(
-                                  '23,sdjiid',
-                                  ),
-                            ],
-                            ),
-                             Row(
-                              
-                            mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                
-                              Text(
-                                
-                                  'User Level :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                 'Doctor'),
-                            ],
-                            ),
-                            //  Row(
-
-                            // mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                                
-                            //   Text(
-                                
-                            //       'Reg.Date :',
-                            //       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                            //       ),
-                            //   Text(
-                            //     'hi'),
-                            // ],
-                            // )
-                          ],
-                        ),
-                      ),
-                    ],
+           child: Column(
+             children: [
+               
+               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Row(
+                   children: [
+                     Text(
+                                      'Name :',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                      ),
+                                        Text(
+                                   "${data['name'].toString()}",style: TextStyle(fontSize: 13),),
+                   ],
+                 ),
+                  Row(
+                   children: [
+                     Text(
+                                      'User Level :',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                      ),
+                                        Text(
+                                   "${data['user_type'].toString()}",style: TextStyle(fontSize: 13),),
+                   ],
+                 ),
+                            
+               ],
+               ),
+               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Row(
+                   children: [
+                     Text(
+                                      'Email.Id :',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                      ),
+                                        Text(
+                                   "${data['email'].toString()}",style: TextStyle(fontSize: 13),),
+                   ],
+                 ),         
+               ],
+               ),
+                 Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Row(
+                   children: [
+                     Text(
+                                      'Address :',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                      ),
+                                        Text(
+                                   "${data['address'].toString()}",style: TextStyle(fontSize: 13),),
+                   ],
+                 ),
+                  Row(
+                   children: [
+                     Text(
+                                      'Mobile :',
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                      ),
+                                        Text(
+                                   "${data['contact_no'].toString()}",style: TextStyle(fontSize: 13),),
+                   ],
+                 ),
+                            
+               ],
+               ),
+                
+             ],
            ),
          ),
        ),
-           ),
+                      );
+                    },
+                  ): Image.asset(
+                        'assets/images/no_data_found.png',
+                        // height: screenheight * 0.3,
+                        // color: Colors.blue.shade100,
+                        // color: Colors.black12,
+                      ),
+
+           ): Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+                  'assets/images/loading_image.png',
+                  // height: screenheight * 0.3,
+                  // color: Colors.blue.shade100,
+                  // color: Colors.black12,
+                ),
+          ),
        );
   }
-   getdoctortList() async{
-  //  var formatter = new DateFormat('yyyy-MM-dd');
-var data = {
+
+   getDoctorList() async{
+// var data = {
 // 'from_date':  formatter.format(dateRange.start),
 // 'to_date': formatter.format(dateRange.end),
-// "referral_name":nameController.text,
-"mobile_number":"98765432398",
-"email_id":"pooja@gmail.com",
-"rtype":"Doctor",
-"password":"123456",
-"designation":"heart",
-"page_type":"doctor",
-"usertype":"Doctor",
-"address":"my heart",
-};
+// // };
 this.setState(() {
-  //  isLoading = true;
+   isLoading = true;
 });
 
-             doctorlist = await api().addDoctor(accessToken,data);
-              if(Helper().isvalidElement( doctorlist) && Helper().isvalidElement( doctorlist['status']) &&  doctorlist['status'] == 'Token is Invalid'){
+              DoctorList = await api().getdoctorlist(accessToken);
+              if(Helper().isvalidElement(DoctorList) && Helper().isvalidElement(DoctorList['status']) && DoctorList['status'] == 'Token is Invalid'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{
-          doctorlist =  doctorlist['reports'];
+          DoctorList = DoctorList['doctor_list'];
   //  storage.setItem('diagnosisList', diagnosisList);
                          this.setState(() {
-  //  isLoading = false;
+   isLoading = false;
 });
 
  }
  }
 }
+
+
+
+
+    // children: [
+    //                   Container(
+    //                     width: screenWidth * 0.46,
+    //                     // color: Colors.amber,
+    //                     child:Column(
+    //                       children: [
+    //                        Row(
+                                  
+    //                         children: [
+    //                           Text(
+    //                               'Name :',
+    //                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+    //                               ),
+    //                           Text(
+    //                                "${data['name'].toString()}",style: TextStyle(fontSize: 13),),
+    //                         ],
+    //                           ),
+    //                            Row(
+    //                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                         children: [
+    //                           Text(
+    //                               'Mobile.No :',
+    //                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+    //                               ),
+    //                           Text(
+    //                           "${data['contact_no'].toString()}",style: TextStyle(fontSize: 13),),
+    //                         ],
+    //                           ),
+    //                           Row(
+    //                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                         children: [
+    //                           Text(
+    //                               'Email.Id :',
+    //                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+    //                               ),
+    //                           Text(
+    //                            "${data['email'].toString()}",style: TextStyle(fontSize: 13),),
+    //                         ],
+    //                           ),
+    //                       ],
+    //                     )
+    //                   ),
+    //                    Container(
+    //                     width: screenWidth *0.46,
+    //                     // color: Colors.black,
+    //                     // alignment: Alignment.centerRight,
+    //                     child: Column(
+    //                       // mainAxisAlignment: MainAxisAlignment.end,
+    //                       children: [
+    //                         Row(
+                              
+    //                         mainAxisAlignment: MainAxisAlignment.end,
+    //                           children: [
+                                
+    //                           Text(
+                                
+                                  // 'Address :',
+    //                               style: TextStyle(fontWeight: FontWeight.bold,fontSize:13 ),
+    //                               ),
+    //                           Text(
+    //                              "${data['address'].toString()}",style: TextStyle(fontSize: 13),
+    //                               ),
+    //                         ],
+    //                         ),
+    //                          Row(
+                              
+    //                         mainAxisAlignment: MainAxisAlignment.end,
+    //                           children: [
+                                
+    //                           Text(
+                                
+    //                               'User Level :',
+    //                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+    //                               ),
+    //                           Text(
+    //                              "${data['user_type'].toString()}",style: TextStyle(fontSize: 13),),
+    //                         ],
+    //                         ),
+                           
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ],
