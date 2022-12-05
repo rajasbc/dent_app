@@ -186,5 +186,15 @@ class api {
       }
 
   }
+  DoctorList(access_token, data) async {
+    String diagnosis_url = RequestPath.base_url + RequestPath.addDoctorEndpoint;
+    var response = await http.post(Uri.parse(diagnosis_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
   
 }

@@ -251,9 +251,25 @@ DateTime currentdate = DateTime.now();
                         width: screenWidth * 0.33,
                         child: ElevatedButton(
                           onPressed: () {
-                            this.setState(() {
+                           if(patientnameController.text.isEmpty && ageController.text.isEmpty ){
+                            Fluttertoast.showToast(msg: 'Please Enter Name And Age',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else{
+                             this.setState(() {
                               show_information = 'Personal Information';
-                            });
+                            }
+                            );
+
+                          }
+                           
                           },
                           child: Align(
                               alignment: Alignment.center,
