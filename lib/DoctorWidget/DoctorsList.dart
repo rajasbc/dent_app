@@ -174,7 +174,6 @@ getDoctorList();
 this.setState(() {
    isLoading = true;
 });
-
               DoctorList = await api().getdoctorlist(accessToken);
               if(Helper().isvalidElement(DoctorList) && Helper().isvalidElement(DoctorList['status']) && DoctorList['status'] == 'Token is Invalid'){
                Helper().appLogoutCall(context, 'Session expeired');
@@ -185,17 +184,12 @@ this.setState(() {
                          this.setState(() {
    isLoading = false;
 });
-
  }
  }
 }
-
-
-
-
     // children: [
     //                   Container(
-    //                     width: screenWidth * 0.46,
+                        // width: screenWidth * 0.46,
     //                     // color: Colors.amber,
     //                     child:Column(
     //                       children: [

@@ -207,5 +207,26 @@ class api {
       return json.decode(response.body);
     }
   }
+   addStaff(access_token, staff_details) async {
+    String addStaff_url = RequestPath.base_url + RequestPath.addStaffEndpoint;
+    var response = await http.post(Uri.parse(addStaff_url),
+        body: jsonEncode(staff_details), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+   getstafflist(access_token) async {
+    String staff_list_url = RequestPath.base_url + RequestPath.staffListEndpoint;
+    var response = await http.get(Uri.parse(staff_list_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
   
 }

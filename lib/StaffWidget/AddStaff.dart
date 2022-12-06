@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 
+import '../Common/utils.dart';
+import '../api/Apicall.dart';
+import 'StaffList.dart';
+
 
 class AddStaff extends StatefulWidget {
 
@@ -106,10 +110,16 @@ var choosevalue = [
                             if (value == null || value.isEmpty) {
                               return '';
                             }
+                            else if(value.length>=1 && value.length<=9){
+                              return 'Mobile.No Must Contain 10 Digits';
+                            }
+                            else{
                             return null;
+                            }
                           },
                           keyboardType:
                               TextInputType.numberWithOptions(decimal: true),
+                              
                           maxLength: 10,
                         
                         ),
@@ -125,7 +135,7 @@ var choosevalue = [
                           autovalidateMode: AutovalidateMode.always,
                           controller: emailController,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null || value.isEmpty || !value.contains('@') || !value.contains('.') || !value.contains('com'))  {
                               return '';
                             }
                             return null;
@@ -212,7 +222,19 @@ var choosevalue = [
                       SizedBox(height: 10,),
                      TextFormField(
                  keyboardType: TextInputType.text,
+                 autovalidateMode: AutovalidateMode.always,
                  controller: passwordController,
+                 validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '';
+                            }
+                            else if(value.length>=1 && value.length<=6){
+                              return'Password should more than 6 characters';
+                            }
+                            else{
+                            return null;
+                            }
+                          },
                  obscureText: !_passwordVisible,//This will obscure text dynamically
                  decoration: InputDecoration(
                      labelText: 'Password',
@@ -238,7 +260,19 @@ var choosevalue = [
                        SizedBox(height: 10,),
                      TextFormField(
                  keyboardType: TextInputType.text,
+              autovalidateMode: AutovalidateMode.always,
                  controller: confirmpassController,
+                  validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '';
+                            }
+                            // else if(value.length>1 && passwordController != confirmpassController){
+                            //   return'Should Be Same as Password';
+                            // }
+                            else{
+                            return null;
+                            }
+                          },
                  obscureText: !_passwordVisible2,//This will obscure text dynamically
                  decoration: InputDecoration(
                      labelText: 'Confirm Password',
@@ -267,7 +301,9 @@ var choosevalue = [
                       ),
                       SizedBox(height: 15,),
                       SizedBox(
-                        child: ElevatedButton(onPressed:(){
+                        child: ElevatedButton(
+                           style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(CustomColors.app_color)),
+                          onPressed:()async{
                           if(staffnameController.text.isEmpty){
                    Fluttertoast.showToast(msg: 'Please Enter Staff Name',
                             toastLength: Toast.LENGTH_SHORT,
@@ -295,8 +331,26 @@ var choosevalue = [
                             textColor: Colors.white,
                                     fontSize: 16.0);
                 }
+                 else if(numberController.text.length<10){
+                   Fluttertoast.showToast(msg: 'Mobile.No Must Have 10 Digits',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                }
                  else if(emailController.text.isEmpty){
                    Fluttertoast.showToast(msg: 'Please Enter Email Id',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                }
+                 else if( ! emailController.text. contains('@') || ! emailController.text.contains('.') || !emailController.text.contains('com')){
+                   Fluttertoast.showToast(msg: 'Please Enter Valid Email Id',
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
                              timeInSecForIosWeb: 1,
@@ -331,16 +385,7 @@ var choosevalue = [
                             textColor: Colors.white,
                                     fontSize: 16.0);
                 }
-                  else if(passwordController != confirmpassController){
-                   Fluttertoast.showToast(msg: 'Password Does not Match',
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0);
-                }
-                 else if(passwordController.text.isEmpty){
+                else if(passwordController.text.isEmpty){
                    Fluttertoast.showToast(msg: 'Password Cannot Be Empty',
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
@@ -358,10 +403,54 @@ var choosevalue = [
                             textColor: Colors.white,
                                     fontSize: 16.0);
                 }
+                  else if(passwordController.text != confirmpassController.text){
+                   Fluttertoast.showToast(msg: 'Password Does not Match',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                }
+                 
                 else{
-                  var staff_details=[
+                  var staff_details={
+                  "staff_id":"",
+                  "userName":staffnameController.text,
+                  "designation":designationController.text,
+                  "email_id":emailController.text,
+                  "mobile_no":numberController.text,
+                  "address":addressController.text,
+                  "username":usernameController.text,
+                  "password":passwordController.text,
+                  "confirmPassword":confirmpassController.text,
+                  };
+                     String access_token = storage.getItem('userResponse')['access_token'];
 
-                  ];
+                          var result=  await api().addStaff(access_token, staff_details);
+                           print(result);
+                          if(result['status'] == "Staff Added  Successfully"){
+                              Fluttertoast.showToast(msg: 'Staff Added Successfully',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder:  (context) => const StaffList()));
+
+                          }
+                          else{
+                             Fluttertoast.showToast(msg: 'Please Try Again Later',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                          }
                 }
 
 

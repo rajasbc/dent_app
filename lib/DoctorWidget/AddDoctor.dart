@@ -143,7 +143,12 @@ class _AddDoctorState extends State<AddDoctor> {
                         if (value == null || value.isEmpty) {
                           return '';
                         }
+                        else if(value.length>=1 && value.length<=9){
+                          return 'Mobile.No Must Contain 10 Digits';
+                        }
+                        else{
                         return null;
+                        }
                       },
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
@@ -161,7 +166,7 @@ class _AddDoctorState extends State<AddDoctor> {
                       autovalidateMode: AutovalidateMode.always,
                       controller: emailController,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                       if (value == null || value.isEmpty || !value.contains('@') || !value.contains('.') || !value.contains('com')) {
                           return '';
                         }
                         return null;
@@ -191,7 +196,19 @@ class _AddDoctorState extends State<AddDoctor> {
                     SizedBox(height: 10,),
                  TextFormField(
    keyboardType: TextInputType.text,
+     autovalidateMode: AutovalidateMode.always,
    controller: passwordController,
+   validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '';
+                        }
+                        else if(value.length>=1 && value.length<=6){
+                          return'More Than 6 Characters';
+                        }
+                        else{
+                        return null;
+                        }
+                      },
    obscureText: !_passwordVisible,//This will obscure text dynamically
    decoration: InputDecoration(
        labelText: 'Password',
@@ -217,7 +234,14 @@ class _AddDoctorState extends State<AddDoctor> {
          SizedBox(height: 10,),
                  TextFormField(
    keyboardType: TextInputType.text,
+     autovalidateMode: AutovalidateMode.always,
    controller: conpasswordController,
+    validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '';
+                        }
+                        return null;
+                      },
    obscureText: !_passwordVisible2,//This will obscure text dynamically
    decoration: InputDecoration(
        labelText: 'Confirm Password',
@@ -290,8 +314,26 @@ class _AddDoctorState extends State<AddDoctor> {
                             textColor: Colors.white,
                                     fontSize: 16.0);
                 }
+                 else if(mobileController.text.length<10){
+                   Fluttertoast.showToast(msg: 'Mobile.No Must Have 10 Digits',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                }
                 else if(emailController.text.isEmpty){
                    Fluttertoast.showToast(msg: 'Please Enter Email',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0);
+                }
+                 else if( ! emailController.text. contains('@') || ! emailController.text.contains('.') || !emailController.text.contains('com')){
+                   Fluttertoast.showToast(msg: 'Please Enter Valid Email Id',
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
                              timeInSecForIosWeb: 1,
@@ -350,7 +392,6 @@ class _AddDoctorState extends State<AddDoctor> {
                     "address":addressController.text,
                     "doctor_id":""
                   };
-                 
                    String access_token = storage.getItem('userResponse')['access_token'];
 
                           var result=  await api().addDoctor(access_token, doctor_details);
