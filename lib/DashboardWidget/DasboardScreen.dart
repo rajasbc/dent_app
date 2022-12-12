@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:hive/hive.dart';
 import 'package:nigdent/AppointmentWidget/CreateAppointment.dart';
-// import 'package:localstorage/localstorage.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:nigdent/Common/storeBox.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
@@ -14,6 +16,8 @@ import 'package:nigdent/api/Apicall.dart';
 import 'package:nigdent/main.dart';
 import 'dart:io' show Platform, exit;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -22,16 +26,23 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // final LocalStorage storage = new LocalStorage('nigdent_store');
+  final LocalStorage storage = new LocalStorage('nigdent_store');
   var userResponse = null;
   var patientList = null;
   var appointmentCount = null;
   var isPatientCountLoader = false;
   var isAppointCountLoader = false;
+  late SharedPreferences pref;
+
+  initPreferences() async{
+    pref = await SharedPreferences.getInstance();
+
+  }
   @override
   void initState() {
+    initPreferences();
     this.setState(() {
-      userResponse = storage.getItem('userResponse');
+         userResponse = storage.getItem('userResponse');
     });
     getPatientList();
     getAppointmentCount();
@@ -47,16 +58,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // Navigator.push(
           //                   context,
           //                   MaterialPageRoute(
-          //                       builder: (context) => MyApp()),
+          //                       builder: (context) => Wrapper()),
           //                 );
-          if (Platform.isAndroid) {
-            exit(0);
-          } else if (Platform.isIOS) {
-            exit(0);
-          }
-          return false;
+          // if (Platform.isAndroid) {
+          //   exit(0);
+          // } else if (Platform.isIOS) {
+          //   exit(0);
+          // }
+          exit(0);
+          // return true;
         },
-        child: new Scaffold(
+        child: Scaffold(
           // return Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(50),
@@ -74,7 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           body: SingleChildScrollView(
-            child: Container(
+            child: new Container(
               width: screenwidth,
               height: screenHeight,
               child: Column(
@@ -198,33 +210,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   color: Colors.black26)),
                                         ],
                                       ),
-                                      //                                       Container(
-                                      // // color: Colors.yellow,
-                                      // height: screenHeight*0.04,alignment: Alignment.topRight,
-                                      // child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
-                                      // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
+                                    
                                     ],
                                   ),
                                 ),
-                                //    Padding(
-                                //   padding: const EdgeInsets.all(20.0),
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //     children: [
-                                //       Row(
-                                //         children: [
-                                //           Text('0',style: TextStyle(fontSize: 20,color: Colors.black26)),
-                                //           SizedBox(width: screenwidth*0.02,),
-                                //            Text('Upcoming', style: TextStyle(fontSize: 18, letterSpacing: 1,color: Colors.black26)),
-                                //         ],
-                                //       ),
-                                //                                       Container(
-                                // height: screenHeight*0.04,alignment: Alignment.topRight,
-                                // child: IconButton(onPressed: (){}, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
-                                //       // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
-                                //     ],
-                                //   ),
-                                // ),
                               ],
                             ),
                           )
@@ -344,13 +333,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   color: Colors.black26)),
                                         ],
                                       ),
-                                      //      Container(
-                                      // // color: Colors.yellow,
-                                      // height: screenHeight*0.04,alignment: Alignment.topRight,
-                                      // child: IconButton(onPressed: (){
-                                      //   // print('total patients');
-                                      // }, icon: Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 15,), ))
-                                      // Icon(FontAwesome5.eye, color: CustomColors.app_color,size: 20,),
                                     ],
                                   ),
                                 ),
@@ -408,11 +390,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           drawer: SafeArea(
             child: Drawer(
               elevation: 50,
-              child: DentMenuBar(),
+              child: const DentMenuBar(),
             ),
             // ),
           ),
-        ));
+        )
+        );
   }
 
   getPatientList() async {
@@ -423,7 +406,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     patientList = await api().getPatientList(userResponse['access_token']);
     if (Helper().isvalidElement(patientList) &&
         Helper().isvalidElement(patientList['status']) &&
-        patientList['status'] == 'Token is Expired') {
+        patientList['status'] == 'Token is Invalid') {
       Helper().appLogoutCall(context, 'Session expeired');
     } else {
       //  storage.setItem('diagnosisList', diagnosisList);
@@ -440,11 +423,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       isAppointCountLoader = true;
     });
     // userResponse = storage.getItem('userResponse');
+    print(userResponse['access_token']);
     appointmentCount =
         await api().getAppointmentCount(userResponse['access_token']);
     if (Helper().isvalidElement(appointmentCount) &&
         Helper().isvalidElement(appointmentCount['status']) &&
-        appointmentCount['status'] == 'Token is Expired') {
+        appointmentCount['status'] == 'Token is Invalid') {
       Helper().appLogoutCall(context, 'Session expeired');
     } else {
       //  storage.setItem('diagnosisList', diagnosisList);

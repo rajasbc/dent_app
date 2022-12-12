@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive/hive.dart';
+import 'package:nigdent/Common/storeBox.dart';
 // import 'package:nigdent/Common/storeBox.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
@@ -13,6 +16,7 @@ import 'package:nigdent/main.dart';
 import 'package:nigdent/Common/colors.dart' as appcolor;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColor;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,29 +26,47 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-    // late final Box? storeBox;
+    late final Box? storeBox;
 
   final LocalStorage storage = new LocalStorage('nigdent_store');
-
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
   bool showPassword = false;
   bool isloading = false;
-
+  late SharedPreferences pref;
   @override
   void initState() {
     // patient_data = storage.getItem('selectedPatient');
     // print('object');
         // storeBox = Hive.box(StoreBoxActions().userResponseBox);
-
+// 
+initPreferences();
     FlutterNativeSplash.remove();
   }
-
+initPreferences() async{
+pref = await SharedPreferences.getInstance();
+}
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width - 20;
     var screenheight = MediaQuery.of(context).size.height;
-    return Scaffold(
+      return new WillPopScope(
+        onWillPop: () async {
+          // Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (context) => Wrapper()),
+          //                 );
+          // if (Platform.isAndroid) {
+          //   exit(0);
+          // } else if (Platform.isIOS) {
+          //   exit(0);
+          // }
+           exit(0);
+          // return true;
+        },
+        child: Scaffold(
+    // return Scaffold(
       body: Container(
         height: screenheight,
         decoration: BoxDecoration(
@@ -177,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'password': _password.text
                         };
                         if (!_email.text.isEmpty && !_password.text.isEmpty) {
+
                           var user_data =
                               await api().userLoginResponse(user_input);
                           storage.setItem('userResponse', user_data);
@@ -216,11 +239,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 // Navigator.pop(context,true);
 //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardScreen()),
 // );
-    Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyApp()),
-                                  );
+
+                            // SharedPreferences SharedPreference = await SharedPreferences.getInstance();
+                            pref.setString('access_token', user_data['access_token']);
+                            pref.setBool('isLogin', true);
+Navigator.of(context).pushReplacement(
+   MaterialPageRoute(builder: (BuildContext context) => DentWrapper()), );
+   
+    // Navigator.push(
+    //                                 context,
+    //                                 MaterialPageRoute(
+    //                                     builder: (context) => MyApp()),
+    //                               );
                               Fluttertoast.showToast(
                                   msg:
                                       "${user_data['clinic_profile']['name']} login successfully",
@@ -270,7 +300,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       ),
-    );
+    // );
+        ));
   }
 
   togglePasswordView() {
