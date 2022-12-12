@@ -15,6 +15,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/api/Apicall.dart';
+
 class DentalPlan extends StatefulWidget {
   const DentalPlan({super.key});
 
@@ -23,36 +24,39 @@ class DentalPlan extends StatefulWidget {
 }
 
 class _DentalPlanState extends State<DentalPlan> {
-      final LocalStorage storage = new LocalStorage('nigdent_store');
+  final LocalStorage storage = new LocalStorage('nigdent_store');
 
   String defaultDropdownValue = 'Adult';
-    String planDropdownValue = 'Without Plan';
+  String planDropdownValue = 'Without Plan';
 
   var dropdownValues = ['Adult', 'Peado', 'Mixed'];
-    var plandropdownValues = ['Without Plan', 'Plan1', 'Plan2'];
+  var plandropdownValues = ['Without Plan', 'Plan1', 'Plan2'];
 
-  var diag_treat_list=  [];
+  var diag_treat_list = [];
   // var map = new Map();
   // var val = [];
   bool isSwitchOn = false;
-bool isLoading = false;
-var treatment_details = null;
-var accessToken;
-int treatment_total = 0;
-var treatment_balance = 0;
-var treatment_discount = 0;
+  bool isLoading = false;
+  var treatment_details = null;
+  var diagnosis_details = null;
+  var accessToken;
+  int treatment_total = 0;
+  var treatment_balance = 0;
+  var treatment_discount = 0;
   @override
   void initState() {
-        accessToken = storage.getItem('userResponse')['access_token'];
+    accessToken = storage.getItem('userResponse')['access_token'];
 
-   getTreatmentDetails();
+    getTreatmentDetails();
+    getDiagnosisDetails();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(storage.getItem('selected_diagnosis_treatment') !=null){
- diag_treat_list = storage.getItem('selected_diagnosis_treatment');
+    if (storage.getItem('selected_diagnosis_treatment') != null) {
+      diag_treat_list = storage.getItem('selected_diagnosis_treatment');
     }
     double screenHeight = MediaQuery.of(context).size.height -
         50 -
@@ -64,13 +68,15 @@ var treatment_discount = 0;
         child: AppBar(
           backgroundColor: CustomColors.app_color,
           title: Text('Dent Plan'),
-                 leading: IconButton(onPressed: (){
-                        Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DashboardScreen()),
-                  );
-            }, icon: Icon(Icons.arrow_back)),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DashboardScreen()),
+                );
+              },
+              icon: Icon(Icons.arrow_back)),
         ),
       ),
       body: Container(
@@ -137,9 +143,9 @@ var treatment_discount = 0;
                 // color: Colors.blue,
                 child: defaultDropdownValue == 'Adult'
                     ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AdultsModalWidget(),
-                    )
+                        padding: const EdgeInsets.all(8.0),
+                        child: AdultsModalWidget(),
+                      )
                     : defaultDropdownValue == 'Peado'
                         ? PeadoModalWidget()
                         : MixedModalWidget(),
@@ -156,29 +162,32 @@ var treatment_discount = 0;
                 height: screenHeight * 0.78,
                 // color: Colors.green,
                 // child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: isSwitchOn ? renderPlanBasedWidget(screenHeight): renderTreatmentBasedWidget(screenHeight *0.8, screenWidth),
-                    // child: Column(
-                    //   children: [
-                    //   Helper().isvalidElement(diag_treat_list) && diag_treat_list.length > 0 ?  
-                    //   Container(
-                    //       height: screenHeight * 0.5,
-                    //       color: Colors.red,
-                    //     child: ListView.builder(
-                    //               itemCount: diag_treat_list.length,
-                    //               itemBuilder: (context, index) {
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: isSwitchOn
+                      ? renderPlanBasedWidget(screenHeight)
+                      : renderTreatmentBasedWidget(
+                          screenHeight * 0.8, screenWidth),
+                  // child: Column(
+                  //   children: [
+                  //   Helper().isvalidElement(diag_treat_list) && diag_treat_list.length > 0 ?
+                  //   Container(
+                  //       height: screenHeight * 0.5,
+                  //       color: Colors.red,
+                  //     child: ListView.builder(
+                  //               itemCount: diag_treat_list.length,
+                  //               itemBuilder: (context, index) {
 
-                    //                 return Padding(
-                    //                   padding: const EdgeInsets.all(20.0),
-                    //                   child: Text('${diag_treat_list[index]['diagnosis_name']}'),
-                    //                 );
-                    //               }),
-                    //   )
-                    //             : Text('No data')
-                    //   ],
-                    // ),
-                  ),
+                  //                 return Padding(
+                  //                   padding: const EdgeInsets.all(20.0),
+                  //                   child: Text('${diag_treat_list[index]['diagnosis_name']}'),
+                  //                 );
+                  //               }),
+                  //   )
+                  //             : Text('No data')
+                  //   ],
+                  // ),
+                ),
                 // ),
               ),
               SizedBox(
@@ -191,7 +200,8 @@ var treatment_discount = 0;
       ),
     );
   }
-  renderTreatmentBasedWidget(screenHeight, screenWidth){
+
+  renderTreatmentBasedWidget(screenHeight, screenWidth) {
     return Container(
       width: screenWidth,
       height: screenHeight,
@@ -212,166 +222,269 @@ var treatment_discount = 0;
           //     ],
           // ),
           //   )),
-            SizedBox(height: screenHeight*0.01,),
-            // Divider(color: Colors.white,),
-          !isLoading ? Container(
-              height: screenHeight*0.85,
-            // color: Colors.red,
-
-            child:  Helper().isvalidElement(treatment_details) &&
-                  treatment_details.length > 0 ? 
-                    ListView.builder(
-          // padding: EdgeInsets.all(5.0),
-          itemCount: treatment_details.length,
-          itemBuilder: (BuildContext context, int index) {
-            var data = treatment_details[index];
-            return Container(
-                color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
-                child: 
-              Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(child: 
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('S.No: ${index+1}', style: TextStyle(fontSize: 12),),
-                            Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
-                            // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
-                            Text('Visit:  ${data['visit']}',style: TextStyle(fontSize: 12)),
-                            
-                          ],
-                        ),
-                      ),
-                      //        Padding(
-                      //   padding: const EdgeInsets.all(2.0),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
-                      //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),                            
-                      //     ],
-                      //   ),
-                      // ),
-                       Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Treatment: ${data['treatment']}',style: TextStyle(fontSize: 11)),
-                          
-                            
-                          ],
-                        ),
-                      ),
- Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Fees: ${data['fees'].toString()}',style: TextStyle(fontSize: 12)),
-                            Text('Discount: ${data['discount'].toString()}',style: TextStyle(fontSize: 12)),
-                            Text('Balance: ${data['balance'].toString()}',style: TextStyle(fontSize: 12)),
-                            Text('Status: ${data['pay_status'].toString()}',style: TextStyle(fontSize: 12)),
-                            
-                          ],
-                        ),
-                      ),
-
-                      
-                    ],
-                  )),
-                  // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                  // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                  // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                  // Divider(thickness: 1,)
-                ],
-              )
-            );
-          },
-        ): Image.asset(
-                        'assets/images/no_data_found.png',
-                        // height: screenheight * 0.3,
-                        // color: Colors.blue.shade100,
-                        // color: Colors.black12,
-                      )
-          ): Align(
-            alignment: Alignment.center,
-            child: Image.asset(
-                  'assets/images/loading_image.png',
-                  // height: screenheight * 0.3,
-                  // color: Colors.blue.shade100,
-                  // color: Colors.black12,
-                ),
+          SizedBox(
+            height: screenHeight * 0.01,
           ),
-        ],
-      ),);
-  }
-  renderPlanBasedWidget(screenHeight){
-    return Column(
-                      children: [
-                        Container(
-                        // alignment: Alignment.center,
-                        // width: screenWidth * 0.95,
-                        height: screenHeight* 0.1,
-                        child: DropdownButtonFormField(
-                          // Initial Value
-                          autovalidateMode: AutovalidateMode.always,
-                          // validator: (value) {
-                          //   if (value == null ||
-                          //       value.isEmpty ||
-                          //       value == 'Select title') {
-                          //     return 'You must select title';
-                          //   }
-                          //   return null;
-                          // },
-                          value: planDropdownValue,
+          // Divider(color: Colors.white,),
+          !isLoading
+              ? Container(
+                  height: screenHeight * 0.85,
+                  // color: Colors.red,
 
-                          // Down Arrow Icon
-                          // icon: const Icon(Icons.keyboard_arrow_down),
-
-                          // Array list of items
-
-                          items: plandropdownValues.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          // After selecting the desired option,it will
-                          // change button value to selected value
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              planDropdownValue = newValue!;
-                            });
+                  child: Helper().isvalidElement(treatment_details) &&
+                          treatment_details.length > 0
+                      ? ListView.builder(
+                          // padding: EdgeInsets.all(5.0),
+                          itemCount: treatment_details.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var data = treatment_details[index];
+                            return Container(
+                                color: index % 2 == 0
+                                    ? Color.fromARGB(255, 218, 235, 238)
+                                    : Colors.white,
+                                child: Column(
+                                  // mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'S.No: ${index + 1}',
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              Text(
+                                                  'Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
+                                                  style:
+                                                      TextStyle(fontSize: 12)),
+                                              // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
+                                              Text('Visit:  ${data['visit']}',
+                                                  style:
+                                                      TextStyle(fontSize: 12)),
+                                            ],
+                                          ),
+                                        ),
+                                        //        Padding(
+                                        //   padding: const EdgeInsets.all(2.0),
+                                        //   child: Row(
+                                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //     children: [
+                                        //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
+                                        //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  'Treatment: ${data['treatment']}',
+                                                  style:
+                                                      TextStyle(fontSize: 11)),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  'Fees: ${data['fees'].toString()}',
+                                                  style:
+                                                      TextStyle(fontSize: 12)),
+                                              Text(
+                                                  'Discount: ${data['discount'].toString()}',
+                                                  style:
+                                                      TextStyle(fontSize: 12)),
+                                              Text(
+                                                  'Balance: ${data['balance'].toString()}',
+                                                  style:
+                                                      TextStyle(fontSize: 12)),
+                                              Text(
+                                                  'Status: ${data['pay_status'].toString()}',
+                                                  style:
+                                                      TextStyle(fontSize: 12)),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                    // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                                    // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                                    // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                                    // Divider(thickness: 1,)
+                                  ],
+                                ));
                           },
-                        ),
-                      ),
-                      Helper().isvalidElement(diag_treat_list) && diag_treat_list.length > 0 ?  
-                      Container(
-                          height: screenHeight * 0.6,
-                          color: Colors.red,
-                        child: ListView.builder(
-                                  itemCount: diag_treat_list.length,
-                                  // scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-
-                                    return Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Text('${diag_treat_list[index]['diagnosis_name']}'),
-                                    );
-                                  }),
-                      )
-                      //  Text('******* data *********')
-                                : Text('No data')
-                      ],
-                    );
+                        )
+                      : Image.asset(
+                          'assets/images/no_data_found.png',
+                          // height: screenheight * 0.3,
+                          // color: Colors.blue.shade100,
+                          // color: Colors.black12,
+                        ))
+              : Align(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/images/loading_image.png',
+                    // height: screenheight * 0.3,
+                    // color: Colors.blue.shade100,
+                    // color: Colors.black12,
+                  ),
+                ),
+        ],
+      ),
+    );
   }
+
+  renderPlanBasedWidget(screenHeight) {
+    return Column(
+      children: [
+        Container(
+          // alignment: Alignment.center,
+          // width: screenWidth * 0.95,
+          height: screenHeight * 0.1,
+          child: DropdownButtonFormField(
+            // Initial Value
+            autovalidateMode: AutovalidateMode.always,
+            // validator: (value) {
+            //   if (value == null ||
+            //       value.isEmpty ||
+            //       value == 'Select title') {
+            //     return 'You must select title';
+            //   }
+            //   return null;
+            // },
+            value: planDropdownValue,
+
+            // Down Arrow Icon
+            // icon: const Icon(Icons.keyboard_arrow_down),
+
+            // Array list of items
+
+            items: plandropdownValues.map((String items) {
+              return DropdownMenuItem(
+                value: items,
+                child: Text(items),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            onChanged: (String? newValue) {
+              setState(() {
+                planDropdownValue = newValue!;
+              });
+            },
+          ),
+        ),
+        Helper().isvalidElement(diagnosis_details) &&
+                diagnosis_details.length > 0
+            ? Container(
+                height: screenHeight * 0.6,
+                // color: Colors.red,
+                child: ListView.builder(
+                    itemCount: diagnosis_details.length,
+                    // scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      var data = diagnosis_details[index];
+                      return Container(
+                          color: index % 2 == 0
+                              ? Color.fromARGB(255, 218, 235, 238)
+                              : Colors.white,
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'S.No: ${index + 1}',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        Text(
+                                            'Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
+                                            style: TextStyle(fontSize: 12)),
+                                        // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
+                                        Text('Visit:  ${data['visit']}',
+                                            style: TextStyle(fontSize: 12)),
+                                      ],
+                                    ),
+                                  ),
+                                  //        Padding(
+                                  //   padding: const EdgeInsets.all(2.0),
+                                  //   child: Row(
+                                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //     children: [
+                                  //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
+                                  //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Diagnosis: ${data['diagnosis']}',
+                                            style: TextStyle(fontSize: 11)),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Fees: ${data['fees'].toString()}',
+                                            style: TextStyle(fontSize: 12)),
+                                        Text(
+                                            'Discount: ${data['discount'].toString()}',
+                                            style: TextStyle(fontSize: 12)),
+                                        Text(
+                                            'Balance: ${data['balance'].toString()}',
+                                            style: TextStyle(fontSize: 12)),
+                                        Text(
+                                            'Status: ${data['status'].toString()}',
+                                            style: TextStyle(fontSize: 12)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                              // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                              // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                              // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                              // Divider(thickness: 1,)
+                            ],
+                          ));
+                    }),
+              )
+            //  Text('******* data *********')
+            : Text('No data')
+      ],
+    );
+  }
+
   renderSwitchComponent() {
     return Padding(
       padding: const EdgeInsets.only(right: 5, left: 5),
@@ -386,7 +499,7 @@ var treatment_discount = 0;
             inactiveTextFontWeight: FontWeight.normal,
             activeColor: CustomColors.app_color,
             inactiveColor: CustomColors.app_color,
-            disabled : true,
+            // disabled : true,
             // activeIcon: networkConnection == 'none'
             //     ? Icon(
             //         Icons.cloud_off,
@@ -434,60 +547,67 @@ var treatment_discount = 0;
             width: MediaQuery.of(context).size.width * 0.02,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.48,
-            height: MediaQuery.of(context).size.width * 0.085,
-            child: 
-            TextButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(CustomColors.app_color),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-    RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18.0),
-      side: BorderSide(color: CustomColors.app_color)
-    )
-  )
-            ),
-            
-              onPressed: (){
-               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DiagnosisList(option: isSwitchOn ?'Diagnosis':'Treatment',)),
-                              );
-            }, child: Text(isSwitchOn ? 'Add Diagnosis': 'Add Treatment', style: TextStyle(color: Colors.white,),textAlign: TextAlign.center,),)
-            // TextField(
-            //   style: TextStyle(
-            //     color: Colors.white,
-            //   ),
-            //   // controller: _email,
-            //   onTap: (){
-            //       Navigator.push(
-            //                     context,
-            //                     MaterialPageRoute(
-            //                         builder: (context) => DiagnosisList(option: isSwitchOn ?'Diagnosis':'Treatment',)),
-            //                   );
-            //   },
-            //   decoration: InputDecoration(
-            //     filled: true, //<-- SEE HERE
-            //     fillColor: Colors.blueAccent,
-            //     focusedBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.all(Radius.circular(15)),
-            //       borderSide: BorderSide(width: 3, color: Colors.blueAccent),
-            //     ),
+              width: MediaQuery.of(context).size.width * 0.48,
+              height: MediaQuery.of(context).size.width * 0.085,
+              child: TextButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(CustomColors.app_color),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: CustomColors.app_color)))),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DiagnosisList(
+                              option: isSwitchOn ? 'diagnosis' : 'Treatment',
+                            )),
+                  );
+                },
+                child: Text(
+                  isSwitchOn ? 'Add Diagnosis' : 'Add Treatment',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              )
+              // TextField(
+              //   style: TextStyle(
+              //     color: Colors.white,
+              //   ),
+              //   // controller: _email,
+              //   onTap: (){
+              //       Navigator.push(
+              //                     context,
+              //                     MaterialPageRoute(
+              //                         builder: (context) => DiagnosisList(option: isSwitchOn ?'Diagnosis':'Treatment',)),
+              //                   );
+              //   },
+              //   decoration: InputDecoration(
+              //     filled: true, //<-- SEE HERE
+              //     fillColor: Colors.blueAccent,
+              //     focusedBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.all(Radius.circular(15)),
+              //       borderSide: BorderSide(width: 3, color: Colors.blueAccent),
+              //     ),
 
-            //     enabledBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.all(Radius.circular(15)),
-            //       borderSide: BorderSide(
-            //           width: 3, color: Colors.blueAccent), //<-- SEE HERE
-            //     ),
-            //     labelText: isSwitchOn ? 'Add Diagnosis': 'Add Treatment',
-            //     labelStyle: TextStyle(color: Colors.white,  fontSize: 13,),
-            //      hintStyle:
-            //         TextStyle(color: Colors.white, fontSize: 13),
-            //     contentPadding:
-            //         const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-            //   ),
-            // ),
-          ),
+              //     enabledBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.all(Radius.circular(15)),
+              //       borderSide: BorderSide(
+              //           width: 3, color: Colors.blueAccent), //<-- SEE HERE
+              //     ),
+              //     labelText: isSwitchOn ? 'Add Diagnosis': 'Add Treatment',
+              //     labelStyle: TextStyle(color: Colors.white,  fontSize: 13,),
+              //      hintStyle:
+              //         TextStyle(color: Colors.white, fontSize: 13),
+              //     contentPadding:
+              //         const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+              //   ),
+              // ),
+              ),
           //  Container(
           //   // height: MediaQuery.of(context).size.height * 0.05,
           //   width:MediaQuery.of(context).size.width*0.45,
@@ -521,25 +641,46 @@ var treatment_discount = 0;
       ),
     );
   }
-  getTreatmentDetails() async {
-           isLoading = true;
-            var selectedPatient = storage.getItem('selectedPatient');
-           var data = {
-            'type':'treatment',
-            "patient_id":selectedPatient['id'].toString(),
-           };
-              treatment_details = await api().getTreatmentDetails(accessToken, data);
-              if(Helper().isvalidElement(treatment_details) && Helper().isvalidElement(treatment_details['status']) && treatment_details['status'] == 'Token is Expired'){
-               Helper().appLogoutCall(context, 'Session expeired');
-               }
-         else{
-                  
 
-  //  storage.setItem('diagnosisList', diagnosisList);
-                          isLoading = false;
-                          this.setState(() {
-                              treatment_details = treatment_details['treatment_list'];
-                          });
-                              }
+  getTreatmentDetails() async {
+    isLoading = true;
+    var selectedPatient = storage.getItem('selectedPatient');
+    var data = {
+      'type': 'treatment',
+      "patient_id": selectedPatient['id'].toString(),
+    };
+    treatment_details = await api().getTreatmentDetails(accessToken, data);
+    if (Helper().isvalidElement(treatment_details) &&
+        Helper().isvalidElement(treatment_details['status']) &&
+        treatment_details['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      //  storage.setItem('diagnosisList', diagnosisList);
+      isLoading = false;
+      this.setState(() {
+        treatment_details = treatment_details['treatment_list'];
+      });
+    }
+  }
+
+  getDiagnosisDetails() async {
+    isLoading = true;
+    var selectedPatient = storage.getItem('selectedPatient');
+    var data = {
+      'type': 'diagnosis',
+      "patient_id": selectedPatient['id'].toString(),
+    };
+    diagnosis_details = await api().getTreatmentDetails(accessToken, data);
+    if (Helper().isvalidElement(diagnosis_details) &&
+        Helper().isvalidElement(diagnosis_details['status']) &&
+        treatment_details['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      //  storage.setItem('diagnosisList', diagnosisList);
+      isLoading = false;
+      this.setState(() {
+        diagnosis_details = diagnosis_details['diagnosis_list'];
+      });
+    }
   }
 }
