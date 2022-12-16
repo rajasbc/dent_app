@@ -28,7 +28,7 @@ class Helper {
     // storage.setItem('userResponse', null);
     // storage.setItem('selectedPatient', null);
     pref = await SharedPreferences.getInstance();
-
+ await pref.setBool('isLogin', false);
     storage.clear();
     //  pref.setString('access_token', user_data['access_token']);
     //                         pref.setBool('isLogin', true);

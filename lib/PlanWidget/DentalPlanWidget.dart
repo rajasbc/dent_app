@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -5,10 +7,12 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/fontelico_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:babylonjs_viewer/babylonjs_viewer.dart';
+import 'package:get/get.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/PlanWidget/AdultsModal.dart';
 import 'package:nigdent/PlanWidget/DiagnosisList.dart';
+import 'package:nigdent/PlanWidget/EditDiagnosisList.dart';
 import 'package:nigdent/PlanWidget/MixedModal.dart';
 import 'package:nigdent/PlanWidget/PeadoModal.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -423,8 +427,36 @@ class _DentalPlanState extends State<DentalPlan> {
                                             'Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
                                             style: TextStyle(fontSize: 12)),
                                         // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
-                                        Text('Visit:  ${data['visit']}',
-                                            style: TextStyle(fontSize: 12)),
+                                        SizedBox(
+                                          height: screenHeight * 0.01,
+                                          // width: 18.0,
+                                          child: IconButton(
+                                              padding: new EdgeInsets.all(0.0),
+                                              // onPressed: () {},
+                                              onPressed: () {
+
+                                                storage.setItem('diagnosis_item_list', data);
+                                                // storage.getItem('diagnosis_item_list');
+                                                //         final myMap = Map<String, dynamic>.from(data);
+                                                // return Prices.fromJson(myMap);
+                                                //         var a = jsonEncode(data);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditDiagnosisiList(),
+                                                     ),
+                                                );
+                                              },
+                                              icon: const Icon(Icons.edit,
+                                                  size: 11.0)),
+                                        )
+
+                                        // ElevatedButton(
+                                        //     onPressed: () {},
+                                        //     child: Text('Edit',
+                                        //         style:
+                                        //             TextStyle(fontSize: 12))),
                                       ],
                                     ),
                                   ),
@@ -446,6 +478,8 @@ class _DentalPlanState extends State<DentalPlan> {
                                       children: [
                                         Text('Diagnosis: ${data['diagnosis']}',
                                             style: TextStyle(fontSize: 11)),
+                                        Text('Visit:  ${data['visit']}',
+                                            style: TextStyle(fontSize: 12)),
                                       ],
                                     ),
                                   ),
