@@ -145,6 +145,23 @@ getpatientSummaryReportList();
       initialDateRange: dateRange,
       firstDate: DateTime(2019),
       lastDate: DateTime(2023),
+       builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Colors.red, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
     );
     setState(() {
       dateRange = newDateRange ?? dateRange;
@@ -177,60 +194,63 @@ getpatientSummaryReportList();
             children: [
                       Container(
                         
-                        width: screenWidth * 0.46,
+                        width: screenWidth * 0.50,
                         // color: Colors.amber,
-                        child:Column(
-                          children: [
-                            Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
                             children: [
-                              Text(
-                                  'Reg.No :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                  "${data['patient_id'].toString()}",style: TextStyle(fontSize: 13),),
-                            ],
-                              ),
-                           Row(
-                                  
-                            children: [
-                              
-                              Text(
-                                  'Name :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                  "${data['title'].toString() + "." + data['p_name'].toString().toUpperCase()}",style: TextStyle(fontSize: 13),),
-                            ],
-                              ),
-                               Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Age :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                  "${data['p_age'].toString()}",style: TextStyle(fontSize: 13),),
-                            ],
-                              ),
                               Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Gender :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                 "${data['gender'].toString().toUpperCase()}",style: TextStyle(fontSize: 13),),
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    'Reg.No :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                    "${data['patient_id'].toString()}",style: TextStyle(fontSize: 13),),
+                              ],
+                                ),
+                             Row(
+                                    
+                              children: [
+                                
+                                Text(
+                                    'Name :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                    "${data['title'].toString() + "." + data['p_name'].toString().toUpperCase()}",style: TextStyle(fontSize: 13),),
+                              ],
+                                ),
+                                 Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    'Age :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                    "${data['p_age'].toString()}",style: TextStyle(fontSize: 13),),
+                              ],
+                                ),
+                                Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    'Gender :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                   "${data['gender'].toString().toUpperCase()}",style: TextStyle(fontSize: 13),),
+                              ],
+                                ),
                             ],
-                              ),
-                          ],
+                          ),
                         )
                       ),
                        Container(
-                        width: screenWidth *0.46,
+                        width: screenWidth *0.42,
                         // color: Colors.black,
                         // alignment: Alignment.centerRight,
                         child: Column(
@@ -316,7 +336,7 @@ this.setState(() {
 });
 
               patientSummaryList = await api().getpatientSummaryReport(accessToken);
-              if(Helper().isvalidElement(patientSummaryList) && Helper().isvalidElement(patientSummaryList['status']) && patientSummaryList['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement(patientSummaryList) && Helper().isvalidElement(patientSummaryList['status']) && patientSummaryList['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

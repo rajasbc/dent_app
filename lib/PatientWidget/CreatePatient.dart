@@ -178,6 +178,23 @@ class _CreatePatientState extends State<CreatePatient> {
   Future<void> selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
+        builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: CustomColors.app_color, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
         initialDate: currentDate,
         firstDate: DateTime(1950),
         lastDate: DateTime(2023));
@@ -193,6 +210,23 @@ class _CreatePatientState extends State<CreatePatient> {
   Future<void> selectdate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
+        builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: CustomColors.app_color, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
         initialDate: currentdate,
         firstDate: DateTime(1950),
         lastDate: DateTime(2023));
@@ -569,12 +603,17 @@ class _CreatePatientState extends State<CreatePatient> {
               keyboardType: TextInputType.phone,
               maxLength: 10,
               autovalidateMode: AutovalidateMode.always,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'You must enter email';
-                }
-                return null;
-              },
+             validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Enter Your Mobile.No';
+                        }
+                        else if(value.length>=1 && value.length<=9){
+                          return 'Mobile.No Must Contain 10 Digits';
+                        }
+                        else{
+                        return null;
+                        }
+                      },
               controller: mobileController,
               decoration: new InputDecoration(
                 filled: true,

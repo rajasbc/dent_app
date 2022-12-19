@@ -146,6 +146,23 @@ revenueRegisterReportList();
       initialDateRange: dateRange,
       firstDate: DateTime(2019),
       lastDate: DateTime(2023),
+       builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Colors.red, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
     );
     setState(() {
       dateRange = newDateRange ?? dateRange;
@@ -313,7 +330,7 @@ this.setState(() {
    isLoading = true;
 });
               revenueReportList = await api().revenueReport(accessToken,data);
-              if(Helper().isvalidElement(revenueReportList) && revenueReportList.length >0 && Helper().isvalidElement(revenueReportList['status']) && revenueReportList['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement(revenueReportList) && revenueReportList.length >0 && Helper().isvalidElement(revenueReportList['status']) && revenueReportList['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

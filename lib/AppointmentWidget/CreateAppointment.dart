@@ -59,9 +59,27 @@ var doctorList = null;
   Future<void> selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
+       builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: CustomColors.app_color, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
         initialDate: currentDate,
         firstDate: DateTime(1950),
         lastDate: DateTime(2023));
+        
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;
@@ -461,10 +479,28 @@ var selectedSlot = null;
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
+                              builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: CustomColors.app_color, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
                               initialDate: DateTime.now(), //get today's date
                               firstDate: DateTime(
                                   2000), //DateTime.now() - not to allow to choose before today.
                               lastDate: DateTime(2101));
+                              
                           if (pickedDate != null) {
                             print(
                                 pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
@@ -658,7 +694,7 @@ var selectedSlot = null;
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: CustomColors.success_color,
+                    primary:  CustomColors.app_color,
                   ),
                   onPressed: () async{
                     if (NameController.text.isEmpty) {
@@ -980,8 +1016,8 @@ patient['title'].toString();
   this.setState(() {
     autoCompleteLoader = true;
   }); // userResponse = storage.getItem('userResponse');
-    patientList = await api().getPatientList(userResponse['access_token']);
-           if(Helper().isvalidElement(patientList) && Helper().isvalidElement(patientList['status']) && patientList['status'] == 'Token is Invalid'){
+    patientList = await api().getPatientList(userResponse['access_token'] );
+           if(Helper().isvalidElement(patientList) && Helper().isvalidElement(patientList['status']) && patientList['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

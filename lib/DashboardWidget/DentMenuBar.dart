@@ -227,29 +227,29 @@ class _DentMenuBarState extends State<DentMenuBar> {
                               },
                             ),
 
-                            ListTile(
-                              title: Text('Performance Summary'),
-                              leading: Icon(Icons.summarize_sharp),
-                              onTap: () {
-                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PerformanceSummary())
-                                  );
-                              },
-                            ),
+                            // ListTile(
+                            //   title: Text('Performance Summary'),
+                            //   leading: Icon(Icons.summarize_sharp),
+                            //   onTap: () {
+                            //      Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => PerformanceSummary())
+                            //       );
+                            //   },
+                            // ),
 
-                            ListTile(
-                              title: Text('Plan Summary'),
-                              leading: Icon(Icons.summarize_outlined),
-                              onTap: () {
-                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PlanSummary())
-                                  );
-                              },
-                            ),
+                            // ListTile(
+                            //   title: Text('Plan Summary'),
+                            //   leading: Icon(Icons.summarize_outlined),
+                            //   onTap: () {
+                            //      Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => PlanSummary())
+                            //       );
+                            //   },
+                            // ),
 
                             ListTile(
                               title: Text('Top Treatment & Diagnosis'),

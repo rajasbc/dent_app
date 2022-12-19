@@ -149,6 +149,23 @@ getPatientRegisterReportList();
       initialDateRange: dateRange,
       firstDate: DateTime(2019),
       lastDate: DateTime(2023),
+       builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Colors.red, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
     );
     setState(() {
       dateRange = newDateRange ?? dateRange;
@@ -182,52 +199,55 @@ return Container(
                       Container(
                         width: screenWidth * 0.46,
                         // color: Colors.amber,
-                        child:Column(
-                          children: [
-                           Row(
-                                  
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
                             children: [
-                              Text(
-                                  'Reg.No :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text("${data['patient_id'].toString()}", style:TextStyle(fontSize: 13),),
+                             Row(
+                                    
+                              children: [
+                                Text(
+                                    'Reg.No :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text("${data['patient_id'].toString()}", style:TextStyle(fontSize: 13),),
+                              ],
+                                ),
+                                 Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    'Patient :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                   "${data['p_name'].toString()}",style: TextStyle(fontSize: 13),),
+                              ],
+                                ),
+                                Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    'Mobile :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                   "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
+                              ],
+                                ),
+                              //     Row(
+                              // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              // children: [
+                              //   Text(
+                              //       ' :',
+                              //       style: TextStyle(fontWeight: FontWeight.bold),
+                              //       ),
+                              //   Text(
+                              //       'Abcdefghijklmnop'),
+                              // ],
+                              //   ),
                             ],
-                              ),
-                               Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Patient :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                 "${data['p_name'].toString()}",style: TextStyle(fontSize: 13),),
-                            ],
-                              ),
-                              Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  'Mobile :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),
-                              Text(
-                                 "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
-                            ],
-                              ),
-                            //     Row(
-                            // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // children: [
-                            //   Text(
-                            //       ' :',
-                            //       style: TextStyle(fontWeight: FontWeight.bold),
-                            //       ),
-                            //   Text(
-                            //       'Abcdefghijklmnop'),
-                            // ],
-                            //   ),
-                          ],
+                          ),
                         )
                       ),
                        Container(
@@ -316,7 +336,7 @@ this.setState(() {
 });
 
               patientRegisterList = await api().patientRegisterReport(accessToken,data);
-              if(Helper().isvalidElement(patientRegisterList) && Helper().isvalidElement(patientRegisterList['status']) && patientRegisterList['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement(patientRegisterList) && Helper().isvalidElement(patientRegisterList['status']) && patientRegisterList['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

@@ -327,6 +327,23 @@ SizedBox(height: 10,),
       initialDateRange: dateRange,
       firstDate: DateTime(2019),
       lastDate: DateTime(2023),
+       builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Colors.red, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
     );
     setState(() {
       dateRange = newDateRange ?? dateRange;
@@ -349,7 +366,7 @@ this.setState(() {
 });
 
              var  treatment_diagnosis_list = await api().treatmentDiagnosisplan(accessToken,data);
-              if(Helper().isvalidElement( treatment_diagnosis_list) && Helper().isvalidElement( treatment_diagnosis_list['status']) &&  treatment_diagnosis_list['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement( treatment_diagnosis_list) && Helper().isvalidElement( treatment_diagnosis_list['status']) &&  treatment_diagnosis_list['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

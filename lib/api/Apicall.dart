@@ -131,8 +131,8 @@ class api {
     }
   }
    paymentReport(access_token, data) async {
-    String patient_list_url = RequestPath.base_url + RequestPath.paymentReportEndpoint;
-    var response = await http.post(Uri.parse(patient_list_url),
+    String payment_list_url = RequestPath.base_url + RequestPath.paymentReportEndpoint;
+    var response = await http.post(Uri.parse(payment_list_url),
      body: jsonEncode(data), headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
       return json.decode(response.body);

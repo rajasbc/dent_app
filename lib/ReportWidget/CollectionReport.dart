@@ -148,6 +148,23 @@ class _CollectionReportState extends State<CollectionReport> {
       initialDateRange: dateRange,
       firstDate: DateTime(2019),
       lastDate: DateTime(2023),
+      builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Colors.red, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
     );
     setState(() {
       dateRange = newDateRange ?? dateRange;
@@ -180,42 +197,45 @@ class _CollectionReportState extends State<CollectionReport> {
                     Container(
                       width: screenWidth * 0.46,
                       // color: Colors.amber,
-                      child:Column(
-                        children: [
-                         Row(
-                                
+                      child:Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
                           children: [
-                            Text(
-                                'Reg.No :',
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                ),
-                            Text(
-                                 "${data['preg_no'].toString()}",style: TextStyle(fontSize: 13),),
+                           Row(
+                                  
+                            children: [
+                              Text(
+                                  'Reg.No :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                   "${data['preg_no'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                               Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Patient :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                 "${data['p_name'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                              Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Mobile :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
                           ],
-                            ),
-                             Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Patient :',
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                ),
-                            Text(
-                               "${data['p_name'].toString()}",style: TextStyle(fontSize: 13),),
-                          ],
-                            ),
-                            Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                'Mobile :',
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                ),
-                            Text(
-                                "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
-                          ],
-                            ),
-                        ],
+                        ),
                       )
                     ),
                      Container(
@@ -305,7 +325,7 @@ this.setState(() {
 });
 
              billingCollectionlist = await api().billingCollectionReport(accessToken,data);
-              if(Helper().isvalidElement( billingCollectionlist) && Helper().isvalidElement( billingCollectionlist['status']) &&  billingCollectionlist['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement( billingCollectionlist) && Helper().isvalidElement( billingCollectionlist['status']) &&  billingCollectionlist['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

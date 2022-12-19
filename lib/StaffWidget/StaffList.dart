@@ -59,72 +59,75 @@ getStafflist();
                        return Container(
                         color: index%2 ==0 ? Color.fromARGB(255, 218, 235, 238): Colors.white,
                         
- child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                         Text(
-                                      'Name :',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                      ),
-                                      Text( "${data['name'].toString()}",style: TextStyle(fontSize: 13),)
-                      ],
-                    ),
-                     Row(
-                      children: [
-                         Text(
-                                      'Mobile.No :',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                      ),
-                                     Text( "${data['contact_no'].toString()}",style: TextStyle(fontSize: 13),)
-                      ],
-                    ),
-                    
-                  ],
-                ),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                         Text(
-                                      'UserLevel:',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                      ),
-                                     Text( "${data['user_type'].toString()}",style: TextStyle(fontSize: 13),)
-                      ],
-                    ),
-                     Row(
-                      children: [
-                         Text(
-                                      'Email:',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                      ),
-                                     Text( "${data['email'].toString()}",style: TextStyle(fontSize: 13),)
-                      ],
-                    ),
-                    
-                  ],
-                ),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                         Text(
-                                      'UserName:',
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                      ),
-                                       Text( "${data['username'].toString()}",style: TextStyle(fontSize: 13),)
-                      ],
-                    ),                   
-                  ],
-                )
-              ],
-            ),
+ child: Padding(
+   padding: const EdgeInsets.all(8.0),
+   child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                           Text(
+                                        'Name :',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                        ),
+                                        Text( "${data['name'].toString()}",style: TextStyle(fontSize: 13),)
+                        ],
+                      ),
+                       Row(
+                        children: [
+                           Text(
+                                        'Mobile.No :',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                        ),
+                                       Text( "${data['contact_no'].toString()}",style: TextStyle(fontSize: 13),)
+                        ],
+                      ),
+                      
+                    ],
+                  ),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                           Text(
+                                        'UserLevel:',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                        ),
+                                       Text( "${data['user_type'].toString()}",style: TextStyle(fontSize: 13),)
+                        ],
+                      ),
+                       Row(
+                        children: [
+                           Text(
+                                        'Email:',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                        ),
+                                       Text( "${data['email'].toString()}",style: TextStyle(fontSize: 13),)
+                        ],
+                      ),
+                      
+                    ],
+                  ),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                           Text(
+                                        'UserName:',
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                        ),
+                                         Text( "${data['username'].toString()}",style: TextStyle(fontSize: 13),)
+                        ],
+                      ),                   
+                    ],
+                  )
+                ],
+              ),
+ ),
                        );
                     },
                   ): Image.asset(
@@ -154,7 +157,7 @@ this.setState(() {
 });
 
               StaffList = await api().getstafflist(accesstoken);
-              if(Helper().isvalidElement(StaffList) && Helper().isvalidElement(StaffList['status']) && StaffList['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement(StaffList) && Helper().isvalidElement(StaffList['status']) && StaffList['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{
