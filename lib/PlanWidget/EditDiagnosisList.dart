@@ -39,6 +39,8 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
   late String accessToken;
   var treatment_list;
   var diagnosis_list;
+  var diagnosisDropdownvalue_name;
+  var treatmentDropdownvalue_name;
 
   void initState() {
     accessToken = storage.getItem('userResponse')['access_token'];
@@ -104,11 +106,19 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
         initialDate: currentDate,
         firstDate: DateTime(1950),
         lastDate: DateTime(2023));
-    if (pickedDate != null && pickedDate != currentDate)
+
+    if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
         currentDate = pickedDate;
       });
-    dobController.text = pickedDate.toString().split(' ')[0];
+          dobController.text = pickedDate.toString().split(' ')[0];
+
+    }
+    else{
+          dobController.text = "";
+
+    }
+      
   }
 
   Widget build(BuildContext context) {
@@ -133,29 +143,51 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
             child: Column(
               children: [
                 SizedBox(height: 10),
-                TextFormField(
-                  keyboardType: TextInputType.none,
-                  controller: dobController,
-                  onTap: () {
-                    selectDate(context);
-                  },
-                  decoration: new InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    labelText: 'D O B',
-                    contentPadding: const EdgeInsets.only(
-                        left: 14.0, bottom: 8.0, top: 8.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          new BorderSide(color: Colors.blueAccent, width: 0.5),
-                      // borderRadius: new BorderRadius.circular(20),
+                Column(
+                  children: [
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Date',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        )),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      keyboardType: TextInputType.none,
+                      controller: dobController,
+                      onTap: () {
+                        selectDate(context);
+                      },
+                      decoration: new InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        labelText: Helper()
+                                .isvalidElement(get_diagnosisi_item_list1)
+                            ? get_diagnosisi_item_list1['treatment_date']
+                                        .toString() ==
+                                    "1970-01-01"
+                                ? "dd-mm-yyyy"
+                                : get_diagnosisi_item_list1['treatment_date']
+                                    .toString()
+                            : "dd-mm-yyyy",
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 8.0),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Colors.blueAccent, width: 0.5),
+                          // borderRadius: new BorderRadius.circular(20),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              new BorderSide(color: Colors.grey, width: 0.5),
+                          // borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          new BorderSide(color: Colors.grey, width: 0.5),
-                      // borderRadius: new BorderRadius.circular(20),
-                    ),
-                  ),
+                  ],
                 ),
                 // Container(
                 //   child: DropdownButtonHideUnderline(
@@ -229,9 +261,11 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                                 ),
                                 // value:' _selectedState[i]',
                                 onChanged: (diagnosis_val) {
+                                  var a = diagnosis_val.toString().split('*&');
                                   setState(() {
-                                    diagnosisDropdownvalue =
-                                        diagnosis_val.toString();
+                                    diagnosisDropdownvalue = a[0].toString();
+                                    diagnosisDropdownvalue_name =
+                                        a[1].toString();
                                     // selectedDoctor = doctor;
                                     // print("Stae value");
                                     // print(newValue);
@@ -246,7 +280,9 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                                       item['diagnosis_name'].toString(),
                                       style: TextStyle(fontSize: 12),
                                     ),
-                                    value: item['id'].toString(),
+                                    value: item['id'].toString() +
+                                        "*&" +
+                                        item['diagnosis_name'].toString(),
                                   );
                                 }).toList(),
                               ),
@@ -307,7 +343,7 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                                                       'treatment'])
                                               ? get_diagnosisi_item_list1[
                                                               'treatment']
-                                                          .toString() ==
+                                                          .toString() !=
                                                       ''
                                                   ? get_diagnosisi_item_list1[
                                                           'treatment']
@@ -321,9 +357,11 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
 
                                 // value:' _selectedState[i]',
                                 onChanged: (treament_val) {
+                                  var t_v = treament_val.toString().split('*&');
                                   setState(() {
-                                    treatmentDropdownvalue =
-                                        treament_val.toString();
+                                    treatmentDropdownvalue = t_v[0].toString();
+                                    treatmentDropdownvalue_name =
+                                        t_v[1].toString();
                                     // selectedDoctor = doctor;
                                     // print("Stae value");
                                     // print(newValue);
@@ -338,7 +376,9 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                                       item['treatment_name'].toString(),
                                       style: TextStyle(fontSize: 14),
                                     ),
-                                    value: item['id'].toString(),
+                                    value: item['id'].toString() +
+                                        "*&" +
+                                        item['treatment_name'].toString(),
                                   );
                                 }).toList(),
                               ),
@@ -432,6 +472,7 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                               DropdownButtonFormField(
                                 // validator: (value) => validateDrops(value),
                                 // isExpanded: true,
+
                                 hint: Text(
                                   visitDropdownvalue != ''
                                       ? visitDropdownvalue
@@ -491,14 +532,31 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                       var get_item_diagnosis_id =
                           storage.getItem('diagnosis_item_list');
                       var update_diagnosis = {
-                        "Date": dobController.text,
-                        "id":get_item_diagnosis_id['id'].toString(),
-                        "Diagnosis": diagnosisDropdownvalue == ''
+                        "Date": dobController.text == ''
+                            ? get_item_diagnosis_id['treatment_date']
+                                        .toString() ==
+                                    "1970-01-01"
+                                ? ""
+                                : get_diagnosisi_item_list1['treatment_date']
+                                    .toString()
+                            : dobController.text,
+                        "id": get_item_diagnosis_id['id'].toString(),
+                        "d_id": diagnosisDropdownvalue == ''
                             ? get_item_diagnosis_id['d_id'].toString()
                             : diagnosisDropdownvalue,
-                        "Treatment": treatmentDropdownvalue == ''
+                        "t_id": treatmentDropdownvalue == ''
                             ? get_item_diagnosis_id['t_id'].toString()
                             : treatmentDropdownvalue,
+                        "Diagnosis": diagnosisDropdownvalue_name != null
+                            ? diagnosisDropdownvalue_name != ''
+                                ? diagnosisDropdownvalue_name
+                                : get_item_diagnosis_id['diagnosis'].toString()
+                            : get_item_diagnosis_id['diagnosis'].toString(),
+                        "Treatment": treatmentDropdownvalue_name != null
+                            ? treatmentDropdownvalue_name != ''
+                                ? treatmentDropdownvalue_name
+                                : get_item_diagnosis_id['treatment'].toString()
+                            : get_item_diagnosis_id['treatment'].toString(),
                         "Fees": feesController.text,
                         "Discount": discountController.text,
                         "Visit": visitDropdownvalue
@@ -516,9 +574,6 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                         );
                         storage.deleteItem('diagnosis_item_list');
                       }
-
-
-
 
                       print(update_diagnosis);
                       // print(get_item_diagnosis_id);

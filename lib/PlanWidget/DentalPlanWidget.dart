@@ -358,39 +358,39 @@ class _DentalPlanState extends State<DentalPlan> {
         Container(
           // alignment: Alignment.center,
           // width: screenWidth * 0.95,
-          height: screenHeight * 0.1,
-          child: DropdownButtonFormField(
-            // Initial Value
-            autovalidateMode: AutovalidateMode.always,
-            // validator: (value) {
-            //   if (value == null ||
-            //       value.isEmpty ||
-            //       value == 'Select title') {
-            //     return 'You must select title';
-            //   }
-            //   return null;
-            // },
-            value: planDropdownValue,
+          // height: screenHeight * 0.1,
+          // child: DropdownButtonFormField(
+          //   // Initial Value
+          //   autovalidateMode: AutovalidateMode.always,
+          //   // validator: (value) {
+          //   //   if (value == null ||
+          //   //       value.isEmpty ||
+          //   //       value == 'Select title') {
+          //   //     return 'You must select title';
+          //   //   }
+          //   //   return null;
+          //   // },
+          //   value: planDropdownValue,
 
-            // Down Arrow Icon
-            // icon: const Icon(Icons.keyboard_arrow_down),
+          //   // Down Arrow Icon
+          //   // icon: const Icon(Icons.keyboard_arrow_down),
 
-            // Array list of items
+          //   // Array list of items
 
-            items: plandropdownValues.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            // After selecting the desired option,it will
-            // change button value to selected value
-            onChanged: (String? newValue) {
-              setState(() {
-                planDropdownValue = newValue!;
-              });
-            },
-          ),
+          //   items: plandropdownValues.map((String items) {
+          //     return DropdownMenuItem(
+          //       value: items,
+          //       child: Text(items),
+          //     );
+          //   }).toList(),
+          //   // After selecting the desired option,it will
+          //   // change button value to selected value
+          //   onChanged: (String? newValue) {
+          //     setState(() {
+          //       planDropdownValue = newValue!;
+          //     });
+          //   },
+          // ),
         ),
         Helper().isvalidElement(diagnosis_details) &&
                 diagnosis_details.length > 0
