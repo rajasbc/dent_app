@@ -88,6 +88,17 @@ class api {
       return json.decode(response.body);
     }
   }
+
+   add_patient_call(access_token,patient_details) async {
+    String addpatienturl = RequestPath.base_url + RequestPath.addPatientEndpoint;
+    var response = await http.post(Uri.parse(addpatienturl),
+        body: jsonEncode(patient_details), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
    getpatientSummaryReport(access_token) async {
     String patient_list_url = RequestPath.base_url + RequestPath.patientSummaryReportEndpoint;
     var response = await http.get(Uri.parse(patient_list_url),
@@ -150,6 +161,19 @@ class api {
       return json.decode(response.body);
     }
   }
+
+   Treatmentplan(access_token, data) async {
+    String treatment_plan_url = RequestPath.base_url + RequestPath.treatmentPlanEndpoint;
+    var response = await http.post(Uri.parse(treatment_plan_url),
+      body: jsonEncode(data),  headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+
     getAppointmentCount(access_token) async {
     String appointment_count_url = RequestPath.base_url + RequestPath.appointmentCountEndpoint;
     var response = await http.get(Uri.parse(appointment_count_url),

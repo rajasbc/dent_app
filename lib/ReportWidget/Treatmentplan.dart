@@ -288,10 +288,10 @@ gettreatmentplanList();
                             children: [
                               Text(
                                 
-                                  'Diagnosis :',
+                                  'Diagnosis:',
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),  Text(
-                             "${data['diagnosis'].toString()}",style: TextStyle(fontSize: 13),),
+                             "${data['diagnosis'].toString()}",style: TextStyle(fontSize: 12),),
 
                             ],
                           ),
@@ -333,27 +333,27 @@ gettreatmentplanList();
           );
  }
  gettreatmentplanList() async{
-//    var formatter = new DateFormat('yyyy-MM-dd');
-// var data = {
-// 'from_date':  formatter.format(dateRange.start),
-// 'to_date': formatter.format(dateRange.end),
-// };
-// this.setState(() {
-//    isLoading = true;
-// });
+   var formatter = new DateFormat('yyyy-MM-dd');
+var data = {
+'from_date':  formatter.format(dateRange.start),
+'to_date': formatter.format(dateRange.end),
+};
+this.setState(() {
+   isLoading = true;
+});
 
-//              treatmentPlanList = await api().treatmentPlanReport(accessToken,data);
-//               if(Helper().isvalidElement(treatmentPlanList) && Helper().isvalidElement(treatmentPlanList['status']) && treatmentPlanList['status'] == 'Token is Invalid'){
-//                Helper().appLogoutCall(context, 'Session expeired');
-//                }
-//          else{
-//           treatmentPlanList = treatmentPlanList['reports'];
-//   //  storage.setItem('diagnosisList', diagnosisList);
-//                          this.setState(() {
-//    isLoading = false;
-// });
+             treatmentPlanList = await api().Treatmentplan(accessToken,data);
+              if(Helper().isvalidElement(treatmentPlanList) && Helper().isvalidElement(treatmentPlanList['status']) && treatmentPlanList['status'] == 'Token is Invalid'){
+               Helper().appLogoutCall(context, 'Session expeired');
+               }
+         else{
+          treatmentPlanList = treatmentPlanList['reports'];
+  //  storage.setItem('diagnosisList', diagnosisList);
+                         this.setState(() {
+   isLoading = false;
+});
 
-//  }
+ }
  }
 }
 

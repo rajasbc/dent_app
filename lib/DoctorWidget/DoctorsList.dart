@@ -175,7 +175,7 @@ this.setState(() {
    isLoading = true;
 });
               DoctorList = await api().getdoctorlist(accessToken);
-              if(Helper().isvalidElement(DoctorList) && Helper().isvalidElement(DoctorList['status']) && DoctorList['status'] == 'Token is Invalid'){
+              if(Helper().isvalidElement(DoctorList) && Helper().isvalidElement(DoctorList['status']) && DoctorList['status'] == 'Token is Expired'){
                Helper().appLogoutCall(context, 'Session expeired');
                }
          else{

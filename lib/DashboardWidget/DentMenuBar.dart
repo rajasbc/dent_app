@@ -275,17 +275,17 @@ class _DentMenuBarState extends State<DentMenuBar> {
                               },
                             ),
 
-                            ListTile(
-                              title: Text('Payment Report'),
-                              leading: Icon(Icons.payment),
-                              onTap: () {
-                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentReport())
-                                  );
-                              },
-                            ),
+                            // ListTile(
+                            //   title: Text('Payment Report'),
+                            //   leading: Icon(Icons.payment),
+                            //   onTap: () {
+                            //      Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => PaymentReport())
+                            //       );
+                            //   },
+                            // ),
 
                             // ListTile(
                             //   title: Text('Collection Report'),

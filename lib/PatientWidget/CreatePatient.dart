@@ -73,9 +73,9 @@ class _CreatePatientState extends State<CreatePatient> {
   // TextEditingController countryController = TextEditingController();
 
   String titleDropdownvalue = 'Mr';
-  String bloodDropdownvalue = 'Select Blood Group';
-  String idDropdownvalue = 'Select ID Proof';
-  String PCMDropdownvalue = 'Preferred Contact Method';
+  String bloodDropdownvalue = 'Select Blood Group : ';
+  String idDropdownvalue = 'Select ID Proof : ';
+  String PCMDropdownvalue = 'Preferred Contact Method : ';
   String regtypeDropdownvalue = 'Register Type : ';
   String payDropdownvalue = 'Payment Type : ';
   String validateDropdownvalue = 'Validity : ';
@@ -92,7 +92,7 @@ class _CreatePatientState extends State<CreatePatient> {
   ];
 
   var blood = [
-    'Select Blood Group',
+    'Select Blood Group : ',
     'A+',
     'A-',
     'B+',
@@ -104,7 +104,7 @@ class _CreatePatientState extends State<CreatePatient> {
   ];
 
   var id = [
-    'Select ID Proof',
+    'Select ID Proof : ',
     'Aadhaar Card',
     'Passport',
     'Voter ID Card',
@@ -112,7 +112,7 @@ class _CreatePatientState extends State<CreatePatient> {
     'Driving Licensees'
   ];
   var PCM = [
-    'Preferred Contact Method',
+    'Preferred Contact Method : ',
     'Whatsapp',
     'Email',
     'phone',
@@ -169,7 +169,6 @@ class _CreatePatientState extends State<CreatePatient> {
     'South Africa',
     'Newzland',
     'England',
-    'Cash',
     'West Indies'
   ];
 
@@ -1709,40 +1708,40 @@ class _CreatePatientState extends State<CreatePatient> {
   }
 
   add_patient(patient_details) async {
-    // this.setState(() {
-    //   loading = true;
-    // });
+    this.setState(() {
+      loading = true;
+    });
 
-    // var result = await api().add_patient_call(accessToken, patient_details);
+    var result = await api().add_patient_call(accessToken, patient_details);
 
-    // if (Helper().isvalidElement(result) &&
-    //     Helper().isvalidElement(result['status']) &&
-    //     result['status'] == 'Token is Invalid') {
-    //   Helper().appLogoutCall(context, 'Session expeired');
-    // } else {
-    //   if (Helper().isvalidElement(result) &&
-    //       Helper().isvalidElement(result['status']) &&
-    //       result['status'] == 'Add patient successfully') {
-    //     Fluttertoast.showToast(
-    //         msg: 'Add patient successfully',
-    //         toastLength: Toast.LENGTH_SHORT,
-    //         gravity: ToastGravity.CENTER,
-    //         timeInSecForIosWeb: 2,
-    //         backgroundColor: CustomColors.success_color,
-    //         textColor: Colors.white,
-    //         fontSize: 15.0);
+    if (Helper().isvalidElement(result) &&
+        Helper().isvalidElement(result['status']) &&
+        result['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      if (Helper().isvalidElement(result) &&
+          Helper().isvalidElement(result['status']) &&
+          result['status'] == 'Add patient successfully') {
+        Fluttertoast.showToast(
+            msg: 'Add patient successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 2,
+            backgroundColor: CustomColors.success_color,
+            textColor: Colors.white,
+            fontSize: 15.0);
 
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(builder: (context) => const DashboardScreen()),
-    //     );
-    //   }
-    //   this.setState(() {
-    //     // appointment_list = result['appointment_list'];
-    //   });
-    // }
-    // this.setState(() {
-    //   loading = false;
-    // });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+        );
+      }
+      this.setState(() {
+        // appointment_list = result['appointment_list'];
+      });
+    }
+    this.setState(() {
+      loading = false;
+    });
   }
 }

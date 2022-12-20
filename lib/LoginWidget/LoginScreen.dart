@@ -142,7 +142,7 @@ pref = await SharedPreferences.getInstance();
                             // color: Colors.red,
                             width: screenWidth * 0.65,
                             child: TextField(
-                              obscureText: showPassword,
+                              obscureText: !showPassword,
                               controller: _password,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.only(
@@ -158,7 +158,7 @@ pref = await SharedPreferences.getInstance();
                             // width: screenheight / 2.5,
                             child: IconButton(
                               icon: Icon(
-                                showPassword
+                                ! showPassword
                                     ? FontAwesome.eye_off
                                     : FontAwesome.eye,
                                 color: Colors.black38,
