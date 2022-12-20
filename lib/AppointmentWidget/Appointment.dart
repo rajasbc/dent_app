@@ -225,6 +225,23 @@ class _AppointmentPageState extends State<AppointmentPage> {
   Future pickDateRange() async {
     DateTimeRange? newDateRange = await showDateRangePicker(
       context: context,
+      builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: CustomColors.app_color, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
       initialDateRange: dateRange,
       firstDate: DateTime(2019),
       lastDate: DateTime(2023),
