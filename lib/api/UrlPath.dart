@@ -21,6 +21,7 @@
 
 
       String doctorListEndpoint = 'auth/dent_get_doctors';
+      String getSlottimeListEndpoint ='auth/dent_slottime_list';
       String addPatientEndpoint = 'auth/dent_add_patient';
       String addStaffEndpoint = 'auth/add_and_edit_staff';
       String staffListEndpoint = 'auth/staff_list';
