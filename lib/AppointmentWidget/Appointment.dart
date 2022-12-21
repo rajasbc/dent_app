@@ -359,7 +359,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     
     if (Helper().isvalidElement(result) &&
         Helper().isvalidElement(result['status']) &&
-        result['status'] == 'Token is Invalid') {
+        result['status'] == 'Session expeired') {
       Helper().appLogoutCall(context, 'Session expeired');
     } else {
       this.setState(() {

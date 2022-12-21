@@ -19,6 +19,7 @@ import 'dart:io' show Platform, exit;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../CofigWidget/ClinicConfig.dart';
 import '../DoctorWidget/DoctorsList.dart';
 import '../StaffWidget/StaffList.dart';
 
@@ -43,6 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   }
   @override
+  var noOfBranches;
   void initState() {
     initPreferences();
     this.setState(() {
@@ -51,9 +53,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     getPatientList();
     getAppointmentCount();
   }
+//   void initstate() {
+//    super.initState();
+//     getCount();
+// }
+//  void getCount() {
+//     print('list builder count is ${noOfBranches}');
+//   }
 
   @override
   Widget build(BuildContext context) {
+    //  setState(() {
+    //   noOfBranches = 2;
+    // });
     // userResponse = storage.getItem('userResponse');
     double screenHeight = MediaQuery.of(context).size.height - 50;
     double screenwidth = MediaQuery.of(context).size.width;
@@ -225,7 +237,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       )),
                     ),
                   ),
-
+              
                   // patient
                   Container(
                     height: screenHeight * 0.35,
@@ -369,6 +381,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   color: Colors.black26)),
                                         ],
                                       ),
+                        
                                       //      Container(
                                       // // color: Colors.yellow,
                                       // height: screenHeight*0.04,alignment: Alignment.topRight,
@@ -381,11 +394,372 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 ),
                               ],
                             ),
-                          )
+                            
+                          ),
+                          
                         ],
                       )),
                     ),
                   ),
+                  SizedBox(height: 10,),
+              
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.settings,
+                                      color: CustomColors.app_color,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      width: screenwidth * 0.01,
+                                    ),
+                                    Text(
+                                      'Settings',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          letterSpacing: 1.42,
+                                          fontWeight: FontWeight.bold,
+                                          color: CustomColors.app_color),
+                                    ),
+                                  ],
+                                ),
+                                // Container(
+                                //     // color: Colors.yellow,
+                                //     height: screenHeight * 0.05,
+                                //     alignment: Alignment.topRight,
+                                    // child: IconButton(
+                                    //   onPressed: () {
+                                    //     Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               const CreateAppointment()),
+                                    //     );
+                                    //   },
+                                    //   icon: Icon(
+                                    //     Icons.add,
+                                    //     color: CustomColors.app_color,
+                                    //     size: 20,
+                                    //   ),
+                                    // )
+                                    // )
+                                // Icon(Icons.add, color: CustomColors.app_color,size: 25,)
+                              ],
+                              ),
+                            ),
+                          ),
+                        
+  //                           child: CustomScrollView(
+  //                             scrollDirection: Axis.vertical,
+                               
+
+  //                             shrinkWrap: true,
+  //                             primary: false,
+  //                             slivers: [
+  //                               SliverPadding(padding: EdgeInsets.all(10)),
+  //                               SliverGrid.count(
+  //                                  childAspectRatio: (1 / .4),
+  //                                 crossAxisSpacing: 1,
+  //                                 mainAxisSpacing: 1,
+  //                                 crossAxisCount: 2,
+  //                                 children: [
+  //                                   Container(
+  //                                     child: SizedBox.fromSize(
+  //                                     size: Size(40, 40),
+  // child: ClipOval(
+    // child: Material(
+    //   color: CustomColors.app_color,
+    //   child: InkWell(
+    //     splashColor: Colors.green, 
+    //     onTap: () {}, 
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: <Widget>[
+    //         Icon(Icons.local_hospital_outlined), // <-- Icon
+    //         Text("Doctor"), // <-- Text
+    //       ],
+    //     ),
+    //   ),
+    // ),
+  // ),
+  //                                    ),
+                                      
+  //                                   ),
+  //                                    Container(
+  //                                    child: SizedBox.fromSize(
+  //                                     size: Size(56, 56),
+  // child: ClipOval(
+  //   child: Material(
+  //     color: CustomColors.app_color,
+  //     child: InkWell(
+  //       splashColor: Colors.green, 
+  //       onTap: () {}, 
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: <Widget>[
+  //           Icon(Icons.people_alt_outlined), // <-- Icon
+  //           Text("Staffs"), // <-- Text
+  //         ],
+  //       ),
+  //     ),
+  //   ),
+  // ),
+  //                                    ),
+  //                                   ),
+  //                                    Container(
+                                    //  child: SizedBox.fromSize(
+                                    //   size: Size(56, 56),
+  // child: ClipOval(
+  //   child: Material(
+  //     color: Colors.amberAccent,
+  //     child: InkWell(
+  //       splashColor: Colors.green, 
+  //       onTap: () {}, 
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: <Widget>[
+  //           Icon(Icons.settings_accessibility_rounded), // <-- Icon
+  //           Text("Configaraution"), // <-- Text
+  //         ],
+  //       ),
+  //     ),
+  //   ),
+  // ),
+  //                                    ),
+  //                                   ),
+  //                                    Container(
+  //                                    child: SizedBox.fromSize(
+  //                                     size: Size(56, 56),
+  // child: ClipOval(
+  //   child: Material(
+  //     color: Colors.amberAccent,
+  //     child: InkWell(
+  //       splashColor: Colors.green, 
+  //       onTap: () {}, 
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: <Widget>[
+  //           Icon(Icons.people_alt_outlined), // <-- Icon
+  //           Text("Staffs"), // <-- Text
+  //         ],
+  //       ),
+  //     ),
+  //   ),
+  // ),
+  //                                    ),
+  //                                   ),
+  //                                 ],
+  //                               )
+  //                             ],
+  //                           ),
+  SizedBox(height: 10,),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  splashColor: Colors.green, 
+                  child: Container(
+                            width: screenwidth * 0.4,
+                              // height: screenHeight*0.22,
+                              height: screenHeight * 0.1,
+                
+                               decoration: BoxDecoration(
+                  
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                  
+                                ],
+                              ),
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.local_hospital_outlined, color: CustomColors.app_color,), // <-- Icon
+                              Text("Doctor"), // <-- Text
+                            ],
+                          )
+                  ),
+                   onTap: (){
+                     Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const DoctorsList()),
+                                      );
+                  },
+                ),
+                InkWell(
+                   
+                  child: Container(
+                             width: screenwidth * 0.4,
+                              // height: screenHeight*0.22,
+                              height: screenHeight * 0.1,
+                              
+                               decoration: BoxDecoration(
+                  
+                                color: Colors.white,
+                                
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                  
+                                ],
+                              ),
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.people_alt_outlined, color: CustomColors.app_color,), // <-- Icon
+                              Text("Staff"), // <-- Text
+                            ],
+                          )
+                  ),
+                  onTap: (){
+                    
+                     Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const StaffList()),
+                                      );
+                  },
+                   splashColor: Colors.green, 
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  splashColor: Colors.green, 
+                  child: Container(
+                    
+                            width: screenwidth * 0.4,
+                              // height: screenHeight*0.22,
+                              height: screenHeight * 0.1,
+                
+                               decoration: BoxDecoration(
+                  
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                  
+                                ],
+                              ),
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.calendar_view_month_rounded, color: CustomColors.app_color,), // <-- Icon
+                              Text("Configaration"), // <-- Text
+                            ],
+                          )
+                  ),
+                   onTap: (){
+                     Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ClinicConfig()),
+                                      );
+                  },
+                ),
+                InkWell(
+                  splashColor: Colors.green, 
+                  child: Container(
+                      width: screenwidth * 0.4,
+                              // height: screenHeight*0.22,
+                              height: screenHeight * 0.1,
+                
+                               decoration: BoxDecoration(
+                  
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                  
+                                ],
+                              ),
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.signpost_outlined,
+                              color: CustomColors.app_color,), // <-- Icon
+                              Text("Profile"), // <-- Text
+                            ],
+                          )
+                  ),
+                   onTap: (){
+                    //  Navigator.push(
+                    //                     context,
+                    //                     MaterialPageRoute(
+                    //                         builder: (context) =>
+                    //                             const StaffList()),
+                    //                   );
+                  },
+                )
+              ],
+            )
+          ],
+        ),
+                            ),
+    )
+                          // Container(
+                          //   child: GridView.count(crossAxisCount: 1,
+                          //   ),
+                          // )
                   // ElevatedButton(onPressed: (){
                   //   Navigator.push(context, MaterialPageRoute(
                   //     builder: (context) => const DoctorsList(),));
@@ -440,7 +814,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         await api().getAppointmentCount(userResponse['access_token']);
     if (Helper().isvalidElement(appointmentCount) &&
         Helper().isvalidElement(appointmentCount['status']) &&
-        appointmentCount['status'] == 'Token is Invalid') {
+        appointmentCount['status'] == 'Token is Expired') {
       Helper().appLogoutCall(context, 'Session expeired');
     } else {
       //  storage.setItem('diagnosisList', diagnosisList);

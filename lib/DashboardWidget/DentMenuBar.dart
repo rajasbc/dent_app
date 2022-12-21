@@ -21,6 +21,7 @@ import 'package:nigdent/Common/colors.dart' as CustomColors;
 import 'package:nigdent/api/Apicall.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../CofigWidget/ClinicConfig.dart';
 import '../DoctorWidget/DoctorsList.dart';
 import '../StaffWidget/StaffList.dart';
 
@@ -353,28 +354,39 @@ class _DentMenuBarState extends State<DentMenuBar> {
                     
                           },
                   ),
-                   ListTile(
-                          title: Text('Doctors'),
-                          leading: Icon(Icons.local_hospital_outlined),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const DoctorsList()),
-                            );
-                          },
-                  ),
-                   ListTile(
-                          title: Text('Staffs'),
-                          leading: Icon(Icons.groups_rounded),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const StaffList()),
-                            );
-                          },
-                  ),
+                  //  ListTile(
+                  //         title: Text('Doctors'),
+                  //         leading: Icon(Icons.local_hospital_outlined),
+                  //         onTap: () {
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => const DoctorsList()),
+                  //           );
+                  //         },
+                  // ),
+                  //  ListTile(
+                  //         title: Text('Staffs'),
+                  //         leading: Icon(Icons.groups_rounded),
+                  //         onTap: () {
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => const StaffList()),
+                  //           );
+                  //         },
+                  // ),
+                  //  ListTile(
+                  //         title: Text('Config'),
+                  //         leading: Icon(Icons.content_copy_rounded),
+                  //         onTap: () {
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => const ClinicConfig()),
+                  //           );
+                  //         },
+                  // ),
                 ])
                           ),
                         ),
