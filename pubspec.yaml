@@ -125,6 +125,9 @@ flutter:
     - assets/images/loading_image.png
     - assets/images/no_data_found.png
     - assets/images/nigsoft_logo.png
+    - assets/images/1.jpg
+    - assets/images/2.jpg
+    - assets/images/3.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/-and-images/#resolution-aware
