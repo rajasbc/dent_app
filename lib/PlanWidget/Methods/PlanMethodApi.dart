@@ -37,4 +37,33 @@ class PlanMethodApi {
     } else {}
     return edidiagnosisList['status'];
   }
+
+  getPlanListApi(accessToken, context) async {
+    var selectedPatient = storage.getItem('selectedPatient');
+    var data = {
+      "patient_id": selectedPatient['id'].toString(),
+    };
+    var getPlanList = await api().getPlanList(accessToken, data);
+
+    if (Helper().isvalidElement(getPlanList) &&
+        Helper().isvalidElement(getPlanList['status']) &&
+        getPlanList['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {}
+
+    return getPlanList['list'];
+  }
+
+  saveAndCreatePlan(accessToken,context, data) async {
+   
+    var save_and_create_plan = await api().saveAndCreatePlan(accessToken, data);
+
+    if (Helper().isvalidElement(save_and_create_plan) &&
+        Helper().isvalidElement(save_and_create_plan['status']) &&
+        save_and_create_plan['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {}
+
+    return save_and_create_plan['status'];
+  }
 }
