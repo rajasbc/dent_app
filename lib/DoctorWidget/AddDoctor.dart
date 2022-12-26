@@ -151,13 +151,14 @@ class _AddDoctorState extends State<AddDoctor> {
                         }
                       },
                       keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                          TextInputType.number,
                       maxLength: 10,
                     ),
                   ),
                    SizedBox(height: 10,),
                     SizedBox(
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         labelText: 'Email Id',
                         border: OutlineInputBorder(),

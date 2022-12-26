@@ -235,6 +235,17 @@ return Container(
                                    "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
                               ],
                                 ),
+                                 Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    'Doctor :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),
+                                Text(
+                                  'dent kiter'),
+                              ],
+                                ),
                               //     Row(
                               // // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               // children: [
@@ -282,8 +293,28 @@ return Container(
                                   'DOB :',
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),
+                              Text(Helper().isvalidElement(data['p_dob'])
+                              ? data["p_dob"].toString()=="0000-00-00"
+                              ?"yyyy-mm-dd"
+                              : data["p_dob"].toString()=="1970-01-01"
+                              ? 'yyyy-mm-dd'
+                              : data["p_dob"].toString()
+                              :"yyyy-mm-dd"
+                              ),
+                            ],
+                            ),
+                            Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
                               Text(
-                                 "${data['p_dob'].toString()}",style: TextStyle(fontSize: 13),),
+                                
+                                  'Age :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                 "${data['p_age'].toString()}",style: TextStyle(fontSize: 13),),
                             ],
                             ),
                              Row(
@@ -296,10 +327,17 @@ return Container(
                                   'Reg.Date :',
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),
-                              Text(
-                                  "${data['preg_date'].toString()}",style: TextStyle(fontSize: 13),),
+                             Text(Helper().isvalidElement(data['preg_date'])
+                              ? data["preg_date"].toString()=="0000-00-00"
+                              ?"yyyy-mm-dd"
+                              : data["preg_date"].toString()=="1970-01-01"
+                              ? 'yyyy-mm-dd'
+                              : data["preg_date"].toString()
+                              :"yyyy-mm-dd"
+                              ),
                             ],
                             )
+                            
                           ],
                         ),
                       ),

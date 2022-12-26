@@ -281,8 +281,14 @@ getpatientSummaryReportList();
                                   'DOB :',
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),
-                              Text(
-                                   "${data['p_dob'].toString()}",style: TextStyle(fontSize: 13),),
+                             Text(Helper().isvalidElement(data)
+                              ? data["p_dob"].toString()=="0000-00-00"
+                              ?"yyyy-mm-dd"
+                              : data["p_dob"].toString()=="1970-01-01"
+                              ? 'yyyy-mm-dd'
+                              : data["p_dob"].toString()
+                              :"yyyy-mm-dd"
+                              ),
                             ],
                             ),
                              Row(
@@ -293,6 +299,20 @@ getpatientSummaryReportList();
                               Text(
                                 
                                   'Email :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                    "${data['p_email'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                            ),
+                             Row(
+                              
+                            mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                
+                              Text(
+                                
+                                  'Doctor :',
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),
                               Text(

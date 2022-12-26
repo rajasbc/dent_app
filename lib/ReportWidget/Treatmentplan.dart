@@ -129,8 +129,6 @@ gettreatmentplanList();
                     )),
               ],
             ),
-            
-         
 
           ],
         ),
@@ -195,121 +193,136 @@ gettreatmentplanList();
            padding: const EdgeInsets.all(3.0),
            child: Column(
              children: [
-               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                          Row(
-                            children: [
-                              Text(
-                                
-                                  'Date :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),  Text(
-                             "${data['treatment_date'].toString()}",style: TextStyle(fontSize: 13),),
+               Padding(
+                 padding: const EdgeInsets.all(1.0),
+                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                            Row(
+                              children: [
+                                Text(
+                                  
+                                    'Date :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),  Text(
+                               "${data['treatment_date'].toString()}",style: TextStyle(fontSize: 13),),
 
-                            ],
-                          ),
-                          Row(
-                             children: [
-                             
-                           Text(
-                             
-                               'Patient :',
-                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                               ),
-                           Text(
-                               'riyaz',style: TextStyle(fontSize: 13),),
                               ],
-                          ),
+                            ),
+                            Row(
+                               children: [
+                               
+                             Text(
+                               
+                                 'Patient :',
+                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                 ),
+                             Text(
+                                 'riyaz',style: TextStyle(fontSize: 13),),
+                                ],
+                            ),
 
-                        ],
+                          ],
+                 ),
                ),
-               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                          Row(
-                            children: [
-                              Text(
-                                
-                                  'Doctor :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),  Text(
-                              'Riyaz',style: TextStyle(fontSize: 13),),
+               Padding(
+                 padding: const EdgeInsets.all(1.0),
+                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                            Row(
+                              children: [
+                                Text(
+                                  
+                                    'Doctor :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),  Text(
+                                'Riyaz',style: TextStyle(fontSize: 13),),
 
-                            ],
-                          ),
-                          Row(
-                             children: [
-                             
-                           Text(
-                             
-                               'Pay Status :',
-                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                               ),
-                           Text(
-                               "${data['pay_status'].toString()}",style: TextStyle(fontSize: 13),),
                               ],
-                          ),
+                            ),
+                            Row(
+                               children: [
+                               
+                             Text(
+                               
+                                 'Pay Status :',
+                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                 ),
+                             Text(
+                                 "${data['pay_status'].toString()}",style: TextStyle(fontSize: 13),),
+                                ],
+                            ),
 
-                        ],
+                          ],
+                 ),
                ),
-               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                          Row(
-                            children: [
-                              Text(
-                                
-                                  'Fee :',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),  Text(
-                             "${data['fee'].toString()}",style: TextStyle(fontSize: 13),),
+               Padding(
+                 padding: const EdgeInsets.all(1.0),
+                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                            Row(
+                              children: [
+                                Text(
+                                  
+                                    'Fee :',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),  Text(
+                               "${data['fee'].toString()}",style: TextStyle(fontSize: 13),),
 
-                            ],
-                          ),
-                          Row(
-                             children: [
-                             
-                           Text(
-                             
-                               'Paid :',
-                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                               ),
-                           Text(
-                               "${data['payable'].toString()}",style: TextStyle(fontSize: 13),),
                               ],
-                          ),
+                            ),
+                            Row(
+                               children: [
+                               
+                             Text(
+                               
+                                 'Paid :',
+                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                 ),
+                             Text(
+                                 "${data['payable'].toString()}",style: TextStyle(fontSize: 13),),
+                                ],
+                            ),
 
-                        ],
-               ), Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                          Row(
-                            children: [
-                              Text(
-                                
-                                  'Diagnosis:',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
-                                  ),  Text(
-                             "${data['diagnosis'].toString()}",style: TextStyle(fontSize: 12),),
+                          ],
+                 ),
+               ), Padding(
+                 padding: const EdgeInsets.all(1.0),
+                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                            Row(
+                              children: [
+                                Text(
+                                  
+                                    'Diagnosis:',
+                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                    ),  Text(
+                               "${data['diagnosis'].toString()}",style: TextStyle(fontSize: 12),),
 
-                            ],
-                          ),
-                          // Row(
-                          //    children: [
-                             
-                          //  Text(
-                             
-                          //      'Paid :',
-                          //      style: TextStyle(fontWeight: FontWeight.bold),
-                          //      ),
-                          //  Text(
-                          //      "${data['payable'].toString()}",style: TextStyle(fontSize: 13),),
-                          //     ],
-                          // ),
+                              ],
+                            ),
 
-                        ],
+                          ],
+                 ),
                ),
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Row(
+                               children: [
+                               
+                             Text(
+                               
+                                 'Treatment :',
+                                 style: TextStyle(fontWeight: FontWeight.bold),
+                                 ),
+                             Text(
+                                 "${data['treatment'].toString()}",style: TextStyle(fontSize: 13),),
+                                ],
+                            ),
+                ),
              ],
            ),
          ),

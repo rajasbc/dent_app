@@ -46,7 +46,7 @@ class _CollectionReportState extends State<CollectionReport> {
           preferredSize: Size.fromHeight(50),
           child: AppBar(
             backgroundColor: CustomColors.app_color,
-            title: Text('Collection Report'),
+            title: Text('Billing Collection Report'),
           ),
         ),
            body: Container( 
@@ -227,7 +227,18 @@ class _CollectionReportState extends State<CollectionReport> {
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                  'Mobile :',
+                                  'Date :',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                  ),
+                              Text(
+                                  "${data['p_phone'].toString()}",style: TextStyle(fontSize: 13),),
+                            ],
+                              ),
+                               Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  'Treatment :',
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),
                               Text(
@@ -253,7 +264,7 @@ class _CollectionReportState extends State<CollectionReport> {
                               
                             Text(
                               
-                                'Email :',
+                                'Doctor :',
                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize:13 ),
                                 ),
                             Text(
@@ -267,7 +278,7 @@ class _CollectionReportState extends State<CollectionReport> {
                               
                             Text(
                               
-                                'DOB :',
+                                'Payment Mode :',
                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(
@@ -281,7 +292,7 @@ class _CollectionReportState extends State<CollectionReport> {
                               
                             Text(
                               
-                                'Reg.Date :',
+                                'Amount :',
                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                 ),
                             Text(

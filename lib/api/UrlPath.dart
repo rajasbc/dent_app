@@ -19,12 +19,13 @@
        String addDoctorEndpoint = 'auth/add_doctor_and_edit';
       String treatmentPlanEndpoint = 'auth/plan_summary_report';
 
-
       String doctorListEndpoint = 'auth/dent_get_doctors';
       String getSlottimeListEndpoint ='auth/dent_slottime_list';
       String addPatientEndpoint = 'auth/dent_add_patient';
       String addStaffEndpoint = 'auth/add_and_edit_staff';
       String staffListEndpoint = 'auth/staff_list';
+      String getconfigEndpoint = 'auth/get_clinic_config';
+      String confifgEndpoint = 'auth/clinic_config';
       // String doctorListEndpoint = 'auth/dent_get_doctors';
 
 

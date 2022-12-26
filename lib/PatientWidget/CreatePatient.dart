@@ -85,6 +85,7 @@ class _CreatePatientState extends State<CreatePatient> {
   var title = [
     'Mr',
     'Mrs',
+    'Miss',
     'Master',
     'Ms',
     'Dr',
@@ -480,6 +481,12 @@ class _CreatePatientState extends State<CreatePatient> {
                     } else if (titleDropdownvalue == 'Mrs') {
                       _radioSelected = 2;
                     }
+                    else if (titleDropdownvalue == 'Miss') {
+                      _radioSelected = 2;
+                    }
+                    else if (titleDropdownvalue == 'Ms') {
+                      _radioSelected = 2;
+                    }
                   });
                 },
               ),
@@ -553,7 +560,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 }
                 return null;
               },
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.number,
               maxLength: 3,
               decoration: new InputDecoration(
                 filled: true,
@@ -643,6 +650,7 @@ class _CreatePatientState extends State<CreatePatient> {
               //   return null;
               // },
               controller: emailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: new InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -927,6 +935,67 @@ class _CreatePatientState extends State<CreatePatient> {
                 ),
               ),
             ),
+            SizedBox(height: 15,),
+            ElevatedButton(
+               style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  CustomColors.app_color)),
+               onPressed: () {
+                           if(patientnameController.text.isEmpty  ){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor:  Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                         else if(ageController.text.isEmpty  ){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Age',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else  if(mobileController.text.isEmpty){
+                            Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+                            
+                          }
+                          else if(mobileController.text.length<10){
+                              Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
+                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                                    fontSize: 16.0
+                            );
+
+                          }
+                          
+                          else{
+                             this.setState(() {
+                              show_information = 'Personal Information';
+                            }
+                            );
+
+                          }
+                           
+                          },
+             child: Text('Next'))
           ],
         ),
       ),
@@ -1148,6 +1217,19 @@ class _CreatePatientState extends State<CreatePatient> {
               },
             ),
           ),
+
+          SizedBox(
+            height: 15,
+          ),
+          ElevatedButton(
+             style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  CustomColors.app_color)),
+            onPressed: (){
+            this.setState(() {
+                              show_information = 'Other Information';
+                            });
+          }, child: Text('Next'))
         ],
       )),
     );
@@ -1219,7 +1301,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 }
                 return null;
               },
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.number,
               maxLength: 10,
               decoration: new InputDecoration(
                 filled: true,
@@ -1285,6 +1367,7 @@ class _CreatePatientState extends State<CreatePatient> {
               // keyboardType: TextInputType.phone,
               // maxLength: 15,
               controller: expiresonController,
+              keyboardType: TextInputType.datetime,
               decoration: new InputDecoration(
                 filled: true,
                 fillColor: Colors.white,

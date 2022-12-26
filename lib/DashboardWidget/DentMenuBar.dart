@@ -7,7 +7,7 @@ import 'package:nigdent/AppointmentWidget/Appointment.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/PlanWidget/DentalPlanWidget.dart';
-import 'package:nigdent/ReportWidget/CollectionReport.dart';
+import 'package:nigdent/ReportWidget/BillingCollectionReport.dart';
 import 'package:nigdent/ReportWidget/PatientRegisterReport.dart';
 import 'package:nigdent/ReportWidget/PatientReportSummary.dart';
 import 'package:nigdent/ReportWidget/PaymentReport.dart';
@@ -217,7 +217,7 @@ class _DentMenuBarState extends State<DentMenuBar> {
                                 ),
                                 
                             ListTile(
-                              title: Text('Collection Report'),
+                              title: Text('Billing Collection Report'),
                               leading: Icon(Icons.collections),
                               onTap: () {
                                 Navigator.push(
@@ -621,7 +621,7 @@ return Container(
     alignment: Alignment.topLeft,
     child: Material(
       child: Container(
-        
+         
         width: screenWidth*0.7,
         height: screenHeight*0.4,
         color: CustomColors.app_color,
@@ -661,3 +661,11 @@ storage.setItem('selectedPatient', options.toList()[0][index]);
 );
   }
 }
+
+
+
+
+
+
+
+

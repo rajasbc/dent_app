@@ -118,7 +118,7 @@ var choosevalue = [
                             }
                           },
                           keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.number,
                               
                           maxLength: 10,
                         
@@ -127,6 +127,7 @@ var choosevalue = [
                        SizedBox(height: 10,),
                        SizedBox(
                         child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             labelText: 'Email ID',
                             border: OutlineInputBorder(),

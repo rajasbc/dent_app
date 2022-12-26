@@ -79,7 +79,7 @@ class api {
   }
 
   billingCollectionReport(access_token,data) async {
-    String url = RequestPath.base_url + RequestPath.patientRegReportEndpoint;
+    String url = RequestPath.base_url + RequestPath.billingCollectionReportEndpoint;
     var response = await http.post(Uri.parse(url),
         body: jsonEncode(data), headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
@@ -272,5 +272,27 @@ class api {
       return json.decode(response.body);
     }
   }
-  
+  update_config_call(access_token,config_details) async {
+    String updateconfigurl = RequestPath.base_url + RequestPath.confifgEndpoint;
+    var response = await http.post(Uri.parse(updateconfigurl),
+        body: jsonEncode(config_details), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  get_clinic_config(access_token) async {
+    String get_config_url = RequestPath.base_url + RequestPath.getconfigEndpoint;
+    var response = await http.get(Uri.parse(get_config_url),
+        headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+
 }
