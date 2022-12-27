@@ -23,6 +23,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../CofigWidget/ClinicConfig.dart';
 import '../DoctorWidget/DoctorsList.dart';
+import '../MedicineWidget/MedicineList.dart';
 import '../StaffWidget/StaffList.dart';
 
 class DentMenuBar extends StatefulWidget {
@@ -352,6 +353,17 @@ class _DentMenuBarState extends State<DentMenuBar> {
                                       fontSize: 15.0);
                             }
                     
+                          },
+                  ),
+                  ListTile(
+                          title: Text('Medicine'),
+                          leading: Icon(Icons.medical_services_rounded),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Medicine()),
+                            );
                           },
                   ),
                   //  ListTile(

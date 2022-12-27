@@ -871,22 +871,13 @@ class _CreatePatientState extends State<CreatePatient> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: DropdownButtonFormField(
-                // Initial Value
                 value: countryDropdownvalue,
-
-                // Down Arrow Icon
-                // icon: const Icon(Icons.keyboard_arrow_down),
-
-                // Array list of items
                 items: country.map((String items) {
                   return DropdownMenuItem(
                     value: items,
                     child: Text(items),
                   );
                 }).toList(),
-
-                // After selecting the desired option,it will
-                // change button value to selected value
                 onChanged: (String? newValue) {
                   setState(() {
                     countryDropdownvalue = newValue!;
