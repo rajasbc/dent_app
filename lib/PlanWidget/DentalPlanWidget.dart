@@ -52,6 +52,7 @@ class _DentalPlanState extends State<DentalPlan> {
   var treatment_balance = 0;
   var treatment_discount = 0;
   var getPlanList;
+  int i = 0;
   @override
   void initState() {
     accessToken = storage.getItem('userResponse')['access_token'];
@@ -222,7 +223,7 @@ class _DentalPlanState extends State<DentalPlan> {
   renderTreatmentBasedWidget(screenHeight, screenWidth) {
     return Container(
       width: screenWidth,
-      height: screenHeight,
+      // height: screenHeight,
       // color: Colors.red,
       child: Column(
         children: [
@@ -246,104 +247,229 @@ class _DentalPlanState extends State<DentalPlan> {
           // Divider(color: Colors.white,),
           !isLoading
               ? Container(
-                  height: screenHeight * 0.85,
+                  // height: screenHeight * 0.85,
+
                   // color: Colors.red,
 
                   child: Helper().isvalidElement(treatment_details) &&
                           treatment_details.length > 0
                       ? ListView.builder(
+                          shrinkWrap: true,
+                          // scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           // padding: EdgeInsets.all(5.0),
                           itemCount: treatment_details.length,
                           itemBuilder: (BuildContext context, int index) {
                             var data = treatment_details[index];
-                            return Container(
-                                color: index % 2 == 0
-                                    ? Color.fromARGB(255, 218, 235, 238)
-                                    : Colors.white,
-                                child: Column(
-                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        child: Column(
+                            return Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    // color: Colors.white,
+                                    color: index % 2 == 0
+                                        ? Color.fromARGB(255, 218, 235, 238)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 3,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  // color: index % 2 == 0
+                                  //     ? Color.fromARGB(255, 218, 235, 238)
+                                  //     : Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'S.No: ${index + 1}',
-                                                style: TextStyle(fontSize: 12),
+                                        Container(
+                                            child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      GestureDetector(
+                                                        // onTap: () {message();},
+                                                        child: ClipOval(
+                                                          child: Container(
+                                                            color: CustomColors
+                                                                .app_color,
+                                                            height: 25.0,
+                                                            width: 25.0,
+                                                            child: Center(
+                                                                child: Text(
+                                                              '${index + 1}',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 16),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            )),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 6.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              'assets/images/teeth1.png',
+                                                              height: 18,
+                                                            ),
+                                                            Text(
+                                                                '  Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        12)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 16,
+                                                    child: Container(
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          // storage.setItem(
+                                                          //     'diagnosis_item_list',
+                                                          //     data);
+
+                                                          // Navigator.push(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //     builder:
+                                                          //         (context) =>
+                                                          //             EditDiagnosisiList(),
+                                                          //   ),
+                                                          // );
+                                                        },
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          minimumSize: Size
+                                                              .zero, // Set this
+                                                          padding: EdgeInsets
+                                                              .zero, // and this
+                                                        ),
+                                                        child: Text(
+                                                          'Edit',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
                                               ),
-                                              Text(
-                                                  'Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
-                                                  style:
-                                                      TextStyle(fontSize: 12)),
-                                              // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
-                                              Text('Visit:  ${data['visit']}',
-                                                  style:
-                                                      TextStyle(fontSize: 12)),
-                                            ],
-                                          ),
-                                        ),
-                                        //        Padding(
-                                        //   padding: const EdgeInsets.all(2.0),
-                                        //   child: Row(
-                                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //     children: [
-                                        //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
-                                        //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                  'Treatment: ${data['treatment']}',
-                                                  style:
-                                                      TextStyle(fontSize: 11)),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                  'Fees: ${data['fees'].toString()}',
-                                                  style:
-                                                      TextStyle(fontSize: 12)),
-                                              Text(
-                                                  'Discount: ${data['discount'].toString()}',
-                                                  style:
-                                                      TextStyle(fontSize: 12)),
-                                              Text(
-                                                  'Balance: ${data['balance'].toString()}',
-                                                  style:
-                                                      TextStyle(fontSize: 12)),
-                                              Text(
-                                                  'Status: ${data['pay_status'].toString()}',
-                                                  style:
-                                                      TextStyle(fontSize: 12)),
-                                            ],
-                                          ),
-                                        ),
+                                            ),
+                                            // Padding(
+                                            //   padding:
+                                            //       const EdgeInsets.all(4.0),
+                                            //   child: Row(
+                                            //     children: [
+                                            //       Image.asset(
+                                            //         'assets/images/teeth.png',
+                                            //         height: 18,
+                                            //       ),
+                                            //       Text(
+                                            //           '  Diagnosis: ${data['diagnosis']}',
+                                            //           style: TextStyle(
+                                            //               fontSize: 12)),
+                                            //     ],
+                                            //   ),
+                                            // ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/images/treatment_icon.png',
+                                                    height: 18,
+                                                  ),
+                                                  Text(
+                                                      '  Treatment: ${data['treatment']}',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                      'Fees: ${data['fees'].toString()}',
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                  Text(
+                                                      'Discount: ${data['discount'].toString()}',
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                      'Balance: ${data['balance'].toString()}',
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                  Text(
+                                                      'Status: ${data['status'].toString()}',
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )),
                                       ],
-                                    )),
-                                    // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                                    // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                                    // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                                    // Divider(thickness: 1,)
-                                  ],
-                                ));
+                                    ),
+                                  )),
+                            );
                           },
                         )
                       : Image.asset(
@@ -421,17 +547,15 @@ class _DentalPlanState extends State<DentalPlan> {
                           setState(() {
                             planDropdownValue = plan_drop[0].toString();
                             planDropdown_id = plan_drop[1].toString();
+                            i = 0;
                           });
                         },
                       )
                     : DropdownButtonFormField(
-                        // validator: (value) => validateDrops(value),
-                        // isExpanded: true,
-                        // hint: Text('Select Treatment'),
-                        // value:' _selectedState[i]',
                         onChanged: (selectedDoctor) {
                           setState(() {
                             planDropdownValue = "0";
+                            i = 0;
                           });
                         },
                         items: [].map<DropdownMenuItem<String>>((item) {
@@ -459,18 +583,19 @@ class _DentalPlanState extends State<DentalPlan> {
                         // scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           var data = diagnosis_details[index];
+
+                          if (diagnosis_details[index]['plan_id'].toString() ==
+                              this.planDropdownValue) {
+                            i++;
+                          }
                           return diagnosis_details[index]['plan_id']
                                       .toString() ==
                                   this.planDropdownValue
                               ? Padding(
                                   padding: const EdgeInsets.all(3.0),
                                   child: Container(
-                                      // color: index % 2 == 0
-                                      //     ? Color.fromARGB(255, 218, 235, 238)
-                                      //     : Colors.white,
                                       decoration: BoxDecoration(
-                                        // color: Colors.white,
-                                        color: index % 2 == 0
+                                        color: i % 2 == 0
                                             ? Color.fromARGB(255, 218, 235, 238)
                                             : Colors.white,
                                         borderRadius: BorderRadius.only(
@@ -491,7 +616,6 @@ class _DentalPlanState extends State<DentalPlan> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(5.0),
                                         child: Column(
-                                          // mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
@@ -518,7 +642,7 @@ class _DentalPlanState extends State<DentalPlan> {
                                                                 width: 25.0,
                                                                 child: Center(
                                                                     child: Text(
-                                                                  '${index + 1}',
+                                                                  '${i}',
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .white,
@@ -553,40 +677,6 @@ class _DentalPlanState extends State<DentalPlan> {
                                                               ],
                                                             ),
                                                           ),
-
-                                                          // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
-                                                          // SizedBox(
-                                                          //   height: screenHeight * 0.01,
-                                                          //   // width: 18.0,
-                                                          //   child: Row(
-                                                          //     children: [
-                                                          //       IconButton(
-                                                          //           // padding:
-                                                          //           //     new EdgeInsets.all(0.0),
-                                                          //           // onPressed: () {},
-                                                          //           onPressed: () {
-                                                          //             storage.setItem(
-                                                          //                 'diagnosis_item_list',
-                                                          //                 data);
-                                                          //             // storage.getItem('diagnosis_item_list');
-                                                          //             //         final myMap = Map<String, dynamic>.from(data);
-                                                          //             // return Prices.fromJson(myMap);
-                                                          //             //         var a = jsonEncode(data);
-                                                          //             Navigator.push(
-                                                          //               context,
-                                                          //               MaterialPageRoute(
-                                                          //                 builder: (context) =>
-                                                          //                     EditDiagnosisiList(),
-                                                          //               ),
-                                                          //             );
-                                                          //           },
-
-                                                          //           icon: Icon(Icons.edit,
-                                                          //               size: 11.0)),
-                                                          //               Text('data')
-                                                          //     ],
-                                                          //   ),
-                                                          // )
                                                         ],
                                                       ),
                                                       SizedBox(
@@ -667,8 +757,6 @@ class _DentalPlanState extends State<DentalPlan> {
                                                   padding:
                                                       const EdgeInsets.all(4.0),
                                                   child: Row(
-                                                    // mainAxisAlignment:
-                                                    //     MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Image.asset(
                                                         'assets/images/treatment_icon.png',
@@ -724,10 +812,6 @@ class _DentalPlanState extends State<DentalPlan> {
                                                 ),
                                               ],
                                             )),
-                                            // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                                            // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                                            // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                                            // Divider(thickness: 1,)
                                           ],
                                         ),
                                       )),
@@ -742,68 +826,81 @@ class _DentalPlanState extends State<DentalPlan> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          // height: 16,
-                          child: Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green),
-                                onPressed: () async {
+                        Helper().isvalidElement(getPlanList) &&
+                                getPlanList.length > 1
+                            ? SizedBox(
+                                // height: 16,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.green),
+                                      onPressed: () async {
+                                        if (planDropdownValue == "0" ||
+                                            planDropdown_id == "0") {
+                                          Fluttertoast.showToast(
+                                              msg: 'Please Select Plan',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        } else {
+                                          var selectedPatient = storage
+                                              .getItem('selectedPatient');
+                                          var data = {
+                                            "patient_id": selectedPatient['id']
+                                                .toString(),
+                                            "plan_no": planDropdownValue,
+                                            "plan_id": planDropdown_id
+                                          };
+                                          print(data);
 
-                                  if (planDropdownValue == "0" || planDropdown_id == "0") {
-                                    Fluttertoast.showToast(
-                                        msg: 'Please Select Plan',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  } else {
-                                    var selectedPatient =
-                                        storage.getItem('selectedPatient');
-                                    var data = {
-                                      "patient_id":
-                                          selectedPatient['id'].toString(),
-                                      "plan_no": planDropdownValue,
-                                      "plan_id": planDropdown_id
-                                    };
-                                    print(data);
+                                          var create_plan =
+                                              await PlanMethodApi()
+                                                  .saveAndCreatePlan(
+                                                      accessToken,
+                                                      context,
+                                                      data);
 
-                                    var create_plan = await PlanMethodApi()
-                                        .saveAndCreatePlan(
-                                            accessToken, context, data);
+                                          if (create_plan ==
+                                              "Update Added  Successfully") {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    'Update Added  Successfully',
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor:
+                                                    CustomColors.success_color,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
 
-                                    if (create_plan == "Update Added  Successfully") {
-                                      Fluttertoast.showToast(
-                                        msg: 'Update Added  Successfully',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Color.fromARGB(255, 15, 199, 64),
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                        
-                                         method();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const DentalPlan()),
-                                    );
-                                      this.setState(() {
-                                        planDropdownValue = "0";
-                                        planDropdown_id = "0";
-                                      });
-                                    }
-                                  }
-                                },
-                                
-                                child: Text('Save',
-                                    style: TextStyle(fontSize: 12))),
-                          ),
-                        ),
+                                            method();
+
+                                            getDiagnosisDetails();
+                                            getTreatmentDetails();
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           const DentalPlan()),
+                                            // );
+                                            this.setState(() {
+                                              planDropdownValue = "0";
+                                              planDropdown_id = "0";
+                                            });
+                                          }
+                                        }
+                                      },
+                                      child: Text('Save',
+                                          style: TextStyle(fontSize: 12))),
+                                ),
+                              )
+                            : SizedBox(
+                                child: Container(height: 0),
+                              ),
                         SizedBox(
                           // height: 16,
                           child: Padding(
@@ -812,6 +909,10 @@ class _DentalPlanState extends State<DentalPlan> {
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: CustomColors.app_color),
                                 onPressed: () async {
+                                  this.setState(() {
+                                    isLoading = true;
+                                  });
+
                                   var selectedPatient =
                                       storage.getItem('selectedPatient');
                                   // var data = {
@@ -827,31 +928,50 @@ class _DentalPlanState extends State<DentalPlan> {
                                     "plan_id": "",
                                   };
                                   // print(data);
-                                  var create_plan = await PlanMethodApi().saveAndCreatePlan(accessToken, context, data);
+                                  var create_plan = await PlanMethodApi()
+                                      .saveAndCreatePlan(
+                                          accessToken, context, data);
 
-                                  if(create_plan == "Added  Successfully"){
+                                  if (create_plan == "Added  Successfully") {
+                                    this.setState(() {
+                                      isLoading = false;
+                                    });
                                     Fluttertoast.showToast(
                                         msg: 'Added  Successfully',
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
                                         backgroundColor:
-                                            Color.fromARGB(255, 15, 199, 64),
+                                            CustomColors.success_color,
                                         textColor: Colors.white,
                                         fontSize: 16.0);
-                                    this.setState(() {
+                                    setState(() {
                                       planDropdownValue = "0";
                                       planDropdown_id = "0";
                                     });
                                     method();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const DentalPlan()),
-                                    );
+                                    getDiagnosisDetails();
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           const DentalPlan()),
+                                    // );
+                                  } else {
+                                    this.setState(() {
+                                      isLoading = false;
+                                    });
+                                    if (create_plan == "No Without Plan") {
+                                      Fluttertoast.showToast(
+                                          msg: 'Please Add Plan',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    }
                                   }
-
                                 },
                                 child: Text('New Plan',
                                     style: TextStyle(fontSize: 12))),
@@ -911,6 +1031,8 @@ class _DentalPlanState extends State<DentalPlan> {
             onToggle: (value) async {
               setState(() {
                 isSwitchOn = value;
+                i = 0;
+                planDropdownValue = "0";
               });
               // if (value == true &&
               //     livePatientList['status'] == 'Token is Expired') {
@@ -991,35 +1113,6 @@ class _DentalPlanState extends State<DentalPlan> {
               //   ),
               // ),
               ),
-          //  Container(
-          //   // height: MediaQuery.of(context).size.height * 0.05,
-          //   width:MediaQuery.of(context).size.width*0.45,
-          //   decoration: BoxDecoration(
-          //       color: Colors.white,
-          //       border: Border.all(color: Colors.blueAccent),
-          //       borderRadius: BorderRadius.all(Radius.circular(8))),
-          //   padding: const EdgeInsets.all(10),
-          //   child: TextField(
-
-          //   style: TextStyle(backgroundColor: Colors.blueAccent,),
-          //     // controller: _email,
-          //     decoration: InputDecoration(
-
-          //       contentPadding:
-          //           const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-          //       border: InputBorder.none,
-          //           labelText: 'Enter Name',
-          //         // hintText: 'Enter Your Name'
-          //     ),
-          //   ),
-          // ),
-          // isSwitchOn == false && localPatientList.length > 0
-          //     ? IconButton(
-          //         onPressed: () {
-          //           print(livePatientList);
-          //         },
-          //         icon: Icon(Icons.sync))
-          //     : Container()
         ],
       ),
     );
