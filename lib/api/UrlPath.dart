@@ -11,7 +11,10 @@
       String diagnosisplanEndpoint= 'auth/top_diagnosis_report';
       String revenueEndpoint= 'auth/revenue_report';
       String paymentReportEndpoint= 'auth/payment_report';
-      String treatmentDetailsEndpoint= 'auth/dent_plan_list';
+      // String treatmentDetailsEndpoint= 'auth/dent_plan_list';
+       String getPlanListEndpoint='auth/get_plan_list';
+       String saveAndCreatePlanEndpoint = 'auth/save_chart_plan';
+        String treatmentDetailsEndpoint= 'auth/diagnosis_treatment_based_list';
       String appointmentCountEndpoint= 'auth/appoin_total_count';
       String addDentPlanEndpoint= 'auth/dent_add_plan';     
       String appointmentList = 'auth/dent_appointment_list';

@@ -1,18 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/fontelico_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:babylonjs_viewer/babylonjs_viewer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:nigdent/Common/utils.dart';
 import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 import 'package:nigdent/PlanWidget/AdultsModal.dart';
 import 'package:nigdent/PlanWidget/DiagnosisList.dart';
 import 'package:nigdent/PlanWidget/EditDiagnosisList.dart';
+import 'package:nigdent/PlanWidget/Methods/PlanMethodApi.dart';
 import 'package:nigdent/PlanWidget/MixedModal.dart';
 import 'package:nigdent/PlanWidget/PeadoModal.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -31,10 +34,11 @@ class _DentalPlanState extends State<DentalPlan> {
   final LocalStorage storage = new LocalStorage('nigdent_store');
 
   String defaultDropdownValue = 'Adult';
-  String planDropdownValue = 'Without Plan';
+  String planDropdownValue = '0';
+  String planDropdown_id = '0';
 
   var dropdownValues = ['Adult', 'Peado', 'Mixed'];
-  var plandropdownValues = ['Without Plan', 'Plan1', 'Plan2'];
+  // var plandropdownValues = ['Without Plan', 'Plan1', 'Plan2'];
 
   var diag_treat_list = [];
   // var map = new Map();
@@ -47,14 +51,24 @@ class _DentalPlanState extends State<DentalPlan> {
   int treatment_total = 0;
   var treatment_balance = 0;
   var treatment_discount = 0;
+  var getPlanList;
   @override
   void initState() {
     accessToken = storage.getItem('userResponse')['access_token'];
 
     getTreatmentDetails();
     getDiagnosisDetails();
-
+    method();
     super.initState();
+  }
+
+  method() async {
+    var getPlanList_result =
+        await PlanMethodApi().getPlanListApi(accessToken, context);
+
+    this.setState(() {
+      getPlanList = getPlanList_result;
+    });
   }
 
   @override
@@ -84,7 +98,7 @@ class _DentalPlanState extends State<DentalPlan> {
         ),
       ),
       body: Container(
-        height: screenHeight,
+        // height: screenHeight,
         width: screenWidth,
         child: SingleChildScrollView(
           child: Column(
@@ -163,7 +177,7 @@ class _DentalPlanState extends State<DentalPlan> {
               ),
 
               Container(
-                height: screenHeight * 0.78,
+                // height: screenHeight * 0.78,
                 // color: Colors.green,
                 // child: SingleChildScrollView(
                 child: Padding(
@@ -356,162 +370,497 @@ class _DentalPlanState extends State<DentalPlan> {
     return Column(
       children: [
         Container(
-          // alignment: Alignment.center,
-          // width: screenWidth * 0.95,
-          // height: screenHeight * 0.1,
-          // child: DropdownButtonFormField(
-          //   // Initial Value
-          //   autovalidateMode: AutovalidateMode.always,
-          //   // validator: (value) {
-          //   //   if (value == null ||
-          //   //       value.isEmpty ||
-          //   //       value == 'Select title') {
-          //   //     return 'You must select title';
-          //   //   }
-          //   //   return null;
-          //   // },
-          //   value: planDropdownValue,
+            alignment: Alignment.center,
+            // width: screenWidth * 0.95,
+            // height: screenHeight * 0.1,
+            child: Column(
+              children: [
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Select Plan',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    )),
+                Helper().isvalidElement(getPlanList) && getPlanList.length > 0
+                    ? DropdownButtonFormField(
+                        // Initial Value
+                        // autovalidateMode: AutovalidateMode.always,
+                        // validator: (value) {
+                        //   if (value == null ||
+                        //       value.isEmpty ||
+                        //       value == 'Select title') {
+                        //     return 'You must select title';
+                        //   }
+                        //   return null;
+                        // },
+                        // value: planDropdownValue,
 
-          //   // Down Arrow Icon
-          //   // icon: const Icon(Icons.keyboard_arrow_down),
+                        // Down Arrow Icon
+                        // icon: const Icon(Icons.keyboard_arrow_down),
+                        // Array list of items
+                        hint: Text("Without Plan"),
 
-          //   // Array list of items
-
-          //   items: plandropdownValues.map((String items) {
-          //     return DropdownMenuItem(
-          //       value: items,
-          //       child: Text(items),
-          //     );
-          //   }).toList(),
-          //   // After selecting the desired option,it will
-          //   // change button value to selected value
-          //   onChanged: (String? newValue) {
-          //     setState(() {
-          //       planDropdownValue = newValue!;
-          //     });
-          //   },
-          // ),
-        ),
+                        items:
+                            getPlanList.map<DropdownMenuItem<String>>((item) {
+                          return new DropdownMenuItem(
+                              child: new Text(
+                                item['plan_name'].toString(),
+                                // style: TextStyle(fontSize: 12),
+                              ),
+                              value: item['plan_no'].toString() +
+                                  "*&" +
+                                  item['id'].toString());
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          var plan_drop = newValue.toString().split('*&');
+                          setState(() {
+                            planDropdownValue = plan_drop[0].toString();
+                            planDropdown_id = plan_drop[1].toString();
+                          });
+                        },
+                      )
+                    : DropdownButtonFormField(
+                        // validator: (value) => validateDrops(value),
+                        // isExpanded: true,
+                        // hint: Text('Select Treatment'),
+                        // value:' _selectedState[i]',
+                        onChanged: (selectedDoctor) {
+                          setState(() {
+                            planDropdownValue = "0";
+                          });
+                        },
+                        items: [].map<DropdownMenuItem<String>>((item) {
+                          return new DropdownMenuItem(
+                            child: new Text('Without Plan'),
+                            value: '0',
+                          );
+                        }).toList(),
+                      )
+              ],
+            )),
+        SizedBox(height: 10),
         Helper().isvalidElement(diagnosis_details) &&
                 diagnosis_details.length > 0
-            ? Container(
-                height: screenHeight * 0.6,
-                // color: Colors.red,
-                child: ListView.builder(
-                    itemCount: diagnosis_details.length,
-                    // scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      var data = diagnosis_details[index];
-                      return Container(
-                          color: index % 2 == 0
-                              ? Color.fromARGB(255, 218, 235, 238)
-                              : Colors.white,
-                          child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'S.No: ${index + 1}',
-                                          style: TextStyle(fontSize: 12),
+            ? Column(
+                children: [
+                  Container(
+                    // height: screenHeight * 0.8,
+                    // color: Colors.red,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        // scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: diagnosis_details.length,
+                        // scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          var data = diagnosis_details[index];
+                          return diagnosis_details[index]['plan_id']
+                                      .toString() ==
+                                  this.planDropdownValue
+                              ? Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                      // color: index % 2 == 0
+                                      //     ? Color.fromARGB(255, 218, 235, 238)
+                                      //     : Colors.white,
+                                      decoration: BoxDecoration(
+                                        // color: Colors.white,
+                                        color: index % 2 == 0
+                                            ? Color.fromARGB(255, 218, 235, 238)
+                                            : Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10),
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            spreadRadius: 2,
+                                            blurRadius: 3,
+                                            offset: Offset(0,
+                                                3), // changes position of shadow
+                                          ),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Column(
+                                          // mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          GestureDetector(
+                                                            // onTap: () {message();},
+                                                            child: ClipOval(
+                                                              child: Container(
+                                                                color: CustomColors
+                                                                    .app_color,
+                                                                height: 25.0,
+                                                                width: 25.0,
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  '${index + 1}',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                )),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 6.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Image.asset(
+                                                                  'assets/images/teeth1.png',
+                                                                  height: 18,
+                                                                ),
+                                                                Text(
+                                                                    '  Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            12)),
+                                                              ],
+                                                            ),
+                                                          ),
+
+                                                          // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
+                                                          // SizedBox(
+                                                          //   height: screenHeight * 0.01,
+                                                          //   // width: 18.0,
+                                                          //   child: Row(
+                                                          //     children: [
+                                                          //       IconButton(
+                                                          //           // padding:
+                                                          //           //     new EdgeInsets.all(0.0),
+                                                          //           // onPressed: () {},
+                                                          //           onPressed: () {
+                                                          //             storage.setItem(
+                                                          //                 'diagnosis_item_list',
+                                                          //                 data);
+                                                          //             // storage.getItem('diagnosis_item_list');
+                                                          //             //         final myMap = Map<String, dynamic>.from(data);
+                                                          //             // return Prices.fromJson(myMap);
+                                                          //             //         var a = jsonEncode(data);
+                                                          //             Navigator.push(
+                                                          //               context,
+                                                          //               MaterialPageRoute(
+                                                          //                 builder: (context) =>
+                                                          //                     EditDiagnosisiList(),
+                                                          //               ),
+                                                          //             );
+                                                          //           },
+
+                                                          //           icon: Icon(Icons.edit,
+                                                          //               size: 11.0)),
+                                                          //               Text('data')
+                                                          //     ],
+                                                          //   ),
+                                                          // )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 16,
+                                                        child: Container(
+                                                          child: TextButton(
+                                                            onPressed: () {
+                                                              storage.setItem(
+                                                                  'diagnosis_item_list',
+                                                                  data);
+                                                              // storage.getItem('diagnosis_item_list');
+                                                              //         final myMap = Map<String, dynamic>.from(data);
+                                                              // return Prices.fromJson(myMap);
+                                                              //         var a = jsonEncode(data);
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          EditDiagnosisiList(),
+                                                                ),
+                                                              );
+                                                            },
+                                                            style: TextButton
+                                                                .styleFrom(
+                                                              minimumSize: Size
+                                                                  .zero, // Set this
+                                                              padding: EdgeInsets
+                                                                  .zero, // and this
+                                                            ),
+                                                            child: Text(
+                                                              'Edit',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                //        Padding(
+                                                //   padding: const EdgeInsets.all(2.0),
+                                                //   child: Row(
+                                                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                //     children: [
+                                                //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
+                                                //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),
+                                                //     ],
+                                                //   ),
+                                                // ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Row(
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/images/teeth.png',
+                                                        height: 18,
+                                                      ),
+                                                      Text(
+                                                          '  Diagnosis: ${data['diagnosis']}',
+                                                          style: TextStyle(
+                                                              fontSize: 12)),
+                                                      // Text('Visit:  ${data['visit']}',
+                                                      //     style: TextStyle(fontSize: 12)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Row(
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/images/treatment_icon.png',
+                                                        height: 18,
+                                                      ),
+                                                      Text(
+                                                          '  Treatment: ${data['diagnosis']}',
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                          )),
+                                                      // Text('Visit:  ${data['visit']}',
+                                                      //     style: TextStyle(fontSize: 12)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          'Fees: ${data['fees'].toString()}',
+                                                          style: TextStyle(
+                                                              fontSize: 12)),
+                                                      Text(
+                                                          'Discount: ${data['discount'].toString()}',
+                                                          style: TextStyle(
+                                                              fontSize: 12)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          'Balance: ${data['balance'].toString()}',
+                                                          style: TextStyle(
+                                                              fontSize: 12)),
+                                                      Text(
+                                                          'Status: ${data['status'].toString()}',
+                                                          style: TextStyle(
+                                                              fontSize: 12)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                            // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                                            // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                                            // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
+                                            // Divider(thickness: 1,)
+                                          ],
                                         ),
-                                        Text(
-                                            'Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',
-                                            style: TextStyle(fontSize: 12)),
-                                        // Text('Date: ${data['fees']}', style: TextStyle(fontSize: 12),),
-                                        SizedBox(
-                                          height: screenHeight * 0.01,
-                                          // width: 18.0,
-                                          child: IconButton(
-                                              padding: new EdgeInsets.all(0.0),
-                                              // onPressed: () {},
-                                              onPressed: () {
+                                      )),
+                                )
+                              : Container(
+                                  height: 0,
+                                );
+                        }),
+                  ),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          // height: 16,
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green),
+                                onPressed: () async {
 
-                                                storage.setItem('diagnosis_item_list', data);
-                                                // storage.getItem('diagnosis_item_list');
-                                                //         final myMap = Map<String, dynamic>.from(data);
-                                                // return Prices.fromJson(myMap);
-                                                //         var a = jsonEncode(data);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditDiagnosisiList(),
-                                                     ),
-                                                );
-                                              },
-                                              icon: const Icon(Icons.edit,
-                                                  size: 11.0)),
-                                        )
+                                  if (planDropdownValue == "0" || planDropdown_id == "0") {
+                                    Fluttertoast.showToast(
+                                        msg: 'Please Select Plan',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  } else {
+                                    var selectedPatient =
+                                        storage.getItem('selectedPatient');
+                                    var data = {
+                                      "patient_id":
+                                          selectedPatient['id'].toString(),
+                                      "plan_no": planDropdownValue,
+                                      "plan_id": planDropdown_id
+                                    };
+                                    print(data);
 
-                                        // ElevatedButton(
-                                        //     onPressed: () {},
-                                        //     child: Text('Edit',
-                                        //         style:
-                                        //             TextStyle(fontSize: 12))),
-                                      ],
-                                    ),
-                                  ),
-                                  //        Padding(
-                                  //   padding: const EdgeInsets.all(2.0),
-                                  //   child: Row(
-                                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  //     children: [
-                                  //       Text('Teeth: ${data['teeth_no'] + '-' + data['teeth_postion']}',style: TextStyle(fontSize: 12)),
-                                  //       Text('Exam: ${index}',style: TextStyle(fontSize: 12)),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Diagnosis: ${data['diagnosis']}',
-                                            style: TextStyle(fontSize: 11)),
-                                        Text('Visit:  ${data['visit']}',
-                                            style: TextStyle(fontSize: 12)),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Fees: ${data['fees'].toString()}',
-                                            style: TextStyle(fontSize: 12)),
-                                        Text(
-                                            'Discount: ${data['discount'].toString()}',
-                                            style: TextStyle(fontSize: 12)),
-                                        Text(
-                                            'Balance: ${data['balance'].toString()}',
-                                            style: TextStyle(fontSize: 12)),
-                                        Text(
-                                            'Status: ${data['status'].toString()}',
-                                            style: TextStyle(fontSize: 12)),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )),
-                              // Text('Name: ${options.toList()[0][index]['p_name'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                              // Text('Phone: ${options.toList()[0][index]['p_phone'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                              // Text('Age: ${options.toList()[0][index]['p_age'].toString().toUpperCase()}', style: const TextStyle(color: Colors.white)),
-                              // Divider(thickness: 1,)
-                            ],
-                          ));
-                    }),
+                                    var create_plan = await PlanMethodApi()
+                                        .saveAndCreatePlan(
+                                            accessToken, context, data);
+
+                                    if (create_plan == "Update Added  Successfully") {
+                                      Fluttertoast.showToast(
+                                        msg: 'Update Added  Successfully',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Color.fromARGB(255, 15, 199, 64),
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                        
+                                         method();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const DentalPlan()),
+                                    );
+                                      this.setState(() {
+                                        planDropdownValue = "0";
+                                        planDropdown_id = "0";
+                                      });
+                                    }
+                                  }
+                                },
+                                
+                                child: Text('Save',
+                                    style: TextStyle(fontSize: 12))),
+                          ),
+                        ),
+                        SizedBox(
+                          // height: 16,
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: CustomColors.app_color),
+                                onPressed: () async {
+                                  var selectedPatient =
+                                      storage.getItem('selectedPatient');
+                                  // var data = {
+                                  //   "patient_id":
+                                  //       selectedPatient['id'].toString(),
+                                  //   "plan_no": planDropdownValue == "0" ? "" : planDropdownValue,
+                                  //   "plan_id": planDropdown_id == "0" ? "" : planDropdown_id,
+                                  // };
+                                  var data = {
+                                    "patient_id":
+                                        selectedPatient['id'].toString(),
+                                    "plan_no": "",
+                                    "plan_id": "",
+                                  };
+                                  // print(data);
+                                  var create_plan = await PlanMethodApi().saveAndCreatePlan(accessToken, context, data);
+
+                                  if(create_plan == "Added  Successfully"){
+                                    Fluttertoast.showToast(
+                                        msg: 'Added  Successfully',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 15, 199, 64),
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                    this.setState(() {
+                                      planDropdownValue = "0";
+                                      planDropdown_id = "0";
+                                    });
+                                    method();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const DentalPlan()),
+                                    );
+                                  }
+
+                                },
+                                child: Text('New Plan',
+                                    style: TextStyle(fontSize: 12))),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               )
             //  Text('******* data *********')
             : Text('No data')

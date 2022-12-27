@@ -57,7 +57,32 @@ class api {
       return json.decode(response.body);
     }
   }
-       getPatientList(access_token) async {
+
+  getPlanList(access_token, data) async {
+    String get_plan_list_url =
+        RequestPath.base_url + RequestPath.getPlanListEndpoint;
+    var response = await http.post(Uri.parse(get_plan_list_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  saveAndCreatePlan(access_token,data) async {
+    String save_create_plan_url =
+        RequestPath.base_url + RequestPath.saveAndCreatePlanEndpoint;
+    var response = await http.post(Uri.parse(save_create_plan_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  getPatientList(access_token) async {
     String patient_list_url = RequestPath.base_url + RequestPath.patientListEndpoint;
     var response = await http.get(Uri.parse(patient_list_url),
         headers: _setHeaders(access_token));
