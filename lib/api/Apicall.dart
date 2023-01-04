@@ -309,7 +309,8 @@ class api {
   }
 
   get_clinic_config(access_token) async {
-    String get_config_url = RequestPath.base_url + RequestPath.getconfigEndpoint;
+    String get_config_url =
+        RequestPath.base_url + RequestPath.getconfigEndpoint;
     var response = await http.get(Uri.parse(get_config_url),
         headers: _setHeaders(access_token));
     if (response.statusCode == 200) {
@@ -319,5 +320,49 @@ class api {
     }
   }
 
+  getBillingList(access_token, data) async {
+    String billing_list_url =
+        RequestPath.base_url + RequestPath.getBillingListEndpoint;
+    var response = await http.post(Uri.parse(billing_list_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
 
+  getPrescriptionList(access_token, data) async {
+    String prescription_list_url =
+        RequestPath.base_url + RequestPath.getPrescriptionEndpoint;
+    var response = await http.post(Uri.parse(prescription_list_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+  BillingPayLog(access_token, data) async {
+    String billing_pay_log_url =
+        RequestPath.base_url + RequestPath.billingPayLogEndpoint;
+    var response = await http.post(Uri.parse(billing_pay_log_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+  BillingPay(access_token, data) async {
+    String billing_pay_url =
+        RequestPath.base_url + RequestPath.billingPayEndpoint;
+    var response = await http.post(Uri.parse(billing_pay_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
 }

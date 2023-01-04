@@ -28,6 +28,10 @@
       String addStaffEndpoint = 'auth/add_and_edit_staff';
       String staffListEndpoint = 'auth/staff_list';
       String getconfigEndpoint = 'auth/get_clinic_config';
+      String getBillingListEndpoint = 'auth/dent_billing_list';
+      String getPrescriptionEndpoint ='auth/get_prescription_details';
+      String billingPayLogEndpoint = 'auth/dent_billing_log';
+      String billingPayEndpoint = 'auth/billing_pay';
       String confifgEndpoint = 'auth/clinic_config';
       // String doctorListEndpoint = 'auth/dent_get_doctors';
 
