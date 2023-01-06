@@ -185,6 +185,7 @@ String? _appitvalue = '';
                   onPressed: (){
    var config_details={
 "call_token":calltokenController.text,
+"visit_token":visittokenController.text,
 "show_diagnosis":_DiagVal,
 "show_appointment_time":_appitvalue,
    };

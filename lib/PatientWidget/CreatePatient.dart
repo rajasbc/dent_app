@@ -197,7 +197,7 @@ class _CreatePatientState extends State<CreatePatient> {
     },
         initialDate: currentDate,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2023));
+        lastDate: DateTime(2024));
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;
@@ -229,7 +229,7 @@ class _CreatePatientState extends State<CreatePatient> {
     },
         initialDate: currentdate,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2023));
+        lastDate: DateTime(2024));
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;
@@ -933,7 +933,7 @@ class _CreatePatientState extends State<CreatePatient> {
                                   CustomColors.app_color)),
                onPressed: () {
                            if(patientnameController.text.isEmpty  ){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
+                            Fluttertoast.showToast(msg: 'Please Enter Your Name',
                              toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,
                              timeInSecForIosWeb: 1,

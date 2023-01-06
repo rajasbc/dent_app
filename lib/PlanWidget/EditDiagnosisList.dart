@@ -106,9 +106,26 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
   Future<void> selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
+        builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: CustomColors.app_color, // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: CustomColors.app_color, // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: CustomColors.app_color, // button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
         initialDate: currentDate,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2023));
+        lastDate: DateTime(2024));
 
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
@@ -541,6 +558,9 @@ class _EditDiagnosisiListState extends State<EditDiagnosisiList> {
                       Container(
                         child: ElevatedButton(
                           // style: style,
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  CustomColors.app_color)),
                           onPressed: () async {
                             var get_item_diagnosis_id =
                                 storage.getItem('diagnosis_item_list');

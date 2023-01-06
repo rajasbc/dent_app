@@ -316,7 +316,7 @@ getpatientSummaryReportList();
                                   style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                                   ),
                               Text(
-                                    "${data['p_email'].toString()}",style: TextStyle(fontSize: 13),),
+                                    "${data['doctor_name'].toString()}",style: TextStyle(fontSize: 13),),
                             ],
                             )
                           ],

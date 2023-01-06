@@ -796,7 +796,7 @@ class _DentalPlanState extends State<DentalPlan> {
                                                         height: 18,
                                                       ),
                                                       Text(
-                                                          '  Treatment: ${data['diagnosis']}',
+                                                          '  Treatment: ${data['treatment']}',
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                           )),
