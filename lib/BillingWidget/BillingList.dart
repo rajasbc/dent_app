@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nigdent/BillingWidget/BillingPay.dart';
 import 'package:nigdent/BillingWidget/Methods/BillingMethodApi.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
+import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
 
 import '../Common/utils.dart';
 
@@ -23,16 +25,17 @@ class _BillingListState extends State<BillingList> {
 
   var pay = [
     'Payment Type : ',
-    'Paytm',
-    'Google Pay',
     'Amazon Pay',
-    'PhonePe',
-    'Credit/Debit Card',
     'Cash',
-    'Others'
+    'Card',
+    'Google Pay',
+    'Net Banking',
+    'PAYTM',
+    'PhonePe',
   ];
+  var selectedPatient;
 
-  TextEditingController remarksController = TextEditingController();
+  TextEditingController paidController = TextEditingController();
   TextEditingController dobController = TextEditingController();
 
   String payDropdownvalue = 'Payment Type : ';
@@ -40,8 +43,13 @@ class _BillingListState extends State<BillingList> {
   @override
   void initState() {
     accessToken = storage.getItem('userResponse')['access_token'];
+        selectedPatient = storage.getItem('selectedPatient');
+
+      DateTime currentDate = DateTime.now();
+
     method();
     super.initState();
+    dobController.text = currentDate.toString().split(' ')[0];;
   }
 
   method() async {
@@ -87,10 +95,33 @@ class _BillingListState extends State<BillingList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // ignore: unnecessary_new
+    return new WillPopScope(
+        onWillPop: () async {
+          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DashboardScreen()),
+                          );
+          // if (Platform.isAndroid) {
+          //   exit(0);
+          // } else if (Platform.isIOS) {
+          //   exit(0);
+          // }
+          // exit(0);
+          return true;
+        },
+        child: Scaffold(
       appBar: AppBar(
         title: Text("Billing"),
         backgroundColor: CustomColors.app_color,
+        leading: IconButton(onPressed: (){
+           Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DashboardScreen()),
+                          );
+        }, icon: Icon(Icons.arrow_back)),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -173,63 +204,65 @@ class _BillingListState extends State<BillingList> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  // InkWell(
+                                  //   splashColor: Colors.white,
+                                  //   child: Container(
+                                  //       width:
+                                  //           MediaQuery.of(context).size.width /
+                                  //               2.2,
+                                  //       height:
+                                  //           MediaQuery.of(context).size.height *
+                                  //               0.055,
+                                  //       decoration: BoxDecoration(
+                                  //         color: Colors.white,
+                                  //         borderRadius: BorderRadius.only(
+                                  //             topLeft: Radius.circular(10),
+                                  //             topRight: Radius.circular(10),
+                                  //             bottomLeft: Radius.circular(10),
+                                  //             bottomRight: Radius.circular(10)),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color:
+                                  //                 Colors.grey.withOpacity(0.3),
+                                  //             spreadRadius: 3,
+                                  //             blurRadius: 4,
+                                  //             offset: Offset(0,
+                                  //                 3), // changes position of shadow
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //       child: Row(
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.center,
+                                  //         children: [
+                                  //           Icon(
+                                  //             Icons.picture_as_pdf,
+                                  //             color: CustomColors.app_color,
+                                  //             size: 25,
+                                  //           ), // <-- Icon
+                                  //           Text("  PDF"),
+                                  //         ],
+                                  //       )
+                                  //       ),
+                                  //   onTap: () {
+                                  //     // Navigator.push(
+                                  //     //   context,
+                                  //     //   MaterialPageRoute(
+                                  //     //       builder: (context) =>
+                                  //     //           const DoctorsList()),
+                                  //     // );
+                                  //   },
+                                  // ),
                                   InkWell(
                                     splashColor: Colors.white,
                                     child: Container(
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 2.2,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.055,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.3),
-                                              spreadRadius: 3,
-                                              blurRadius: 4,
-                                              offset: Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.picture_as_pdf,
-                                              color: CustomColors.app_color,
-                                              size: 25,
-                                            ), // <-- Icon
-                                            Text("  PDF"),
-                                          ],
-                                        )),
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) =>
-                                      //           const DoctorsList()),
-                                      // );
-                                    },
-                                  ),
-                                  InkWell(
-                                    splashColor: Colors.white,
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.2,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.055,
+                                        // height:
+                                        //     MediaQuery.of(context).size.height *
+                                        //         0.055,
+                                        height: MediaQuery.of(context).size.height * 0.12,
                                         // width: screenwidth * 0.4,
                                         // height: screenHeight*0.22,
                                         // height: screenHeight * 0.1,
@@ -262,12 +295,13 @@ class _BillingListState extends State<BillingList> {
                                           ],
                                         )),
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) =>
-                                      //           const DoctorsList()),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const DashboardScreen()),
+                                      );
+                                      storage.setItem('selectedPatient', null);
                                     },
                                   ),
                                 ],
@@ -689,7 +723,7 @@ class _BillingListState extends State<BillingList> {
                                 TextFormField(
                                   // keyboardType: TextInputType.phone,
                                   // maxLength: 15,
-                                  controller: remarksController,
+                                  controller: paidController,
                                   decoration: new InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
@@ -714,7 +748,9 @@ class _BillingListState extends State<BillingList> {
                                 TextFormField(
                                   // keyboardType: TextInputType.phone,
                                   // maxLength: 15,
-                                  controller: remarksController,
+                                  enabled: false,
+                                  
+                                  controller: paidController,
                                   decoration: new InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
@@ -747,7 +783,91 @@ class _BillingListState extends State<BillingList> {
                                                           Color>(
                                                       CustomColors.app_color)),
                                           child: Text('Save'),
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            if (payDropdownvalue ==
+                                                "Payment Type : ") {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Please Select Playment Type',
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            } else if (paidController.text ==
+                                                    '' ||
+                                                paidController.text == null) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Please Enter Paid Amount',
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            }else if (double.parse("${total()}") < double.parse(paidController.text)){
+Fluttertoast.showToast(
+                                                  msg:
+                                                      'Please Check Amount',
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            }
+                                            else {
+                                              var data = {
+                                                "patient_id":
+                                                    selectedPatient['id']
+                                                        .toString(),
+                                                "pay_method": payDropdownvalue,
+                                                "balance_received":
+                                                    paidController.text
+                                              };
+                                              var result =
+                                                  await BillingMethodApi()
+                                                      .bulkBillPay(accessToken,
+                                                          context, data);
+                                                          
+                                              if (result == "Success") {
+                                                Fluttertoast.showToast(
+                                                    msg: 'Paid Successfully',
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.CENTER,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        CustomColors
+                                                            .success_color,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const BillingList()),
+                                                );
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg: 'Faild',
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.CENTER,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.red,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
+                                              }
+                                            }
+                                          },
                                         ),
                                       ),
                                       Padding(
@@ -778,6 +898,7 @@ class _BillingListState extends State<BillingList> {
           ),
         ),
       ),
+    )
     );
   }
 

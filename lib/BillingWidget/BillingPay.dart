@@ -21,8 +21,8 @@ class _BillingPayState extends State<BillingPay> {
     'Cash',
     'Card',
     'Google Pay',
-    'Net Banking'
-        'PAYTM',
+    'Net Banking',
+    'PAYTM',
     'PhonePe',
   ];
   bool isLoading = false;
@@ -254,7 +254,7 @@ class _BillingPayState extends State<BillingPay> {
                       ),
                       View_history
                           ? Container(
-                              child: billingPayLog['billing_log'].length > 0
+                              child: billingPayLog['billing_log'].length > 0 && billingPayLog ['billing_log'] != "No Transcation"
                                   ? ListView.builder(
                                       shrinkWrap: true,
                                       // scrollDirection: Axis.vertical,
@@ -362,7 +362,7 @@ class _BillingPayState extends State<BillingPay> {
                                                                       //       .black45,
                                                                       // ),
                                                                       Text(
-                                                                          '  payment_mode: ${data['payment_mode']}',
+                                                                          '  payment_mode: ${data['payment_mode'].toString()}',
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -451,9 +451,12 @@ class _BillingPayState extends State<BillingPay> {
                                           ),
                                         );
                                       })
-                                  : Image.asset(
-                                      'assets/images/no_data_found.png',
-                                    ))
+                                  : 
+                                  // Image.asset(
+                                  //     'assets/images/no_data_found.png',
+                                  //   )
+                                  Text('No Transaction', )
+                                    )
                           : Container(
                               height: 0,
                             ),

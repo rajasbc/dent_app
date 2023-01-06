@@ -365,4 +365,15 @@ class api {
       return json.decode(response.body);
     }
   }
+  BulkBillPay(access_token, data) async {
+    String bulk_pay_url =
+        RequestPath.base_url + RequestPath.bulkBillPayEndpoint;
+    var response = await http.post(Uri.parse(bulk_pay_url),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
 }

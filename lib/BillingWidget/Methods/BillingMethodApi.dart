@@ -56,4 +56,16 @@ class BillingMethodApi {
     }
     return billingPay['status'];
   }
+
+  bulkBillPay(accessToken, context, data) async {
+    var bulkBillPay = await api().BulkBillPay(accessToken, data);
+    if (Helper().isvalidElement(bulkBillPay) &&
+        Helper().isvalidElement(bulkBillPay['status']) &&
+        bulkBillPay['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      bulkBillPay = bulkBillPay;
+    }
+    return bulkBillPay['status'];
+  }
 }

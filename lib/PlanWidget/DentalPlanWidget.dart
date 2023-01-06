@@ -353,43 +353,57 @@ class _DentalPlanState extends State<DentalPlan> {
                                                       ),
                                                     ],
                                                   ),
-                                                  SizedBox(
-                                                    height: 16,
-                                                    child: Container(
-                                                      child: TextButton(
-                                                        onPressed: () {
-                                                          // storage.setItem(
-                                                          //     'diagnosis_item_list',
-                                                          //     data);
+                                                  Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Row(
+                                                children: [
+                                                  
+                                                  Text(
+                                                      '${data['treatment_date']}',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                                  // SizedBox(
+                                                  //   height: 16,
+                                                  //   child: Container(
+                                                  //     child: TextButton(
+                                                  //       onPressed: () {
+                                                  //         // storage.setItem(
+                                                  //         //     'diagnosis_item_list',
+                                                  //         //     data);
 
-                                                          // Navigator.push(
-                                                          //   context,
-                                                          //   MaterialPageRoute(
-                                                          //     builder:
-                                                          //         (context) =>
-                                                          //             EditDiagnosisiList(),
-                                                          //   ),
-                                                          // );
-                                                        },
-                                                        style: TextButton
-                                                            .styleFrom(
-                                                          minimumSize: Size
-                                                              .zero, // Set this
-                                                          padding: EdgeInsets
-                                                              .zero, // and this
-                                                        ),
-                                                        child: Text(
-                                                          'Edit',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
+                                                  //         // Navigator.push(
+                                                  //         //   context,
+                                                  //         //   MaterialPageRoute(
+                                                  //         //     builder:
+                                                  //         //         (context) =>
+                                                  //         //             EditDiagnosisiList(),
+                                                  //         //   ),
+                                                  //         // );
+                                                  //       },
+                                                  //       style: TextButton
+                                                  //           .styleFrom(
+                                                  //         minimumSize: Size
+                                                  //             .zero, // Set this
+                                                  //         padding: EdgeInsets
+                                                  //             .zero, // and this
+                                                  //       ),
+                                                  //       child: Text(
+                                                  //         'Edit',
+                                                  //         style: TextStyle(
+                                                  //             fontSize: 12,
+                                                  //             color: Colors.red,
+                                                  //             fontWeight:
+                                                  //                 FontWeight
+                                                  //                     .bold),
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
+                                                  // )
                                                 ],
                                               ),
                                             ),
@@ -679,47 +693,66 @@ class _DentalPlanState extends State<DentalPlan> {
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(
-                                                        height: 16,
-                                                        child: Container(
-                                                          child: TextButton(
-                                                            onPressed: () {
-                                                              storage.setItem(
-                                                                  'diagnosis_item_list',
-                                                                  data);
-                                                              // storage.getItem('diagnosis_item_list');
-                                                              //         final myMap = Map<String, dynamic>.from(data);
-                                                              // return Prices.fromJson(myMap);
-                                                              //         var a = jsonEncode(data);
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          EditDiagnosisiList(),
-                                                                ),
-                                                              );
-                                                            },
-                                                            style: TextButton
-                                                                .styleFrom(
-                                                              minimumSize: Size
-                                                                  .zero, // Set this
-                                                              padding: EdgeInsets
-                                                                  .zero, // and this
-                                                            ),
-                                                            child: Text(
-                                                              'Edit',
-                                                              style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Colors
-                                                                      .red,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
+                                                      Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 6.0),
+                                                            child: Row(
+                                                              children: [
+                                                                
+                                                                Text(
+                                                                    '${data['treatment_date']}',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            12)),
+                                                              ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      )
+                                                      // SizedBox(
+                                                      //   height: 16,
+                                                      //   child: Container(
+                                                      //     child: TextButton(
+                                                      //       onPressed: () {
+                                                      //         storage.setItem(
+                                                      //             'diagnosis_item_list',
+                                                      //             data);
+                                                      //         // storage.getItem('diagnosis_item_list');
+                                                      //         //         final myMap = Map<String, dynamic>.from(data);
+                                                      //         // return Prices.fromJson(myMap);
+                                                      //         //         var a = jsonEncode(data);
+                                                      //         Navigator.push(
+                                                      //           context,
+                                                      //           MaterialPageRoute(
+                                                      //             builder:
+                                                      //                 (context) =>
+                                                      //                     EditDiagnosisiList(),
+                                                      //           ),
+                                                      //         );
+                                                      //       },
+                                                      //       style: TextButton
+                                                      //           .styleFrom(
+                                                      //         minimumSize: Size
+                                                      //             .zero, // Set this
+                                                      //         padding: EdgeInsets
+                                                      //             .zero, // and this
+                                                      //       ),
+                                                      //       child: Text(
+                                                      //         'Edit',
+                                                      //         style: TextStyle(
+                                                      //             fontSize: 12,
+                                                      //             color: Colors
+                                                      //                 .red,
+                                                      //             fontWeight:
+                                                      //                 FontWeight
+                                                      //                     .bold),
+                                                      //       ),
+                                                      //     ),
+                                                      //   ),
+                                                      // )
                                                     ],
                                                   ),
                                                 ),
@@ -784,6 +817,10 @@ class _DentalPlanState extends State<DentalPlan> {
                                                           'Fees: ${data['fees'].toString()}',
                                                           style: TextStyle(
                                                               fontSize: 12)),
+                                                               Text(
+                                                          'Balance: ${data['balance'].toString()}',
+                                                          style: TextStyle(
+                                                              fontSize: 12)),
                                                       Text(
                                                           'Discount: ${data['discount'].toString()}',
                                                           style: TextStyle(
@@ -799,14 +836,55 @@ class _DentalPlanState extends State<DentalPlan> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Text(
-                                                          'Balance: ${data['balance'].toString()}',
-                                                          style: TextStyle(
-                                                              fontSize: 12)),
+                                                      // Text(
+                                                      //     'Balance: ${data['balance'].toString()}',
+                                                      //     style: TextStyle(
+                                                      //         fontSize: 12)),
                                                       Text(
                                                           'Status: ${data['status'].toString()}',
                                                           style: TextStyle(
                                                               fontSize: 12)),
+                                                              SizedBox(
+                                                        height: 16,
+                                                        child: Container(
+                                                          child: TextButton(
+                                                            onPressed: () {
+                                                              storage.setItem(
+                                                                  'diagnosis_item_list',
+                                                                  data);
+                                                              // storage.getItem('diagnosis_item_list');
+                                                              //         final myMap = Map<String, dynamic>.from(data);
+                                                              // return Prices.fromJson(myMap);
+                                                              //         var a = jsonEncode(data);
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          EditDiagnosisiList(),
+                                                                ),
+                                                              );
+                                                            },
+                                                            style: TextButton
+                                                                .styleFrom(
+                                                              minimumSize: Size
+                                                                  .zero, // Set this
+                                                              padding: EdgeInsets
+                                                                  .zero, // and this
+                                                            ),
+                                                            child: Text(
+                                                              'Edit',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 ),

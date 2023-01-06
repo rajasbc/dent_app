@@ -391,7 +391,7 @@ class _MedicineState extends State<Medicine> {
                                                         //     .app_color,
                                                       ),
                                                       Text(
-                                                          '  Pattern: ${data['medicine']}',
+                                                          '  Pattern: ${data['medicine1']}',
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                           )),
