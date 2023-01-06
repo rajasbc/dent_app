@@ -51,191 +51,192 @@ class _MedicineState extends State<Medicine> {
             padding: const EdgeInsets.all(3.0),
             child: Column(
               children: [
-                Container(
-                  // height: screenheight * 0.1,
-                  // color: Colors.amber,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.48,
-                        height: MediaQuery.of(context).size.height * 0.13,
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: InkWell(
-                            splashColor: Colors.white,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 3,
-                                      blurRadius: 4,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    // Icon(
-                                    //   Icons.local_hospital_outlined,
-                                    //   color: CustomColors.app_color,
-                                    // ), // <-- Icon
-                                    // Image.asset(
-                                    //   'assets/images/bulkpay_icon.png',
-                                    //   height: 40,
-                                    // ),
-                                    Icon(
-                                      Icons.payment,
-                                      color: CustomColors.app_color,
-                                      size: 50,
-                                    ),
-                                    Text("Bulk Medicine payment"), // <-- Text
-                                  ],
-                                )),
-                            onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           const DoctorsList()),
-                              // );
+                // Container(
+                //   // height: screenheight * 0.1,
+                //   // color: Colors.amber,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       SizedBox(
+                //         width: MediaQuery.of(context).size.width * 0.48,
+                //         height: MediaQuery.of(context).size.height * 0.13,
+                //         child: Padding(
+                //           padding: const EdgeInsets.all(3.0),
+                //           child: InkWell(
+                //             splashColor: Colors.white,
+                //             child: Container(
+                //                 decoration: BoxDecoration(
+                //                   color: Colors.white,
+                //                   borderRadius: BorderRadius.only(
+                //                       topLeft: Radius.circular(10),
+                //                       topRight: Radius.circular(10),
+                //                       bottomLeft: Radius.circular(10),
+                //                       bottomRight: Radius.circular(10)),
+                //                   boxShadow: [
+                //                     BoxShadow(
+                //                       color: Colors.grey.withOpacity(0.3),
+                //                       spreadRadius: 3,
+                //                       blurRadius: 4,
+                //                       offset: Offset(
+                //                           0, 3), // changes position of shadow
+                //                     ),
+                //                   ],
+                //                 ),
+                //                 child: Column(
+                //                   mainAxisAlignment: MainAxisAlignment.center,
+                //                   children: <Widget>[
+                //                     // Icon(
+                //                     //   Icons.local_hospital_outlined,
+                //                     //   color: CustomColors.app_color,
+                //                     // ), // <-- Icon
+                //                     // Image.asset(
+                //                     //   'assets/images/bulkpay_icon.png',
+                //                     //   height: 40,
+                //                     // ),
+                //                     Icon(
+                //                       Icons.payment,
+                //                       color: CustomColors.app_color,
+                //                       size: 50,
+                //                     ),
+                //                     Text("Bulk Medicine payment"), // <-- Text
+                //                   ],
+                //                 )
+                //                 ),
+                //             onTap: () {
+                //               // Navigator.push(
+                //               //   context,
+                //               //   MaterialPageRoute(
+                //               //       builder: (context) =>
+                //               //           const DoctorsList()),
+                //               // );
 
-                              this.setState(() {
-                                // bulk_pay = !bulk_pay;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.48,
-                        height: MediaQuery.of(context).size.height * 0.13,
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    splashColor: Colors.white,
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.2,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.055,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.3),
-                                              spreadRadius: 3,
-                                              blurRadius: 4,
-                                              offset: Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.add,
-                                              color: CustomColors.app_color,
-                                              size: 25,
-                                            ), // <-- Icon
-                                            Text(" Add Medicine"),
-                                          ],
-                                        )),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const AddMedicine()),
-                                      );
-                                    },
-                                  ),
-                                  InkWell(
-                                    splashColor: Colors.white,
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.2,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.055,
-                                        // width: screenwidth * 0.4,
-                                        // height: screenHeight*0.22,
-                                        // height: screenHeight * 0.1,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.3),
-                                              spreadRadius: 3,
-                                              blurRadius: 4,
-                                              offset: Offset(0, 3),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.picture_as_pdf,
-                                              color: CustomColors.app_color,
-                                              size: 25,
-                                            ),
-                                            Text(" PDF"),
-                                          ],
-                                        )),
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) =>
-                                      //           const DoctorsList()),
-                                      // );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(),
+                //               this.setState(() {
+                //                 // bulk_pay = !bulk_pay;
+                //               });
+                //             },
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: MediaQuery.of(context).size.width * 0.48,
+                //         height: MediaQuery.of(context).size.height * 0.13,
+                //         child: Padding(
+                //           padding: const EdgeInsets.all(3.0),
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Column(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   InkWell(
+                //                     splashColor: Colors.white,
+                //                     child: Container(
+                //                         width:
+                //                             MediaQuery.of(context).size.width /
+                //                                 2.2,
+                //                         height:
+                //                             MediaQuery.of(context).size.height *
+                //                                 0.055,
+                //                         decoration: BoxDecoration(
+                //                           color: Colors.white,
+                //                           borderRadius: BorderRadius.only(
+                //                               topLeft: Radius.circular(10),
+                //                               topRight: Radius.circular(10),
+                //                               bottomLeft: Radius.circular(10),
+                //                               bottomRight: Radius.circular(10)),
+                //                           boxShadow: [
+                //                             BoxShadow(
+                //                               color:
+                //                                   Colors.grey.withOpacity(0.3),
+                //                               spreadRadius: 3,
+                //                               blurRadius: 4,
+                //                               offset: Offset(0,
+                //                                   3), // changes position of shadow
+                //                             ),
+                //                           ],
+                //                         ),
+                //                         child: Row(
+                //                           mainAxisAlignment:
+                //                               MainAxisAlignment.center,
+                //                           children: [
+                //                             Icon(
+                //                               Icons.add,
+                //                               color: CustomColors.app_color,
+                //                               size: 25,
+                //                             ), // <-- Icon
+                //                             Text(" Add Medicine"),
+                //                           ],
+                //                         )),
+                //                     onTap: () {
+                //                       Navigator.push(
+                //                         context,
+                //                         MaterialPageRoute(
+                //                             builder: (context) =>
+                //                                 const AddMedicine()),
+                //                       );
+                //                     },
+                //                   ),
+                //                   InkWell(
+                //                     splashColor: Colors.white,
+                //                     child: Container(
+                //                         width:
+                //                             MediaQuery.of(context).size.width /
+                //                                 2.2,
+                //                         height:
+                //                             MediaQuery.of(context).size.height *
+                //                                 0.055,
+                //                         // width: screenwidth * 0.4,
+                //                         // height: screenHeight*0.22,
+                //                         // height: screenHeight * 0.1,
+                //                         decoration: BoxDecoration(
+                //                           color: Colors.white,
+                //                           borderRadius: BorderRadius.only(
+                //                               topLeft: Radius.circular(10),
+                //                               topRight: Radius.circular(10),
+                //                               bottomLeft: Radius.circular(10),
+                //                               bottomRight: Radius.circular(10)),
+                //                           boxShadow: [
+                //                             BoxShadow(
+                //                               color:
+                //                                   Colors.grey.withOpacity(0.3),
+                //                               spreadRadius: 3,
+                //                               blurRadius: 4,
+                //                               offset: Offset(0, 3),
+                //                             ),
+                //                           ],
+                //                         ),
+                //                         child: Row(
+                //                           mainAxisAlignment:
+                //                               MainAxisAlignment.center,
+                //                           children: [
+                //                             Icon(
+                //                               Icons.picture_as_pdf,
+                //                               color: CustomColors.app_color,
+                //                               size: 25,
+                //                             ),
+                //                             Text(" PDF"),
+                //                           ],
+                //                         )),
+                //                     onTap: () {
+                //                       // Navigator.push(
+                //                       //   context,
+                //                       //   MaterialPageRoute(
+                //                       //       builder: (context) =>
+                //                       //           const DoctorsList()),
+                //                       // );
+                //                     },
+                //                   ),
+                //                 ],
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Divider(),
                 !isLoading
                     ? Container(
                         // height: MediaQuery.of(context).size.height * 0.70,
@@ -335,7 +336,7 @@ class _MedicineState extends State<Medicine> {
                                                                       .black45,
                                                                 ),
                                                                 Text(
-                                                                    ' Medicine ${data['medicine']}',
+                                                                    ' Medicine : ${data['medicine']}',
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
