@@ -22,7 +22,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../CofigWidget/ClinicConfig.dart';
 import '../DoctorWidget/DoctorsList.dart';
+import '../Profile/Profile.dart';
 import '../StaffWidget/StaffList.dart';
+import '../changepasswordWidget/changepassword.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -635,7 +637,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ), // <-- Icon
                                         Text("Doctor"), // <-- Text
                                       ],
-                                    )),
+                                    )
+                                    ),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -689,8 +692,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 },
                                 splashColor: Colors.green,
                               ),
+                              // 
+                            ],
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.015,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
                               InkWell(
-                                splashColor: Colors.green,
                                 child: Container(
                                     // width: screenwidth * 0.4,
                                     width: screenwidth * 0.3,
@@ -718,7 +729,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         Icon(
-                                          Icons.calendar_view_month_rounded,
+                                          Icons.calendar_view_month_outlined,
                                           color: CustomColors.app_color,
                                         ), // <-- Icon
                                         Text("Configaration"), // <-- Text
@@ -729,104 +740,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const ClinicConfig()),
+                                            const Changepassword()),
                                   );
                                 },
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.015,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              // InkWell(
-                              //   splashColor: Colors.green,
-                              //   child: Container(
-                              //       width: screenwidth * 0.4,
-                              //       // height: screenHeight*0.22,
-                              //       height: screenHeight * 0.1,
-                              //       decoration: BoxDecoration(
-                              //         color: Colors.white,
-                              //         borderRadius: BorderRadius.only(
-                              //             topLeft: Radius.circular(10),
-                              //             topRight: Radius.circular(10),
-                              //             bottomLeft: Radius.circular(10),
-                              //             bottomRight: Radius.circular(10)),
-                              //         boxShadow: [
-                              //           BoxShadow(
-                              //             color: Colors.grey.withOpacity(0.5),
-                              //             spreadRadius: 5,
-                              //             blurRadius: 7,
-                              //             offset: Offset(0,
-                              //                 3), // changes position of shadow
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       child: Column(
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.center,
-                              //         children: <Widget>[
-                              //           Icon(
-                              //             Icons.calendar_view_month_rounded,
-                              //             color: CustomColors.app_color,
-                              //           ), // <-- Icon
-                              //           Text("Configaration"), // <-- Text
-                              //         ],
-                              //       )),
-                              //   onTap: () {
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               const ClinicConfig()),
-                              //     );
-                              //   },
-                              // ),
-                              // InkWell(
-                              //   splashColor: Colors.green,
-                              //   child: Container(
-                              //       width: screenwidth * 0.4,
-                              //       // height: screenHeight*0.22,
-                              //       height: screenHeight * 0.10,
-                              //       decoration: BoxDecoration(
-                              //         color: Colors.white,
-                              //         borderRadius: BorderRadius.only(
-                              //             topLeft: Radius.circular(10),
-                              //             topRight: Radius.circular(10),
-                              //             bottomLeft: Radius.circular(10),
-                              //             bottomRight: Radius.circular(10)),
-                              //         boxShadow: [
-                              //           BoxShadow(
-                              //             color: Colors.grey.withOpacity(0.5),
-                              //             spreadRadius: 5,
-                              //             blurRadius: 7,
-                              //             offset: Offset(0,
-                              //                 3), // changes position of shadow
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       child: Column(
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.center,
-                              //         children: <Widget>[
-                              //           Icon(
-                              //             Icons.signpost_outlined,
-                              //             color: CustomColors.app_color,
-                              //           ), // <-- Icon
-                              //           Text("Profile"), // <-- Text
-                              //         ],
-                              //       )),
-                              //   onTap: () {
-                              //     //  Navigator.push(
-                              //     //                     context,
-                              //     //                     MaterialPageRoute(
-                              //     //                         builder: (context) =>
-                              //     //                             const StaffList()),
-                              //     //                   );
-                              //   },
-                              // )
+                                splashColor: Colors.green,
+                            ),
+                               InkWell(
+                                child: Container(
+                                    // width: screenwidth * 0.4,
+                                    width: screenwidth * 0.3,
+                                      // height: screenHeight*0.22,
+                                    height: screenHeight * 0.1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.person_add,
+                                          color: CustomColors.app_color,
+                                        ), // <-- Icon
+                                        Text("Profile"), // <-- Text
+                                      ],
+                                    )),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Profile()),
+                                  );
+                                },
+                                splashColor: Colors.green,
+                              ),
                             ],
                           )
                         ],

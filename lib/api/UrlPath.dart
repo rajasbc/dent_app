@@ -34,6 +34,7 @@
       String billingPayEndpoint = 'auth/billing_pay';
       String bulkBillPayEndpoint ='auth/bulk_billing_pay';
       String confifgEndpoint = 'auth/clinic_config';
+      String profileEndpoint = 'auth/clinic_update';
       // String doctorListEndpoint = 'auth/dent_get_doctors';
 
 

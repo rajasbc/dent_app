@@ -28,7 +28,7 @@ import '../CofigWidget/ClinicConfig.dart';
 import '../DoctorWidget/DoctorsList.dart';
 import '../MedicineWidget/MedicineList.dart';
 import '../StaffWidget/StaffList.dart';
-
+import '../Medical_allergyWidget/MedicalAllergy.dart';
 class DentMenuBar extends StatefulWidget {
   const DentMenuBar({Key? key}) : super(key: key);
 
@@ -373,6 +373,17 @@ class _DentMenuBarState extends State<DentMenuBar> {
                                 textColor: Colors.white,
                                 fontSize: 15.0);
                           }
+                        },
+                      ),
+                       ListTile(
+                        title: Text('Medical Allergy'),
+                        leading: Icon(Icons.medication_liquid_outlined),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MedicalAllergy()),
+                          );
                         },
                       ),
                       ListTile(

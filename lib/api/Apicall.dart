@@ -376,4 +376,14 @@ class api {
       return json.decode(response.body);
     }
   }
+  profile_update(access_token,profile_details) async {
+    String updateprofileurl = RequestPath.base_url + RequestPath.profileEndpoint;
+    var response = await http.post(Uri.parse(updateprofileurl),
+        body: jsonEncode(profile_details), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
 }
