@@ -596,7 +596,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: screenHeight * 0.30,
+                      height: screenHeight * 0.40,
                       // height: 300,
                       child: Column(
                         children: [
@@ -740,7 +740,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const Changepassword()),
+                                            const ClinicConfig()),
                                   );
                                 },
                                 splashColor: Colors.green,
@@ -788,6 +788,57 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   );
                                 },
                                 splashColor: Colors.green,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                               InkWell(
+                                splashColor: Colors.green,
+                                child: Container(
+                                    // width: screenwidth * 0.4,
+                                    width: screenwidth * 0.4,
+                                    // height: screenHeight*0.22,
+                                    height: screenHeight * 0.1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0,
+                                              3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.password_sharp,
+                                          color: CustomColors.app_color,
+                                        ), // <-- Icon
+                                        Text("Change Password"), // <-- Text
+                                      ],
+                                    )
+                                    ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Changepassword()),
+                                  );
+                                },
                               ),
                             ],
                           )

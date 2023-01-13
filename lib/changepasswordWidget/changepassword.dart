@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nigdent/Common/colors.dart' as CustomColors;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Changepassword extends StatefulWidget {
 
@@ -113,7 +114,58 @@ class _ChangepasswordState extends State<Changepassword> {
                      SizedBox(
                       height: 15,
                      ),
-                     ElevatedButton(onPressed: (){
+                     ElevatedButton(
+                        style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          CustomColors.app_color)),
+                                          onPressed: (){
+                                            if(passwordController.text.isEmpty){
+                                                Fluttertoast.showToast(
+                                      msg: 'Please Enter Password',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                            }
+                                            else if(passwordController.text.length<6){
+                                               Fluttertoast.showToast(
+                                      msg: 'Password Must Have Six Digits',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                            }
+                                             else if(confirmpassController.text.isEmpty){
+                                               Fluttertoast.showToast(
+                                      msg: 'Please Confirm Your Password',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                             }
+                                            else if(passwordController.text != confirmpassController.text){
+                                               Fluttertoast.showToast(
+                                      msg: 'Password Does Not Match',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                            }
+                                            else {
+                                              var passdetails ={
+                                                "new_Password":passwordController,
+                                                "confirm_Password":confirmpassController,
+                                              };
+                                            }
 
                      }, child: Text('Save'))
               ],

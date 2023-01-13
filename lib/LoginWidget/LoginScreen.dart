@@ -31,9 +31,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final LocalStorage storage = new LocalStorage('nigdent_store');
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+   TextEditingController useroremail = TextEditingController();
   bool showPassword = false;
   bool isloading = false;
   late SharedPreferences pref;
+
+  String numberdropdown='';
+  var number = [
+    ""
+
+  ];
   @override
   void initState() {
     // patient_data = storage.getItem('selectedPatient');
@@ -173,9 +180,143 @@ pref = await SharedPreferences.getInstance();
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: screenheight * 0.02,
+                  TextButton(onPressed: (){
+                    showDialog(
+                      
+                      context: context,
+                     builder: (context) => AlertDialog(
+                      // title: const Text('Forgot Password'),
+                      content:
+                       Container(
+                        
+                        height: screenheight*0.21,
+                        child: Column(
+                          
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Forgot Password',
+                                 style: TextStyle(
+                              // color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              // letterSpacing: 2.48
+                              ),
+                                ),
+                                IconButton(onPressed: (){
+                                   Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen()),);
+                                }, icon: Icon(Icons.close))
+                              ],
+                            ),
+                            Divider(),
+                            Text('Enter your Username or Email'),
+                            SizedBox(height: 10,),
+                            TextField(
+                              
+                              controller: useroremail,
+                              decoration: InputDecoration(
+                                // labelText: 'Enter Your Username or Email',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                       actions: <Widget>[
+                  ElevatedButton(onPressed: (){
+                    showDialog(
+                      context: context,
+                     builder: (context) => AlertDialog(
+                      // title: const Text('Enter Your Username/Email'),
+                      content: Container(
+                        height: screenheight*0.26,
+                        child: Column(
+                          children: [
+                            Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Forgot Password',
+                                 style: TextStyle(
+                              // color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              // letterSpacing: 2.48
+                              ),
+                                ),
+                                IconButton(onPressed: (){
+                                   Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen()),);
+
+                                }, icon: Icon(Icons.close))
+                              ],
+                            ),
+                            Divider(),
+                            Text('Enter Your Username or Email'),
+                            TextField(
+                              
+                              controller: useroremail,
+                              decoration: InputDecoration(
+                                // labelText: 'Enter Your Username or Email',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                             DropdownButtonFormField(
+            
+                  value: numberdropdown,
+                  items: number.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      numberdropdown = newValue!;
+                    });
+                  },
+                ),
+                          ],
+                        ),
+                        
+                      ),
+                      
+                       actions: <Widget>[
+                  ElevatedButton(onPressed: (){
+                    
+
+                  }, child: Text('Submit')),
+                 
+                  ],
+                  
+                     ),
+                    );
+
+                  }, child: Text('Ok'))
+                  ],
+                     ),
+                     );
+
+                  }, child: Text('Forgot Password ? ',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                              // color: Colors.white,
+                              color: Color.fromARGB(255, 5, 64, 112),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                  )
                   ),
+                  // SizedBox(
+                  //   height: screenheight * 0.02,
+                  // ),
                   SizedBox(
                     width: screenWidth * 0.88,
                     child: ElevatedButton(
@@ -293,7 +434,11 @@ Navigator.of(context).pushReplacement(
                         });
                       },
                     ),
+
+
                   ),
+
+                  
                 ],
               ),
             ),
