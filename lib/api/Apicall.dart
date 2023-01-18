@@ -386,4 +386,38 @@ class api {
       return json.decode(response.body);
     }
   }
+  getMedicinePayLog(access_token, data) async {
+     String medicinepaylogurl = RequestPath.base_url + RequestPath.MedicinePayLogEndpoint;
+    var response = await http.post(Uri.parse(medicinepaylogurl),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  medicinePay(access_token, data) async {
+    String medicinepayurl =
+        RequestPath.base_url + RequestPath.MedicinePayEndpoint;
+    var response = await http.post(Uri.parse(medicinepayurl),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    }
+  }
+
+  medicineBulkPayment(access_token, data) async {
+    String medicinebulkpayurl =
+        RequestPath.base_url + RequestPath.MedicineBulkPaymentEndpoint;
+    var response = await http.post(Uri.parse(medicinebulkpayurl),
+        body: jsonEncode(data), headers: _setHeaders(access_token));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      return json.decode(response.body);
+    } 
+  }
 }

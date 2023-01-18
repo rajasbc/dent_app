@@ -20,4 +20,44 @@ class MedicineMethodApi {
 
     return prescription_list;
   }
+
+  getMadicinePayLogApi(accessToken, context, data) async {
+    var MedicinePaylog_list = await api().getMedicinePayLog(accessToken, data);
+    if (Helper().isvalidElement(MedicinePaylog_list) &&
+        Helper().isvalidElement(MedicinePaylog_list['status']) &&
+        MedicinePaylog_list['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      MedicinePaylog_list = MedicinePaylog_list;
+    }
+
+    return MedicinePaylog_list;
+  }
+
+  medicinePayApi(accessToken, context, data) async {
+    var MedicinePay = await api().medicinePay(accessToken, data);
+    if (Helper().isvalidElement(MedicinePay) &&
+        Helper().isvalidElement(MedicinePay['status']) &&
+        MedicinePay['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      MedicinePay = MedicinePay['status'];
+    }
+
+    return MedicinePay;
+  }
+
+  medicineBulkPaymentApi(accessToken, context, data) async {
+    
+    var MedicineBulkPay = await api().medicineBulkPayment(accessToken, data);
+    if (Helper().isvalidElement(MedicineBulkPay) &&
+        Helper().isvalidElement(MedicineBulkPay['status']) &&
+        MedicineBulkPay['status'] == 'Token is Expired') {
+      Helper().appLogoutCall(context, 'Session expeired');
+    } else {
+      MedicineBulkPay = MedicineBulkPay['status'];
+    }
+
+    return MedicineBulkPay;
+  }
 }
