@@ -75,9 +75,9 @@ class _CreateAppointmentState extends State<CreateAppointment> {
             child: child!,
           );
         },
-        initialDate: currentDate,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2023));
+        initialDate: DateTime.now(),
+        firstDate:DateTime(DateTime.now().year - 100),
+        lastDate: DateTime.now(),);
 
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
@@ -808,72 +808,72 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                             this.setState(() {
                               isLoading = true;
                             });
-                            // var addAppointment = await api().addNewAppointment(
-                            //     access_token, appointment_details);
-                            // this.setState(() {
-                            //   isLoading = false;
-                            // });
-                            // if (Helper().isvalidElement(addAppointment) &&
-                            //     Helper()
-                            //         .isvalidElement(addAppointment['status']) &&
-                            //     addAppointment['status'] ==
-                            //         'Token is Invalid') {
-                            //   Helper()
-                            //       .appLogoutCall(context, 'Session expeired');
-                            // } else {
-                            //   if (Helper().isvalidElement(addAppointment) &&
-                            //       Helper().isvalidElement(
-                            //           addAppointment['status']) &&
-                            //       (addAppointment['status'] ==
-                            //               'Add appointment Successfully' ||
-                            //           addAppointment['status'] ==
-                            //               'Update Successfully')) {
-                            //     this.setState(() {
-                            //       selectedPatient = null;
-                            //       showAutoComplete = true;
-                            //       defaultTitleDropdownValue = 'Mr';
-                            //       NameController.text = '';
-                            //       contactController.text = '';
-                            //       _radioGenderSelected = 1;
-                            //       // gender
-                            //       dobController.text = '';
-                            //       ageController.text = '';
-                            //       //  _radioVal ='Male';
+                            var addAppointment = await api().addNewAppointment(
+                                access_token, appointment_details);
+                            this.setState(() {
+                              isLoading = false;
+                            });
+                            if (Helper().isvalidElement(addAppointment) &&
+                                Helper()
+                                    .isvalidElement(addAppointment['status']) &&
+                                addAppointment['status'] ==
+                                    'Token is Invalid') {
+                              Helper()
+                                  .appLogoutCall(context, 'Session expeired');
+                            } else {
+                              if (Helper().isvalidElement(addAppointment) &&
+                                  Helper().isvalidElement(
+                                      addAppointment['status']) &&
+                                  (addAppointment['status'] ==
+                                          'Add appointment Successfully' ||
+                                      addAppointment['status'] ==
+                                          'Update Successfully')) {
+                                this.setState(() {
+                                  selectedPatient = null;
+                                  showAutoComplete = true;
+                                  defaultTitleDropdownValue = 'Mr';
+                                  NameController.text = '';
+                                  contactController.text = '';
+                                  _radioGenderSelected = 1;
+                                  // gender
+                                  dobController.text = '';
+                                  ageController.text = '';
+                                  //  _radioVal ='Male';
 
-                            //       _AdultSelected = 1;
-                            //       _AppointmentSelected = 1;
+                                  _AdultSelected = 1;
+                                  _AppointmentSelected = 1;
 
-                            //       // dateController.text = '';
-                            //     });
-                            //     Fluttertoast.showToast(
-                            //         msg: 'Appointment added successfully',
-                            //         toastLength: Toast.LENGTH_SHORT,
-                            //         gravity: ToastGravity.CENTER,
-                            //         timeInSecForIosWeb: 2,
-                            //         backgroundColor: CustomColors.success_color,
-                            //         textColor: Colors.white,
-                            //         fontSize: 15.0);
+                                  // dateController.text = '';
+                                });
+                                Fluttertoast.showToast(
+                                    msg: 'Appointment added successfully',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor: CustomColors.success_color,
+                                    textColor: Colors.white,
+                                    fontSize: 15.0);
 
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               const AppointmentPage()),
-                            //     );
-                            //   } else {
-                            //     Fluttertoast.showToast(
-                            //         msg: 'Please try again',
-                            //         toastLength: Toast.LENGTH_SHORT,
-                            //         gravity: ToastGravity.CENTER,
-                            //         timeInSecForIosWeb: 2,
-                            //         backgroundColor: CustomColors.error_color,
-                            //         textColor: Colors.white,
-                            //         fontSize: 15.0);
-                            //   }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AppointmentPage()),
+                                );
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: 'Please try again',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor: CustomColors.error_color,
+                                    textColor: Colors.white,
+                                    fontSize: 15.0);
+                              }
 
-                            //   //  storage.setItem('diagnosisList', diagnosisList);
+                              //  storage.setItem('diagnosisList', diagnosisList);
 
-                            // }
+                            }
 
                             // print(
                             //     'Appointment_details: ******${Appointment_details}');
