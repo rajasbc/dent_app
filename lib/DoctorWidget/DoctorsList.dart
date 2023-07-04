@@ -159,6 +159,10 @@ class _DoctorsListState extends State<DoctorsList> {
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 13),
                                               ),
+                                              data['address'].toString().length>25? Text(
+                                                "${data['address'].toString().substring(0,24)}...",
+                                                style: TextStyle(fontSize: 13),
+                                              ):
                                               Text(
                                                 "${data['address'].toString()}",
                                                 style: TextStyle(fontSize: 13),

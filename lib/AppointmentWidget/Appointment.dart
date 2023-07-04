@@ -243,8 +243,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
       );
     },
       initialDateRange: dateRange,
-      firstDate: DateTime(2019),
-      lastDate: DateTime(2023),
+      firstDate:DateTime(DateTime.now().year - 10),
+      lastDate:DateTime(DateTime.now().year + 10),
     );
 
     setState(() {

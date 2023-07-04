@@ -19,9 +19,13 @@ class _ClinicConfigState extends State<ClinicConfig> {
    var clinicconfig=null;
   var accessToken = '';
   void initState() {
-    accessToken = storage.getItem('userResponse')['access_token'];
-  getclinicconfig();
+   
     super.initState();
+ init();
+  }
+  init()async{
+     accessToken =await storage.getItem('userResponse')['access_token'];
+  await getclinicconfig();
 
   }
   
@@ -33,167 +37,379 @@ bool loading = false;
   
 // int? _apptimeSelected = 1;
   // String _apptimeVal = "";
-String? _DiagVal = '';
-String? _appitvalue = '';
+String? _DiagVal ;
+String? _appitvalue;
 
    @override
    Widget build(BuildContext context) {
+    double screenHeight= MediaQuery.of(context).size.height;
+    double screenWidth=MediaQuery.of(context).size.width;
        return Scaffold(
-           appBar: AppBar(title: const Text('Clinic Configaration'),
+           appBar: AppBar(title: const Text('Clinic Configuration'),
+             leading: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DashboardScreen(),
+              ));
+        },
+        child: Icon(
+          Icons.arrow_back,
+          // color: colorAnimated.color,
+          color: Colors.white,
+        ),
+      ),
            backgroundColor: CustomColors.app_color,),
-           body: Container(
+           body:
+           isLoading==true? Container(
+            height: screenHeight,
+            width: screenWidth,
             child: Column(
               children: [
-                SizedBox(height: 10,),
-                TextField(
-  //                 onChanged: (s) {
-  // int s = int.parse(
-  //  calltokenController.text);
-  //   },
-                  keyboardType: TextInputType.number,
-                  controller: calltokenController,
-                  decoration: new InputDecoration(
-                    filled: true,
-                    labelText: 'Call Token',
-                      contentPadding:
-                    const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      new BorderSide(color: Colors.blueAccent, width: 0.5),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.grey, width: 0.5),
-                ),
+                SizedBox(height: screenHeight*0.01,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                           //                 onChanged: (s) {
+                           // int s = int.parse(
+                           //  calltokenController.text);
+                           //   },
+                    keyboardType: TextInputType.number,
+                    controller: calltokenController,
+                    decoration: new InputDecoration(
+                      filled: true,
+                      labelText: 'Call Token',
+                        contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        new BorderSide(color: Colors.blueAccent, width: 0.5),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.grey, width: 0.5),
+                  ),
+                    ),
                   ),
                 ),
-                  SizedBox(height: 10,),
-                TextField(
-                  
-                  keyboardType: TextInputType.number,
-                  controller: visittokenController ,
-                  
-                  decoration: new InputDecoration(
-                    filled: true,
-                    labelText: 'visit Token',
+                  SizedBox(height: screenHeight*0.01,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
                     
-                    // hintText:,
-                      contentPadding:
-                    const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      new BorderSide(color: Colors.blueAccent, width: 0.5),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.grey, width: 0.5),
-                ),
+                    keyboardType: TextInputType.number,
+                    controller: visittokenController ,
+                    
+                    decoration: new InputDecoration(
+                      filled: true,
+                      labelText: 'visit Token',
+                      
+                      // hintText:,
+                        contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        new BorderSide(color: Colors.blueAccent, width: 0.5),
                   ),
-                  
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.grey, width: 0.5),
+                  ),
+                    ),
+                    
+                  ),
                 ),
                 SizedBox(height: 10,),
                 Text('Do You Want Diagnosis ? ',
                 textAlign: TextAlign.left,
                 style: TextStyle(fontSize: 14),),
                 SizedBox(height: 10,),
-                Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RadioButton(
-                  description: "Yes",
-                  value: "yes",
-                  groupValue: _DiagVal,
-                  onChanged: (value) => setState(
-                    () => _DiagVal = value,
-                  ),
-                  // activeColor: Colors.red,
-                  textStyle: TextStyle(
-                      // fontSize: 30,
-                      // fontWeight: FontWeight.w600,
-                      // color: Colors.red
-                      ),
-                ),
-                RadioButton(
-                  description: "No",
-                  value: "no",
+                Container(
+                  width: screenWidth*0.9,
+                height: screenHeight*0.05,
+                  child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                 Container( 
+            padding: EdgeInsets.all(0),
+            child: 
+          Row(
+            children: [
+                
+                // Text("What is your gender?", style: TextStyle( 
+                //     fontSize: 18
+                // ),),
 
-                  groupValue: _DiagVal,
-                  onChanged: (value) => setState(
-                    () => _DiagVal = value,
+                // Divider(),
+                
+                Container(
+                   width: screenWidth*0.4,
+                height: screenHeight*0.05,
+                  child: RadioListTile(
+                      title: Text("Yes"),
+                      value: "yes", 
+                      groupValue: _DiagVal, 
+                      onChanged: (value){
+                        setState(() {
+                            _DiagVal = value.toString();
+                        });
+                      },
                   ),
-                  // textPosition: RadioButtonTextPosition.left,
                 ),
-                //  RadioButton(
-                //   description: "Other",
-                //   value: "Other",
 
-                //   groupValue: _singleValue,
-                //   onChanged: (value) => setState(
-                //     () => _singleValue = value,
-                //   ),
-                //   // textPosition: RadioButtonTextPosition.left,
-                // ),
-              ],
-            ),
+                Container(
+                   width: screenWidth*0.4,
+                height: screenHeight*0.05,
+                  child: RadioListTile(
+                      title: Text("No"),
+                      value: "no", 
+                      groupValue: _DiagVal, 
+                      onChanged: (value){
+                        setState(() {
+                            _DiagVal = value.toString();
+                        });
+                      },
+                  ),
+                ),
+
+                
+            ],
+          ),
+        ),
+                  //  RadioListTile(
+                  //           title: Text("Yes"),
+                  //           value: "yes", 
+                  //           groupValue: _DiagVal, 
+                  //           onChanged: (value){
+                  //             setState(() {
+                  //   _DiagVal = value.toString();
+                  //             });
+                  //           },
+                  //     ),
+                  //      RadioListTile(
+                  //           title: Text("NO"),
+                  //           value: "no", 
+                  //           groupValue: _DiagVal, 
+                  //           onChanged: (value){
+                  //             setState(() {
+                  //   _DiagVal = value.toString();
+                  //             });
+                  //           },
+                  //     )
+                  // RadioButton(
+                  //   description: "Yes",
+                  //   value: "yes",
+                  //   groupValue: _DiagVal,
+                  //   onChanged: (value) => setState(
+                  //     () => _DiagVal = value,
+                  //   ),
+                  //   // activeColor: Colors.red,
+                  //   textStyle: TextStyle(
+                  //       // fontSize: 30,
+                  //       // fontWeight: FontWeight.w600,
+                  //       // color: Colors.red
+                  //       ),
+                  // ),
+                  // RadioButton(
+                  //   description: "No",
+                  //   value: "no",
+                           
+                  //   groupValue: _DiagVal,
+                  //   onChanged: (value) => setState(
+                  //     () => _DiagVal = value,
+                  //   ),
+                  //   // textPosition: RadioButtonTextPosition.left,
+                  // ),
+                  // //  RadioButton(
+                  // //   description: "Other",
+                  // //   value: "Other",
+                           
+                  // //   groupValue: _singleValue,
+                  // //   onChanged: (value) => setState(
+                  // //     () => _singleValue = value,
+                  // //   ),
+                  // //   // textPosition: RadioButtonTextPosition.left,
+                  // // ),
+                              ],
+                            ),
+                ),
                   SizedBox(height: 10,),
                 Text('Do You Want Appointment Time ? ',
                 textAlign: TextAlign.left,
                 style: TextStyle(fontSize: 14),),
                 SizedBox(height: 10,),
-                Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RadioButton(
-                  description: "Yes",
-                  value: "yes",
-                  groupValue: _appitvalue,
-                  onChanged: (value) => setState(
-                    () => _appitvalue = value,
-                  ),
-                  // activeColor: Colors.red,
-                  textStyle: TextStyle(
-                      // fontSize: 30,
-                      // fontWeight: FontWeight.w600,
-                      // color: Colors.red
-                      ),
-                ),
-                RadioButton(
-                  description: "No",
-                  value: "no",
+                     Container(
+                  width: screenWidth*0.9,
+                height: screenHeight*0.05,
+                  child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                 Container( 
+            padding: EdgeInsets.all(0),
+            child: 
+          Row(
+            children: [
+                
+                // Text("What is your gender?", style: TextStyle( 
+                //     fontSize: 18
+                // ),),
 
-                  groupValue: _appitvalue,
-                  onChanged: (value) => setState(
-                    () => _appitvalue = value,
+                // Divider(),
+                
+                Container(
+                   width: screenWidth*0.4,
+                height: screenHeight*0.05,
+                  child: RadioListTile(
+                      title: Text("Yes"),
+                      value: "yes", 
+                      groupValue: _appitvalue, 
+                      onChanged: (value){
+                        setState(() {
+                            _appitvalue = value.toString();
+                        });
+                      },
                   ),
-                  // textPosition: RadioButtonTextPosition.left,
                 ),
-                //  RadioButton(
-                //   description: "Other",
-                //   value: "Other",
 
-                //   groupValue: _singleValue,
-                //   onChanged: (value) => setState(
-                //     () => _singleValue = value,
-                //   ),
-                //   // textPosition: RadioButtonTextPosition.left,
-                // ),
-              ],
-            ),
+                Container(
+                   width: screenWidth*0.4,
+                height: screenHeight*0.05,
+                  child: RadioListTile(
+                      title: Text("No"),
+                      value: "no", 
+                      groupValue: _appitvalue, 
+                      onChanged: (value){
+                        setState(() {
+                            _appitvalue = value.toString();
+                        });
+                      },
+                  ),
+                ),
+
+                
+            ],
+          ),
+        ),
+                  //  RadioListTile(
+                  //           title: Text("Yes"),
+                  //           value: "yes", 
+                  //           groupValue: _DiagVal, 
+                  //           onChanged: (value){
+                  //             setState(() {
+                  //   _DiagVal = value.toString();
+                  //             });
+                  //           },
+                  //     ),
+                  //      RadioListTile(
+                  //           title: Text("NO"),
+                  //           value: "no", 
+                  //           groupValue: _DiagVal, 
+                  //           onChanged: (value){
+                  //             setState(() {
+                  //   _DiagVal = value.toString();
+                  //             });
+                  //           },
+                  //     )
+                  // RadioButton(
+                  //   description: "Yes",
+                  //   value: "yes",
+                  //   groupValue: _DiagVal,
+                  //   onChanged: (value) => setState(
+                  //     () => _DiagVal = value,
+                  //   ),
+                  //   // activeColor: Colors.red,
+                  //   textStyle: TextStyle(
+                  //       // fontSize: 30,
+                  //       // fontWeight: FontWeight.w600,
+                  //       // color: Colors.red
+                  //       ),
+                  // ),
+                  // RadioButton(
+                  //   description: "No",
+                  //   value: "no",
+                           
+                  //   groupValue: _DiagVal,
+                  //   onChanged: (value) => setState(
+                  //     () => _DiagVal = value,
+                  //   ),
+                  //   // textPosition: RadioButtonTextPosition.left,
+                  // ),
+                  // //  RadioButton(
+                  // //   description: "Other",
+                  // //   value: "Other",
+                           
+                  // //   groupValue: _singleValue,
+                  // //   onChanged: (value) => setState(
+                  // //     () => _singleValue = value,
+                  // //   ),
+                  // //   // textPosition: RadioButtonTextPosition.left,
+                  // // ),
+                              ],
+                            ),
+                ),
+            //     Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget>[
+            //     RadioButton(
+            //       description: "Yes",
+            //       value: "yes",
+            //       groupValue: _appitvalue,
+            //       onChanged: (value) => setState(
+            //         () => _appitvalue = value,
+            //       ),
+            //       // activeColor: Colors.red,
+            //       textStyle: TextStyle(
+            //           // fontSize: 30,
+            //           // fontWeight: FontWeight.w600,
+            //           // color: Colors.red
+            //           ),
+            //     ),
+            //     RadioButton(
+            //       description: "No",
+            //       value: "no",
+           
+            //       groupValue: _appitvalue,
+            //       onChanged: (value) => setState(
+            //         () => _appitvalue = value,
+            //       ),
+            //       // textPosition: RadioButtonTextPosition.left,
+            //     ),
+            //     //  RadioButton(
+            //     //   description: "Other",
+            //     //   value: "Other",
+           
+            //     //   groupValue: _singleValue,
+            //     //   onChanged: (value) => setState(
+            //     //     () => _singleValue = value,
+            //     //   ),
+            //     //   // textPosition: RadioButtonTextPosition.left,
+            //     // ),
+            //   ],
+            // ),
                 SizedBox(height: 15,),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                           primary: CustomColors.app_color,
                         ),
                   onPressed: (){
-   var config_details={
-"call_token":calltokenController.text,
-"visit_token":visittokenController.text,           
-"show_diagnosis":_DiagVal,
-"show_appointment_time":_appitvalue,
-   };
-   add_config(config_details);
+            var config_details={
+           "call_token":calltokenController.text,
+           "visit_token":visittokenController.text,           
+           "show_diagnosis":_DiagVal,
+           "show_appointment_time":_appitvalue,
+            };
+            add_config(config_details);
                 }, child: Text('Update'))
               ],
             ),
-           ),
+           ): Align(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/images/loading_image.png',
+                    // height: screenheight * 0.3,
+                    // color: Colors.blue.shade100,
+                    // color: Colors.black12,
+                  ),
+                ),
        );
   }
   add_config(config_details) async {
@@ -235,9 +451,9 @@ String? _appitvalue = '';
   }
 
   getclinicconfig()async{
-    this.setState(() {
-   isLoading = true;
-});
+//     setState(() {
+//    isLoading = ;
+// });
 
    clinicconfig=await api().get_clinic_config(accessToken);
    if(Helper().isvalidElement(clinicconfig) && Helper().isvalidElement(clinicconfig['status']) && clinicconfig['status'] == 'Token is Expired'){
@@ -246,14 +462,17 @@ String? _appitvalue = '';
          else{
           var data  = clinicconfig['list'];
           
+  setState(() {          
   //  storage.setItem('diagnosisList', diagnosisList);
   calltokenController.text=data[0]['call_tkn'].toString();
   visittokenController.text=data[0]['visit_tkn'].toString();
   _DiagVal=data[0]['diagnosis_show'].toString().toLowerCase();
-  _appitvalue=data[0]['time_show'];
-                         this.setState(() {
-   isLoading = false;
+  _appitvalue=data[0]['time_show'].toString().toLowerCase();
+                       
+   isLoading = true;
+
 });
+print(data[0]);
  }
   }
 

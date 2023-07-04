@@ -42,6 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   ];
   var userResponse = null;
   var patientList = null;
+  var accesstoken=null;
   var appointmentCount = null;
   var isPatientCountLoader = false;
   var isAppointCountLoader = false;
@@ -55,11 +56,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
   var noOfBranches;
   void initState() {
     initPreferences();
-    this.setState(() {
-      userResponse = storage.getItem('userResponse');
-    });
-    getPatientList();
-    getAppointmentCount();
+   
+     init();
+   
+  }
+  init()async{
+     
+     userResponse = await storage.getItem('userResponse');
+     accesstoken=await userResponse['access_token'];
+     print(accesstoken);
+  
+    await getPatientList();
+    await getAppointmentCount();
+
   }
 //   void initstate() {
 //    super.initState();
@@ -721,60 +730,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           Icons.people_alt_outlined,
                                           color: CustomColors.app_color,
                                         ), // <-- Icon
-                                        Text("Staff"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const StaffList()),
-                                  );
-                                },
-                                splashColor: Colors.green,
-                              ),
-                              //
-                            ],
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.015,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                child: Container(
-                                    // width: screenwidth * 0.4,
-                                    width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.calendar_view_month_outlined,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Configaration"), // <-- Text
+                                        Text("Configuration"), // <-- Text
                                       ],
                                     )),
                                 onTap: () {
@@ -787,102 +743,155 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 },
                                 splashColor: Colors.green,
                               ),
-                              InkWell(
-                                child: Container(
-                                    // width: screenwidth * 0.4,
-                                    width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        // BoxShadow(
-                                        //   color: Colors.grey.withOpacity(0.5),
-                                        //   spreadRadius: 5,
-                                        //   blurRadius: 7,
-                                        //   offset: Offset(0,
-                                        //       3), // changes position of shadow
-                                        // ),
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.person_add,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Profile"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Profile()),
-                                  );
-                                },
-                                splashColor: Colors.green,
-                              ),
-                              InkWell(
-                                splashColor: Colors.green,
-                                child: Container(
-                                    // width: screenwidth * 0.4,
-                                    width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.password_sharp,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Change Password"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Changepassword()),
-                                  );
-                                },
-                              ),
+                              //
                             ],
                           ),
+                          // SizedBox(
+                          //   height: screenHeight * 0.015,
+                          // ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     InkWell(
+                          //       child: Container(
+                          //           // width: screenwidth * 0.4,
+                          //           width: screenwidth * 0.3,
+                          //           // height: screenHeight*0.22,
+                          //           height: screenHeight * 0.1,
+                          //           decoration: BoxDecoration(
+                          //             color: Colors.white,
+                          //             borderRadius: BorderRadius.only(
+                          //                 topLeft: Radius.circular(10),
+                          //                 topRight: Radius.circular(10),
+                          //                 bottomLeft: Radius.circular(10),
+                          //                 bottomRight: Radius.circular(10)),
+                          //             boxShadow: [
+                          //               BoxShadow(
+                          //                 color: Colors.grey.withOpacity(0.3),
+                          //                 spreadRadius: 3,
+                          //                 blurRadius: 3,
+                          //                 offset: Offset(0,
+                          //                     1), // changes position of shadow
+                          //               ),
+                          //             ],
+                          //           ),
+                          //           child: Column(
+                          //             mainAxisAlignment:
+                          //                 MainAxisAlignment.center,
+                          //             children: <Widget>[
+                          //               Icon(
+                          //                 Icons.calendar_view_month_outlined,
+                          //                 color: CustomColors.app_color,
+                          //               ), // <-- Icon
+                          //               Text("configuration"), // <-- Text
+                          //             ],
+                          //           )),
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   const ClinicConfig()),
+                          //         );
+                          //       },
+                          //       splashColor: Colors.green,
+                          //     ),
+                          //     InkWell(
+                          //       child: Container(
+                          //           // width: screenwidth * 0.4,
+                          //           width: screenwidth * 0.3,
+                          //           // height: screenHeight*0.22,
+                          //           height: screenHeight * 0.1,
+                          //           decoration: BoxDecoration(
+                          //             color: Colors.white,
+                          //             borderRadius: BorderRadius.only(
+                          //                 topLeft: Radius.circular(10),
+                          //                 topRight: Radius.circular(10),
+                          //                 bottomLeft: Radius.circular(10),
+                          //                 bottomRight: Radius.circular(10)),
+                          //             boxShadow: [
+                          //               // BoxShadow(
+                          //               //   color: Colors.grey.withOpacity(0.5),
+                          //               //   spreadRadius: 5,
+                          //               //   blurRadius: 7,
+                          //               //   offset: Offset(0,
+                          //               //       3), // changes position of shadow
+                          //               // ),
+                          //               BoxShadow(
+                          //                 color: Colors.grey.withOpacity(0.3),
+                          //                 spreadRadius: 3,
+                          //                 blurRadius: 3,
+                          //                 offset: Offset(0,
+                          //                     1), // changes position of shadow
+                          //               ),
+                          //             ],
+                          //           ),
+                          //           child: Column(
+                          //             mainAxisAlignment:
+                          //                 MainAxisAlignment.center,
+                          //             children: <Widget>[
+                          //               Icon(
+                          //                 Icons.person_add,
+                          //                 color: CustomColors.app_color,
+                          //               ), // <-- Icon
+                          //               Text("Profile"), // <-- Text
+                          //             ],
+                          //           )),
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) => const Profile()),
+                          //         );
+                          //       },
+                          //       splashColor: Colors.green,
+                          //     ),
+                          //     InkWell(
+                          //       splashColor: Colors.green,
+                          //       child: Container(
+                          //           // width: screenwidth * 0.4,
+                          //           width: screenwidth * 0.3,
+                          //           // height: screenHeight*0.22,
+                          //           height: screenHeight * 0.1,
+                          //           decoration: BoxDecoration(
+                          //             color: Colors.white,
+                          //             borderRadius: BorderRadius.only(
+                          //                 topLeft: Radius.circular(10),
+                          //                 topRight: Radius.circular(10),
+                          //                 bottomLeft: Radius.circular(10),
+                          //                 bottomRight: Radius.circular(10)),
+                          //             boxShadow: [
+                          //               BoxShadow(
+                          //                 color: Colors.grey.withOpacity(0.3),
+                          //                 spreadRadius: 3,
+                          //                 blurRadius: 3,
+                          //                 offset: Offset(0,
+                          //                     1), // changes position of shadow
+                          //               ),
+                          //             ],
+                          //           ),
+                          //           child: Column(
+                          //             mainAxisAlignment:
+                          //                 MainAxisAlignment.center,
+                          //             children: <Widget>[
+                          //               Icon(
+                          //                 Icons.password_sharp,
+                          //                 color: CustomColors.app_color,
+                          //               ), // <-- Icon
+                          //               Text("Change Password"), // <-- Text
+                          //             ],
+                          //           )),
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   const Changepassword()),
+                          //         );
+                          //       },
+                          //     ),
+                          //   ],
+                          // ),
                           // SizedBox(height: 10,),
                           // Row(
                           //   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -941,246 +950,246 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   SizedBox(
                     height: screenHeight * 0.012,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.settings_outlined,
-                                color: CustomColors.app_color,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: screenwidth * 0.01,
-                              ),
-                              Text(
-                                'Utilities',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    letterSpacing: 1.42,
-                                    fontWeight: FontWeight.bold,
-                                    color: CustomColors.app_color),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      // height: screenHeight * 0.40,
-                      // height: 300,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                splashColor: Colors.green,
-                                child: Container(
-                                    width: screenwidth * 0.46,
-                                    // width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.local_hospital_outlined,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Diagnosis List"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DoctorsList()),
-                                  );
-                                },
-                              ),
-                              InkWell(
-                                child: Container(
-                                    width: screenwidth * 0.46,
-                                    // width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.people_alt_outlined,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Treatment List"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const StaffList()),
-                                  );
-                                },
-                                splashColor: Colors.green,
-                              ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Row(
+                  //           children: [
+                  //             Icon(
+                  //               Icons.settings_outlined,
+                  //               color: CustomColors.app_color,
+                  //               size: 20,
+                  //             ),
+                  //             SizedBox(
+                  //               width: screenwidth * 0.01,
+                  //             ),
+                  //             Text(
+                  //               'Utilities',
+                  //               style: TextStyle(
+                  //                   fontSize: 20,
+                  //                   letterSpacing: 1.42,
+                  //                   fontWeight: FontWeight.bold,
+                  //                   color: CustomColors.app_color),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     // height: screenHeight * 0.40,
+                  //     // height: 300,
+                  //     child: Column(
+                  //       children: [
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             InkWell(
+                  //               splashColor: Colors.green,
+                  //               child: Container(
+                  //                   width: screenwidth * 0.46,
+                  //                   // width: screenwidth * 0.3,
+                  //                   // height: screenHeight*0.22,
+                  //                   height: screenHeight * 0.1,
+                  //                   decoration: BoxDecoration(
+                  //                     color: Colors.white,
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(10),
+                  //                         topRight: Radius.circular(10),
+                  //                         bottomLeft: Radius.circular(10),
+                  //                         bottomRight: Radius.circular(10)),
+                  //                     boxShadow: [
+                  //                       BoxShadow(
+                  //                         color: Colors.grey.withOpacity(0.3),
+                  //                         spreadRadius: 3,
+                  //                         blurRadius: 3,
+                  //                         offset: Offset(0,
+                  //                             1), // changes position of shadow
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                   child: Column(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.center,
+                  //                     children: <Widget>[
+                  //                       Icon(
+                  //                         Icons.local_hospital_outlined,
+                  //                         color: CustomColors.app_color,
+                  //                       ), // <-- Icon
+                  //                       Text("Diagnosis List"), // <-- Text
+                  //                     ],
+                  //                   )),
+                  //               onTap: () {
+                  //                 Navigator.push(
+                  //                   context,
+                  //                   MaterialPageRoute(
+                  //                       builder: (context) =>
+                  //                           const DoctorsList()),
+                  //                 );
+                  //               },
+                  //             ),
+                  //             InkWell(
+                  //               child: Container(
+                  //                   width: screenwidth * 0.46,
+                  //                   // width: screenwidth * 0.3,
+                  //                   // height: screenHeight*0.22,
+                  //                   height: screenHeight * 0.1,
+                  //                   decoration: BoxDecoration(
+                  //                     color: Colors.white,
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(10),
+                  //                         topRight: Radius.circular(10),
+                  //                         bottomLeft: Radius.circular(10),
+                  //                         bottomRight: Radius.circular(10)),
+                  //                     boxShadow: [
+                  //                       BoxShadow(
+                  //                         color: Colors.grey.withOpacity(0.3),
+                  //                         spreadRadius: 3,
+                  //                         blurRadius: 3,
+                  //                         offset: Offset(0,
+                  //                             1), // changes position of shadow
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                   child: Column(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.center,
+                  //                     children: <Widget>[
+                  //                       Icon(
+                  //                         Icons.people_alt_outlined,
+                  //                         color: CustomColors.app_color,
+                  //                       ), // <-- Icon
+                  //                       Text("Treatment List"), // <-- Text
+                  //                     ],
+                  //                   )),
+                  //               onTap: () {
+                  //                 Navigator.push(
+                  //                   context,
+                  //                   MaterialPageRoute(
+                  //                       builder: (context) =>
+                  //                           const StaffList()),
+                  //                 );
+                  //               },
+                  //               splashColor: Colors.green,
+                  //             ),
                               
-                              //
-                            ],
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.015,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                child: Container(
-                                    width: screenwidth * 0.46,
-                                    // width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.calendar_view_month_outlined,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Medicine List"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ClinicConfig()),
-                                  );
-                                },
-                                splashColor: Colors.green,
-                              ),
-                              InkWell(
-                                child: Container(
-                                    width: screenwidth * 0.46,
-                                    // width: screenwidth * 0.3,
-                                    // height: screenHeight*0.22,
-                                    height: screenHeight * 0.1,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      boxShadow: [
-                                        // BoxShadow(
-                                        //   color: Colors.grey.withOpacity(0.5),
-                                        //   spreadRadius: 5,
-                                        //   blurRadius: 7,
-                                        //   offset: Offset(0,
-                                        //       3), // changes position of shadow
-                                        // ),
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 3,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.person_add,
-                                          color: CustomColors.app_color,
-                                        ), // <-- Icon
-                                        Text("Prescription Preset"), // <-- Text
-                                      ],
-                                    )),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Profile()),
-                                  );
-                                },
-                                splashColor: Colors.green,
-                              ),
+                  //             //
+                  //           ],
+                  //         ),
+                  //         SizedBox(
+                  //           height: screenHeight * 0.015,
+                  //         ),
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             InkWell(
+                  //               child: Container(
+                  //                   width: screenwidth * 0.46,
+                  //                   // width: screenwidth * 0.3,
+                  //                   // height: screenHeight*0.22,
+                  //                   height: screenHeight * 0.1,
+                  //                   decoration: BoxDecoration(
+                  //                     color: Colors.white,
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(10),
+                  //                         topRight: Radius.circular(10),
+                  //                         bottomLeft: Radius.circular(10),
+                  //                         bottomRight: Radius.circular(10)),
+                  //                     boxShadow: [
+                  //                       BoxShadow(
+                  //                         color: Colors.grey.withOpacity(0.3),
+                  //                         spreadRadius: 3,
+                  //                         blurRadius: 3,
+                  //                         offset: Offset(0,
+                  //                             1), // changes position of shadow
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                   child: Column(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.center,
+                  //                     children: <Widget>[
+                  //                       Icon(
+                  //                         Icons.calendar_view_month_outlined,
+                  //                         color: CustomColors.app_color,
+                  //                       ), // <-- Icon
+                  //                       Text("Medicine List"), // <-- Text
+                  //                     ],
+                  //                   )),
+                  //               onTap: () {
+                  //                 Navigator.push(
+                  //                   context,
+                  //                   MaterialPageRoute(
+                  //                       builder: (context) =>
+                  //                           const ClinicConfig()),
+                  //                 );
+                  //               },
+                  //               splashColor: Colors.green,
+                  //             ),
+                  //             InkWell(
+                  //               child: Container(
+                  //                   width: screenwidth * 0.46,
+                  //                   // width: screenwidth * 0.3,
+                  //                   // height: screenHeight*0.22,
+                  //                   height: screenHeight * 0.1,
+                  //                   decoration: BoxDecoration(
+                  //                     color: Colors.white,
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(10),
+                  //                         topRight: Radius.circular(10),
+                  //                         bottomLeft: Radius.circular(10),
+                  //                         bottomRight: Radius.circular(10)),
+                  //                     boxShadow: [
+                  //                       // BoxShadow(
+                  //                       //   color: Colors.grey.withOpacity(0.5),
+                  //                       //   spreadRadius: 5,
+                  //                       //   blurRadius: 7,
+                  //                       //   offset: Offset(0,
+                  //                       //       3), // changes position of shadow
+                  //                       // ),
+                  //                       BoxShadow(
+                  //                         color: Colors.grey.withOpacity(0.3),
+                  //                         spreadRadius: 3,
+                  //                         blurRadius: 3,
+                  //                         offset: Offset(0,
+                  //                             1), // changes position of shadow
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                   child: Column(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.center,
+                  //                     children: <Widget>[
+                  //                       Icon(
+                  //                         Icons.person_add,
+                  //                         color: CustomColors.app_color,
+                  //                       ), // <-- Icon
+                  //                       Text("Prescription Preset"), // <-- Text
+                  //                     ],
+                  //                   )),
+                  //               onTap: () {
+                  //                 Navigator.push(
+                  //                   context,
+                  //                   MaterialPageRoute(
+                  //                       builder: (context) => const Profile()),
+                  //                 );
+                  //               },
+                  //               splashColor: Colors.green,
+                  //             ),
                              
-                            ],
-                          ),
+                  //           ],
+                  //         ),
                           
-                        ],
-                      ),
-                    ),
-                  ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   // Container(
                   //   child: GridView.count(crossAxisCount: 1,
                   //   ),
@@ -1213,7 +1222,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       isPatientCountLoader = true;
     });
     // userResponse = storage.getItem('userResponse');
-    patientList = await api().getPatientList(userResponse['access_token']);
+    patientList = await api().getPatientList(accesstoken);
     if (Helper().isvalidElement(patientList) &&
         Helper().isvalidElement(patientList['status']) &&
         patientList['status'] == 'Token is Invalid') {
@@ -1235,7 +1244,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // userResponse = storage.getItem('userResponse');
     print(userResponse['access_token']);
     appointmentCount =
-        await api().getAppointmentCount(userResponse['access_token']);
+        await api().getAppointmentCount(accesstoken);
     if (Helper().isvalidElement(appointmentCount) &&
         Helper().isvalidElement(appointmentCount['status']) &&
         appointmentCount['status'] == 'Token is Expired') {

@@ -507,9 +507,8 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                                     },
                                     initialDate:
                                         DateTime.now(), //get today's date
-                                    firstDate: DateTime(
-                                        2000), //DateTime.now() - not to allow to choose before today.
-                                    lastDate: DateTime(2101));
+                                    firstDate:DateTime.now(),//DateTime.now() - not to allow to choose before today.
+                                    lastDate: DateTime(DateTime.now().year + 100));
 
                                 if (pickedDate != null) {
                                   print(
