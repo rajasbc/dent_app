@@ -99,7 +99,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           //   exit(0);
           // }
           exit(0);
-          // return true;
         },
         child: Scaffold(
           // return Scaffold(

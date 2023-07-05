@@ -46,520 +46,529 @@ class _DiagnosisListState extends State<DiagnosisList> {
         50 -
         MediaQuery.of(context).padding.top;
     var screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50),
-          child: AppBar(
-            backgroundColor: CustomColors.app_color,
-            title: Text('${widget.option} List'),
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const DentalPlan()),
-                  );
-                },
-                icon: Icon(Icons.arrow_back)),
+    return WillPopScope(
+       onWillPop: () async {
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DentalPlan()),
+        );
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50),
+            child: AppBar(
+              backgroundColor: CustomColors.app_color,
+              title: Text('${widget.option} List'),
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DentalPlan()),
+                    );
+                  },
+                  icon: Icon(Icons.arrow_back)),
+            ),
           ),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: !isLoading
-            ? Container(
-                height: screenHeight,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: screenHeight * 0.01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10),
-                      child: Container(
-                        height: screenHeight * 0.085,
-                        child: renderSearchBar(),
+          resizeToAvoidBottomInset: false,
+          body: !isLoading
+              ? Container(
+                  height: screenHeight,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: screenHeight * 0.01,
                       ),
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.01,
-                    ),
-                    widget.option == 'diagnosis'
-                        ? Container(
-                            height: screenHeight * 0.89,
-                            width: screenWidth,
-                            child: Helper().isvalidElement(diagnosisList) &&
-                                    Helper()
-                                        .isvalidElement(diagnosisList.values) &&
-                                    Helper().isvalidElement(
-                                        diagnosisList.values.toList()) &&
-                                    Helper().isvalidElement(
-                                        diagnosisList.values.toList()[0]) &&
-                                    Helper().isvalidElement(diagnosisList.values
-                                        .toList()[0]
-                                        .length) &&
-                                    diagnosisList.values.toList()[0].length > 0
-                                ? ListView.builder(
-                                    itemCount: searchText.text.isEmpty
-                                        ? diagnosisList.values
-                                            .toList()[0]
-                                            .length
-                                        : searchList?.length,
-                                    // scrollDirection: Axis.horizontal,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final data;
-                                      int data_index = index;
-                                      data = searchText.text.isEmpty
-                                          ? diagnosisList.values.toList()[0]
-                                          : diagnosisList.values.toList();
-                                      return Container(
-                                        width: screenWidth,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              // color: Colors.red,
-                                              width: screenWidth * 0.78,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8.0,
-                                                    right: 8.0,
-                                                    top: 15.0,
-                                                    bottom: 15.0),
-                                                child: Text(
-                                                    '${index + 1}. ${diagnosisList.values.toList()[0][index]['diagnosis_name'].toString()}'),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10),
+                        child: Container(
+                          height: screenHeight * 0.085,
+                          child: renderSearchBar(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.01,
+                      ),
+                      widget.option == 'diagnosis'
+                          ? Container(
+                              height: screenHeight * 0.89,
+                              width: screenWidth,
+                              child: Helper().isvalidElement(diagnosisList) &&
+                                      Helper()
+                                          .isvalidElement(diagnosisList.values) &&
+                                      Helper().isvalidElement(
+                                          diagnosisList.values.toList()) &&
+                                      Helper().isvalidElement(
+                                          diagnosisList.values.toList()[0]) &&
+                                      Helper().isvalidElement(diagnosisList.values
+                                          .toList()[0]
+                                          .length) &&
+                                      diagnosisList.values.toList()[0].length > 0
+                                  ? ListView.builder(
+                                      itemCount: searchText.text.isEmpty
+                                          ? diagnosisList.values
+                                              .toList()[0]
+                                              .length
+                                          : searchList?.length,
+                                      // scrollDirection: Axis.horizontal,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final data;
+                                        int data_index = index;
+                                        data = searchText.text.isEmpty
+                                            ? diagnosisList.values.toList()[0]
+                                            : diagnosisList.values.toList();
+                                        return Container(
+                                          width: screenWidth,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                // color: Colors.red,
+                                                width: screenWidth * 0.78,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 8.0,
+                                                      right: 8.0,
+                                                      top: 15.0,
+                                                      bottom: 15.0),
+                                                  child: Text(
+                                                      '${index + 1}. ${diagnosisList.values.toList()[0][index]['diagnosis_name'].toString()}'),
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth * 0.01,
-                                            ),
-                                            Container(
-                                              // color: Colors.green,
-                                              width: screenWidth * 0.2,
-                                              child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                CustomColors
-                                                                    .app_color)),
-                                                // onPressed: () {
-                                                //   if (Helper().isvalidElement(
-                                                //           selectedTeeth) &&
-                                                //       selectedTeeth.length >
-                                                //           0) {
-                                                //     print(selectedTeeth);
-                                                //     print(data[data_index]);
-                                                //     Fluttertoast.showToast(
-                                                //         msg: widget.option ==
-                                                //                 'diagnosis'
-                                                //             ? 'Diagnosis added successfully'
-                                                //             : 'Treatment added successfully',
-                                                //         toastLength:
-                                                //             Toast.LENGTH_SHORT,
-                                                //         gravity:
-                                                //             ToastGravity.CENTER,
-                                                //         timeInSecForIosWeb: 2,
-                                                //         backgroundColor:
-                                                //             CustomColors
-                                                //                 .success_color,
-                                                //         textColor: Colors.white,
-                                                //         fontSize: 15.0);
-                                                //                                                     Navigator.pop(context,
-                                                //     MaterialPageRoute(builder: (context) => DentalPlan()));
-
-                                                //   } else {
-                                                //     Fluttertoast.showToast(
-                                                //         msg:
-                                                //             'Kindly Add Atleast One Teeth Part',
-                                                //         toastLength:
-                                                //             Toast.LENGTH_SHORT,
-                                                //         gravity:
-                                                //             ToastGravity.CENTER,
-                                                //         timeInSecForIosWeb: 2,
-                                                //         backgroundColor:
-                                                //             CustomColors
-                                                //                 .error_color,
-                                                //         textColor: Colors.white,
-                                                //         fontSize: 15.0);
-                                                //   }
-                                                // },
-                                                onPressed: () async {
-                                                  if (Helper().isvalidElement(
-                                                          selectedTeeth) &&
-                                                      selectedTeeth.length >
-                                                          0) {
-                                                    List<SelectedTeethModal>
-                                                        selected_teeth_values =
-                                                        [];
-                                                    var selectedPatient =
-                                                        storage.getItem(
-                                                            'selectedPatient');
-                                                    print(selectedTeeth);
-                                                    // print(storage.getItem('selectedPatient'));
-                                                    print(data[data_index]);
-                                                    selectedTeeth.forEach((e) {
-                                                      selected_teeth_values.add(
-                                                          SelectedTeethModal(
-                                                        t_no: e.t_no,
-                                                        position: e.position,
-                                                      ));
-                                                      print(e);
-                                                    });
-
-                                                    //                    for (final e
-                                                    //     in selectedTeeth) {
-                                                    //   selected_testlist.add(SelectedTeethModal(
-                                                    //       t_no: e.test_id,
-                                                    //       position: e.test_name,));
-                                                    //   // list.add(e);
-                                                    // }
-                                                    //                    var selectTestMap = selectedTeeth.map((e) {
-                                                    //   return {
-                                                    //     'test_id': e.test_id,
-                                                    //     'test_name': e.test_name,
-                                                    //     'test_amount': e.test_amount,
-                                                    //     'department': e.department,
-                                                    //     'group_id': e.group_id,
-                                                    //     'discount': "0"
-                                                    //   };
-                                                    // }).toList();
-
-                                                    var selectTeethMap =
-                                                        selected_teeth_values
-                                                            .map((e) {
-                                                      return {
-                                                        't_no': e.t_no,
-                                                        'position': e.position
-                                                      };
-                                                    }).toList();
-                                                    var planDetails = {
-                                                      "patient_id":
-                                                          selectedPatient['id']
-                                                              .toString(),
-                                                      "type": "diagnosis",
-                                                      "list": data[data_index]
-                                                          ['diagnosis_name'],
-                                                      // "treatment_amount":
-                                                      //     data[data_index]
-                                                      //             ['Amount']
-                                                      //         .toString(),
-                                                      "treatment_amount": '0',
-                                                      "list_id":
-                                                          data[data_index]['id']
-                                                              .toString(),
-                                                      "Items": selectTeethMap
-                                                    };
-                                                    print(planDetails);
-                                                    var add_plan_result =
-                                                        await api().addDentPlan(
-                                                            accessToken,
-                                                            planDetails);
+                                              SizedBox(
+                                                width: screenWidth * 0.01,
+                                              ),
+                                              Container(
+                                                // color: Colors.green,
+                                                width: screenWidth * 0.2,
+                                                child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all<Color>(
+                                                                  CustomColors
+                                                                      .app_color)),
+                                                  // onPressed: () {
+                                                  //   if (Helper().isvalidElement(
+                                                  //           selectedTeeth) &&
+                                                  //       selectedTeeth.length >
+                                                  //           0) {
+                                                  //     print(selectedTeeth);
+                                                  //     print(data[data_index]);
+                                                  //     Fluttertoast.showToast(
+                                                  //         msg: widget.option ==
+                                                  //                 'diagnosis'
+                                                  //             ? 'Diagnosis added successfully'
+                                                  //             : 'Treatment added successfully',
+                                                  //         toastLength:
+                                                  //             Toast.LENGTH_SHORT,
+                                                  //         gravity:
+                                                  //             ToastGravity.CENTER,
+                                                  //         timeInSecForIosWeb: 2,
+                                                  //         backgroundColor:
+                                                  //             CustomColors
+                                                  //                 .success_color,
+                                                  //         textColor: Colors.white,
+                                                  //         fontSize: 15.0);
+                                                  //                                                     Navigator.pop(context,
+                                                  //     MaterialPageRoute(builder: (context) => DentalPlan()));
+    
+                                                  //   } else {
+                                                  //     Fluttertoast.showToast(
+                                                  //         msg:
+                                                  //             'Kindly Add Atleast One Teeth Part',
+                                                  //         toastLength:
+                                                  //             Toast.LENGTH_SHORT,
+                                                  //         gravity:
+                                                  //             ToastGravity.CENTER,
+                                                  //         timeInSecForIosWeb: 2,
+                                                  //         backgroundColor:
+                                                  //             CustomColors
+                                                  //                 .error_color,
+                                                  //         textColor: Colors.white,
+                                                  //         fontSize: 15.0);
+                                                  //   }
+                                                  // },
+                                                  onPressed: () async {
                                                     if (Helper().isvalidElement(
-                                                            add_plan_result) &&
-                                                        Helper().isvalidElement(
-                                                            add_plan_result[
-                                                                'Add_plan']) &&
-                                                        add_plan_result[
-                                                                'Add_plan'] ==
-                                                            "Add Plan succesfully") {
-                                                      Fluttertoast.showToast(
-                                                          msg: widget.option ==
-                                                                  'diagnosis'
-                                                              ? 'Diagnosis added successfully'
-                                                              : 'Treatment added successfully',
-                                                          toastLength: Toast
-                                                              .LENGTH_SHORT,
-                                                          gravity: ToastGravity
-                                                              .CENTER,
-                                                          timeInSecForIosWeb: 2,
-                                                          backgroundColor:
-                                                              CustomColors
-                                                                  .success_color,
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 15.0);
-
-                                                      storage.setItem(
-                                                          'selectedTeethPosition',
-                                                          null);
-                                                      //                                    Navigator.pop(context,
-                                                      // MaterialPageRoute(builder: (context) => DentalPlan()));
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const DentalPlan()),
-                                                      );
+                                                            selectedTeeth) &&
+                                                        selectedTeeth.length >
+                                                            0) {
+                                                      List<SelectedTeethModal>
+                                                          selected_teeth_values =
+                                                          [];
+                                                      var selectedPatient =
+                                                          storage.getItem(
+                                                              'selectedPatient');
+                                                      print(selectedTeeth);
+                                                      // print(storage.getItem('selectedPatient'));
+                                                      print(data[data_index]);
+                                                      selectedTeeth.forEach((e) {
+                                                        selected_teeth_values.add(
+                                                            SelectedTeethModal(
+                                                          t_no: e.t_no,
+                                                          position: e.position,
+                                                        ));
+                                                        print(e);
+                                                      });
+    
+                                                      //                    for (final e
+                                                      //     in selectedTeeth) {
+                                                      //   selected_testlist.add(SelectedTeethModal(
+                                                      //       t_no: e.test_id,
+                                                      //       position: e.test_name,));
+                                                      //   // list.add(e);
+                                                      // }
+                                                      //                    var selectTestMap = selectedTeeth.map((e) {
+                                                      //   return {
+                                                      //     'test_id': e.test_id,
+                                                      //     'test_name': e.test_name,
+                                                      //     'test_amount': e.test_amount,
+                                                      //     'department': e.department,
+                                                      //     'group_id': e.group_id,
+                                                      //     'discount': "0"
+                                                      //   };
+                                                      // }).toList();
+    
+                                                      var selectTeethMap =
+                                                          selected_teeth_values
+                                                              .map((e) {
+                                                        return {
+                                                          't_no': e.t_no,
+                                                          'position': e.position
+                                                        };
+                                                      }).toList();
+                                                      var planDetails = {
+                                                        "patient_id":
+                                                            selectedPatient['id']
+                                                                .toString(),
+                                                        "type": "diagnosis",
+                                                        "list": data[data_index]
+                                                            ['diagnosis_name'],
+                                                        // "treatment_amount":
+                                                        //     data[data_index]
+                                                        //             ['Amount']
+                                                        //         .toString(),
+                                                        "treatment_amount": '0',
+                                                        "list_id":
+                                                            data[data_index]['id']
+                                                                .toString(),
+                                                        "Items": selectTeethMap
+                                                      };
+                                                      print(planDetails);
+                                                      var add_plan_result =
+                                                          await api().addDentPlan(
+                                                              accessToken,
+                                                              planDetails);
+                                                      if (Helper().isvalidElement(
+                                                              add_plan_result) &&
+                                                          Helper().isvalidElement(
+                                                              add_plan_result[
+                                                                  'Add_plan']) &&
+                                                          add_plan_result[
+                                                                  'Add_plan'] ==
+                                                              "Add Plan succesfully") {
+                                                        Fluttertoast.showToast(
+                                                            msg: widget.option ==
+                                                                    'diagnosis'
+                                                                ? 'Diagnosis added successfully'
+                                                                : 'Treatment added successfully',
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity: ToastGravity
+                                                                .CENTER,
+                                                            timeInSecForIosWeb: 2,
+                                                            backgroundColor:
+                                                                CustomColors
+                                                                    .success_color,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 15.0);
+    
+                                                        storage.setItem(
+                                                            'selectedTeethPosition',
+                                                            null);
+                                                        //                                    Navigator.pop(context,
+                                                        // MaterialPageRoute(builder: (context) => DentalPlan()));
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const DentalPlan()),
+                                                        );
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                            msg: widget.option ==
+                                                                    'diagnosis'
+                                                                ? 'Please try again'
+                                                                : 'Please try again',
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity: ToastGravity
+                                                                .CENTER,
+                                                            timeInSecForIosWeb: 2,
+                                                            backgroundColor:
+                                                                CustomColors
+                                                                    .error_color,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 15.0);
+                                                      }
                                                     } else {
                                                       Fluttertoast.showToast(
-                                                          msg: widget.option ==
-                                                                  'diagnosis'
-                                                              ? 'Please try again'
-                                                              : 'Please try again',
-                                                          toastLength: Toast
-                                                              .LENGTH_SHORT,
-                                                          gravity: ToastGravity
-                                                              .CENTER,
+                                                          msg:
+                                                              'Kindly Add Atleast One Teeth Part',
+                                                          toastLength:
+                                                              Toast.LENGTH_SHORT,
+                                                          gravity:
+                                                              ToastGravity.CENTER,
                                                           timeInSecForIosWeb: 2,
                                                           backgroundColor:
                                                               CustomColors
                                                                   .error_color,
-                                                          textColor:
-                                                              Colors.white,
+                                                          textColor: Colors.white,
                                                           fontSize: 15.0);
                                                     }
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            'Kindly Add Atleast One Teeth Part',
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        gravity:
-                                                            ToastGravity.CENTER,
-                                                        timeInSecForIosWeb: 2,
-                                                        backgroundColor:
-                                                            CustomColors
-                                                                .error_color,
-                                                        textColor: Colors.white,
-                                                        fontSize: 15.0);
-                                                  }
-                                                },
-                                                child: Text(
-                                                  'Add',
-                                                  style: TextStyle(),
-                                                  textAlign: TextAlign.center,
+                                                  },
+                                                  child: Text(
+                                                    'Add',
+                                                    style: TextStyle(),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      })
+                                  : Image.asset(
+                                      'assets/images/no_data_found.png',
+                                      // height: screenheight * 0.3,
+                                      // color: Colors.blue.shade100,
+                                      // color: Colors.black12,
+                                    ),
+                            )
+                          : Container(
+                              height: screenHeight * 0.89,
+                              width: screenWidth,
+                              child: Helper().isvalidElement(treatmentList) &&
+                                      treatmentList.length > 0
+                                  ? ListView.builder(
+                                      // itemCount:diagnosisList.values.toList()[0].length,
+    
+                                      itemCount: searchText.text.isEmpty
+                                          ? treatmentList.length
+                                          : searchList?.length,
+                                      // scrollDirection: Axis.horizontal,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final data;
+                                        int data_index = index;
+                                        data = searchText.text.isEmpty
+                                            ? treatmentList
+                                            : treatmentList;
+                                        return Container(
+                                          width: screenWidth,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                // color: Colors.red,
+                                                width: screenWidth * 0.78,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 8.0,
+                                                      right: 8.0,
+                                                      top: 15.0,
+                                                      bottom: 15.0),
+                                                  child: Text(
+                                                      '${index + 1}. ${treatmentList[index]['treatment_name'].toString()}'),
                                                 ),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    })
-                                : Image.asset(
-                                    'assets/images/no_data_found.png',
-                                    // height: screenheight * 0.3,
-                                    // color: Colors.blue.shade100,
-                                    // color: Colors.black12,
-                                  ),
-                          )
-                        : Container(
-                            height: screenHeight * 0.89,
-                            width: screenWidth,
-                            child: Helper().isvalidElement(treatmentList) &&
-                                    treatmentList.length > 0
-                                ? ListView.builder(
-                                    // itemCount:diagnosisList.values.toList()[0].length,
-
-                                    itemCount: searchText.text.isEmpty
-                                        ? treatmentList.length
-                                        : searchList?.length,
-                                    // scrollDirection: Axis.horizontal,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final data;
-                                      int data_index = index;
-                                      data = searchText.text.isEmpty
-                                          ? treatmentList
-                                          : treatmentList;
-                                      return Container(
-                                        width: screenWidth,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              // color: Colors.red,
-                                              width: screenWidth * 0.78,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8.0,
-                                                    right: 8.0,
-                                                    top: 15.0,
-                                                    bottom: 15.0),
-                                                child: Text(
-                                                    '${index + 1}. ${treatmentList[index]['treatment_name'].toString()}'),
+                                              SizedBox(
+                                                width: screenWidth * 0.01,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth * 0.01,
-                                            ),
-                                            Container(
-                                              // color: Colors.green,
-                                              width: screenWidth * 0.2,
-                                              child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                CustomColors
-                                                                    .app_color)),
-                                                onPressed: () async {
-                                                  if (Helper().isvalidElement(
-                                                          selectedTeeth) &&
-                                                      selectedTeeth.length >
-                                                          0) {
-                                                    List<SelectedTeethModal>
-                                                        selected_teeth_values =
-                                                        [];
-                                                    var selectedPatient =
-                                                        storage.getItem(
-                                                            'selectedPatient');
-                                                    print(selectedTeeth);
-                                                    // print(storage.getItem('selectedPatient'));
-                                                    print(data[data_index]);
-                                                    selectedTeeth.forEach((e) {
-                                                      selected_teeth_values.add(
-                                                          SelectedTeethModal(
-                                                        t_no: e.t_no,
-                                                        position: e.position,
-                                                      ));
-                                                      print(e);
-                                                    });
-
-                                                    //                    for (final e
-                                                    //     in selectedTeeth) {
-                                                    //   selected_testlist.add(SelectedTeethModal(
-                                                    //       t_no: e.test_id,
-                                                    //       position: e.test_name,));
-                                                    //   // list.add(e);
-                                                    // }
-                                                    //                    var selectTestMap = selectedTeeth.map((e) {
-                                                    //   return {
-                                                    //     'test_id': e.test_id,
-                                                    //     'test_name': e.test_name,
-                                                    //     'test_amount': e.test_amount,
-                                                    //     'department': e.department,
-                                                    //     'group_id': e.group_id,
-                                                    //     'discount': "0"
-                                                    //   };
-                                                    // }).toList();
-
-                                                    var selectTeethMap =
-                                                        selected_teeth_values
-                                                            .map((e) {
-                                                      return {
-                                                        't_no': e.t_no,
-                                                        'position': e.position
-                                                      };
-                                                    }).toList();
-                                                    var planDetails = {
-                                                      "patient_id":
-                                                          selectedPatient['id']
-                                                              .toString(),
-                                                      "type": "treatment",
-                                                      "list": data[data_index]
-                                                          ['treatment_name'],
-                                                      "treatment_amount":
-                                                          data[data_index]
-                                                                  ['Amount']
-                                                              .toString(),
-                                                      "list_id":
-                                                          data[data_index]['id']
-                                                              .toString(),
-                                                      "Items": selectTeethMap
-                                                    };
-                                                    print(planDetails);
-                                                    var add_plan_result =
-                                                        await api().addDentPlan(
-                                                            accessToken,
-                                                            planDetails);
+                                              Container(
+                                                // color: Colors.green,
+                                                width: screenWidth * 0.2,
+                                                child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all<Color>(
+                                                                  CustomColors
+                                                                      .app_color)),
+                                                  onPressed: () async {
                                                     if (Helper().isvalidElement(
-                                                            add_plan_result) &&
-                                                        Helper().isvalidElement(
-                                                            add_plan_result[
-                                                                'Add_plan']) &&
-                                                        add_plan_result[
-                                                                'Add_plan'] ==
-                                                            "Add Plan succesfully") {
-                                                      Fluttertoast.showToast(
-                                                          msg: widget.option ==
-                                                                  'diagnosis'
-                                                              ? 'Diagnosis added successfully'
-                                                              : 'Treatment added successfully',
-                                                          toastLength: Toast
-                                                              .LENGTH_SHORT,
-                                                          gravity: ToastGravity
-                                                              .CENTER,
-                                                          timeInSecForIosWeb: 2,
-                                                          backgroundColor:
-                                                              CustomColors
-                                                                  .success_color,
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 15.0);
-
-                                                      storage.setItem(
-                                                          'selectedTeethPosition',
-                                                          null);
-                                                      //                                    Navigator.pop(context,
-                                                      // MaterialPageRoute(builder: (context) => DentalPlan()));
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const DentalPlan()),
-                                                      );
+                                                            selectedTeeth) &&
+                                                        selectedTeeth.length >
+                                                            0) {
+                                                      List<SelectedTeethModal>
+                                                          selected_teeth_values =
+                                                          [];
+                                                      var selectedPatient =
+                                                          storage.getItem(
+                                                              'selectedPatient');
+                                                      print(selectedTeeth);
+                                                      // print(storage.getItem('selectedPatient'));
+                                                      print(data[data_index]);
+                                                      selectedTeeth.forEach((e) {
+                                                        selected_teeth_values.add(
+                                                            SelectedTeethModal(
+                                                          t_no: e.t_no,
+                                                          position: e.position,
+                                                        ));
+                                                        print(e);
+                                                      });
+    
+                                                      //                    for (final e
+                                                      //     in selectedTeeth) {
+                                                      //   selected_testlist.add(SelectedTeethModal(
+                                                      //       t_no: e.test_id,
+                                                      //       position: e.test_name,));
+                                                      //   // list.add(e);
+                                                      // }
+                                                      //                    var selectTestMap = selectedTeeth.map((e) {
+                                                      //   return {
+                                                      //     'test_id': e.test_id,
+                                                      //     'test_name': e.test_name,
+                                                      //     'test_amount': e.test_amount,
+                                                      //     'department': e.department,
+                                                      //     'group_id': e.group_id,
+                                                      //     'discount': "0"
+                                                      //   };
+                                                      // }).toList();
+    
+                                                      var selectTeethMap =
+                                                          selected_teeth_values
+                                                              .map((e) {
+                                                        return {
+                                                          't_no': e.t_no,
+                                                          'position': e.position
+                                                        };
+                                                      }).toList();
+                                                      var planDetails = {
+                                                        "patient_id":
+                                                            selectedPatient['id']
+                                                                .toString(),
+                                                        "type": "treatment",
+                                                        "list": data[data_index]
+                                                            ['treatment_name'],
+                                                        "treatment_amount":
+                                                            data[data_index]
+                                                                    ['Amount']
+                                                                .toString(),
+                                                        "list_id":
+                                                            data[data_index]['id']
+                                                                .toString(),
+                                                        "Items": selectTeethMap
+                                                      };
+                                                      print(planDetails);
+                                                      var add_plan_result =
+                                                          await api().addDentPlan(
+                                                              accessToken,
+                                                              planDetails);
+                                                      if (Helper().isvalidElement(
+                                                              add_plan_result) &&
+                                                          Helper().isvalidElement(
+                                                              add_plan_result[
+                                                                  'Add_plan']) &&
+                                                          add_plan_result[
+                                                                  'Add_plan'] ==
+                                                              "Add Plan succesfully") {
+                                                        Fluttertoast.showToast(
+                                                            msg: widget.option ==
+                                                                    'diagnosis'
+                                                                ? 'Diagnosis added successfully'
+                                                                : 'Treatment added successfully',
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity: ToastGravity
+                                                                .CENTER,
+                                                            timeInSecForIosWeb: 2,
+                                                            backgroundColor:
+                                                                CustomColors
+                                                                    .success_color,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 15.0);
+    
+                                                        storage.setItem(
+                                                            'selectedTeethPosition',
+                                                            null);
+                                                        //                                    Navigator.pop(context,
+                                                        // MaterialPageRoute(builder: (context) => DentalPlan()));
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const DentalPlan()),
+                                                        );
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                            msg: widget.option ==
+                                                                    'diagnosis'
+                                                                ? 'Please try again'
+                                                                : 'Please try again',
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity: ToastGravity
+                                                                .CENTER,
+                                                            timeInSecForIosWeb: 2,
+                                                            backgroundColor:
+                                                                CustomColors
+                                                                    .error_color,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 15.0);
+                                                      }
                                                     } else {
                                                       Fluttertoast.showToast(
-                                                          msg: widget.option ==
-                                                                  'diagnosis'
-                                                              ? 'Please try again'
-                                                              : 'Please try again',
-                                                          toastLength: Toast
-                                                              .LENGTH_SHORT,
-                                                          gravity: ToastGravity
-                                                              .CENTER,
+                                                          msg:
+                                                              'Kindly Add Atleast One Teeth Part',
+                                                          toastLength:
+                                                              Toast.LENGTH_SHORT,
+                                                          gravity:
+                                                              ToastGravity.CENTER,
                                                           timeInSecForIosWeb: 2,
                                                           backgroundColor:
                                                               CustomColors
                                                                   .error_color,
-                                                          textColor:
-                                                              Colors.white,
+                                                          textColor: Colors.white,
                                                           fontSize: 15.0);
                                                     }
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            'Kindly Add Atleast One Teeth Part',
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        gravity:
-                                                            ToastGravity.CENTER,
-                                                        timeInSecForIosWeb: 2,
-                                                        backgroundColor:
-                                                            CustomColors
-                                                                .error_color,
-                                                        textColor: Colors.white,
-                                                        fontSize: 15.0);
-                                                  }
-                                                },
-                                                child: Text(
-                                                  'Add',
-                                                  style: TextStyle(),
-                                                  textAlign: TextAlign.center,
+                                                  },
+                                                  child: Text(
+                                                    'Add',
+                                                    style: TextStyle(),
+                                                    textAlign: TextAlign.center,
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    })
-                                : Image.asset(
-                                    'assets/images/no_data_found.png',
-                                    // height: screenheight * 0.3,
-                                    // color: Colors.blue.shade100,
-                                    // color: Colors.black12,
-                                  ),
-                          ),
-                  ],
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      })
+                                  : Image.asset(
+                                      'assets/images/no_data_found.png',
+                                      // height: screenheight * 0.3,
+                                      // color: Colors.blue.shade100,
+                                      // color: Colors.black12,
+                                    ),
+                            ),
+                    ],
+                  ),
+                )
+              : Align(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/images/loading_image.png',
+                    // height: screenheight * 0.3,
+                    // color: Colors.blue.shade100,
+                    // color: Colors.black12,
+                  ),
                 ),
-              )
-            : Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'assets/images/loading_image.png',
-                  // height: screenheight * 0.3,
-                  // color: Colors.blue.shade100,
-                  // color: Colors.black12,
-                ),
-              ),
+        ),
       ),
     );
   }

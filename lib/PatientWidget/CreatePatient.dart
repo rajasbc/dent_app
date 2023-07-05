@@ -249,189 +249,212 @@ class _CreatePatientState extends State<CreatePatient> {
         50 -
         MediaQuery.of(context).padding.top;
     var screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50),
-          child: AppBar(
-            backgroundColor: CustomColors.app_color,
-            title: Text('Add Patient'),
+    return WillPopScope(
+       onWillPop: () async {
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50),
+            child: AppBar(
+              backgroundColor: CustomColors.app_color,
+              title: Text('Add Patient'),
+                  leading: InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
+                ));
+          },
+          child: Icon(
+            Icons.arrow_back,
+            // color: colorAnimated.color,
+            color: Colors.white,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: screenHeight,
-            width: screenWidth,
-            child: Column(
-              children: [
-                SizedBox(height: screenHeight * 0.003),
-                Container(
-                  height: screenHeight * 0.06,
-                  width: screenWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: screenWidth * 0.33,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  CustomColors.app_color)),
-                          onPressed: () {
-                            this.setState(() {
-                              show_information = 'Basic Information';
-                            });
-                          },
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text('Basic')),
-                        ),
-                      ),
-                      Container(
-                        width: screenWidth * 0.33,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  CustomColors.app_color)),
-                          onPressed: () {
-                           if(patientnameController.text.isEmpty  ){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor:  Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-                            
-                          }
-                         else if(ageController.text.isEmpty  ){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Age',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-                            
-                          }
-                          else  if(mobileController.text.isEmpty){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-                            
-                          }
-                          else if(mobileController.text.length<10){
-                              Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-
-                          }
-                          
-                          else{
-                             this.setState(() {
-                              show_information = 'Personal Information';
-                            }
-                            );
-
-                          }
-                           
-                          },
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text('Personal')),
-                        ),
-                      ),
-                      Container(
-                        width: screenWidth * 0.33,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  CustomColors.app_color)),
-                          onPressed: () {
-                             if(patientnameController.text.isEmpty  ){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor:  Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-                            
-                          }
-                         else if(ageController.text.isEmpty  ){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Age',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-                            
-                          }
-                          else  if(mobileController.text.isEmpty){
-                            Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-                            
-                          }
-                          else if(mobileController.text.length<10){
-                              Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
-                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                             timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                                    fontSize: 16.0
-                            );
-
-                          }
-                          else{
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              height: screenHeight,
+              width: screenWidth,
+              child: Column(
+                children: [
+                  SizedBox(height: screenHeight * 0.003),
+                  Container(
+                    height: screenHeight * 0.06,
+                    width: screenWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: screenWidth * 0.33,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(
+                                    CustomColors.app_color)),
+                            onPressed: () {
                               this.setState(() {
-                              show_information = 'Other Information';
-                            });
-                          }
-                          },
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text('Other')),
+                                show_information = 'Basic Information';
+                              });
+                            },
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text('Basic')),
+                          ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          width: screenWidth * 0.33,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(
+                                    CustomColors.app_color)),
+                            onPressed: () {
+                             if(patientnameController.text.isEmpty  ){
+                              Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor:  Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+                              
+                            }
+                           else if(ageController.text.isEmpty  ){
+                              Fluttertoast.showToast(msg: 'Please Enter Your Age',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+                              
+                            }
+                            else  if(mobileController.text.isEmpty){
+                              Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+                              
+                            }
+                            else if(mobileController.text.length<10){
+                                Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+    
+                            }
+                            
+                            else{
+                               this.setState(() {
+                                show_information = 'Personal Information';
+                              }
+                              );
+    
+                            }
+                             
+                            },
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text('Personal')),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * 0.33,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(
+                                    CustomColors.app_color)),
+                            onPressed: () {
+                               if(patientnameController.text.isEmpty  ){
+                              Fluttertoast.showToast(msg: 'Please Enter Your Nmae',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor:  Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+                              
+                            }
+                           else if(ageController.text.isEmpty  ){
+                              Fluttertoast.showToast(msg: 'Please Enter Your Age',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+                              
+                            }
+                            else  if(mobileController.text.isEmpty){
+                              Fluttertoast.showToast(msg: 'Please Enter Your Mobile.No',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+                              
+                            }
+                            else if(mobileController.text.length<10){
+                                Fluttertoast.showToast(msg: 'Please Enter Valid Mobile.No',
+                               toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                               timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                                      fontSize: 16.0
+                              );
+    
+                            }
+                            else{
+                                this.setState(() {
+                                show_information = 'Other Information';
+                              });
+                            }
+                            },
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text('Other')),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.005),
-                Container(
-                  height: screenHeight * 0.93,
-                  width: screenWidth,
-                  // decoration: BoxDecoration(color: Colors.yellow),
-                  child: SingleChildScrollView(
-                      child: show_information == 'Basic Information'
-                          ? renderBasicInformationWidget()
-                          : show_information == 'Personal Information'
-                              ? renderPersonalInformationWidget()
-                              : renderOtherInformationWidget()),
-                ),
-              ],
+                  SizedBox(height: screenHeight * 0.005),
+                  Container(
+                    height: screenHeight * 0.93,
+                    width: screenWidth,
+                    // decoration: BoxDecoration(color: Colors.yellow),
+                    child: SingleChildScrollView(
+                        child: show_information == 'Basic Information'
+                            ? renderBasicInformationWidget()
+                            : show_information == 'Personal Information'
+                                ? renderPersonalInformationWidget()
+                                : renderOtherInformationWidget()),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
