@@ -48,7 +48,15 @@ class _AppointmentPageState extends State<AppointmentPage> {
     double screenHeight = MediaQuery.of(context).size.height - 50;
     var screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+   return new WillPopScope(
+      onWillPop: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+        return true;
+      },
+      child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: AppBar(
@@ -136,7 +144,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             //   ),
             // ),
 
-            ));
+            )));
   }
 
   renderDoctorDropdown() {
