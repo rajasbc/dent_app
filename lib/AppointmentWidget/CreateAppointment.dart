@@ -77,7 +77,7 @@ class _CreateAppointmentState extends State<CreateAppointment> {
           );
         },
         initialDate: currentDate,
-        firstDate: DateTime(DateTime.now().year - 10),
+        firstDate: DateTime(DateTime.now().year - 100),
         lastDate:  DateTime(DateTime.now().year + 10),
         );
 
@@ -169,8 +169,8 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                   ));
             },
             child: Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
+              Icons.arrow_back,
+              color: Colors.white,
               // color: colorAnimated.color,
             ),
           ),
@@ -531,9 +531,8 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                                     },
                                     initialDate:
                                         DateTime.now(), //get today's date
-                                    firstDate: DateTime(
-                                        2000), //DateTime.now() - not to allow to choose before today.
-                                    lastDate: DateTime(2101));
+                                    firstDate: DateTime.now(),//DateTime.now() - not to allow to choose before today.
+                                    lastDate: DateTime(DateTime.now().year + 10),);
       
                                 if (pickedDate != null) {
                                   print(
@@ -832,72 +831,72 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                             this.setState(() {
                               isLoading = true;
                             });
-                            // var addAppointment = await api().addNewAppointment(
-                            //     access_token, appointment_details);
-                            // this.setState(() {
-                            //   isLoading = false;
-                            // });
-                            // if (Helper().isvalidElement(addAppointment) &&
-                            //     Helper()
-                            //         .isvalidElement(addAppointment['status']) &&
-                            //     addAppointment['status'] ==
-                            //         'Token is Invalid') {
-                            //   Helper()
-                            //       .appLogoutCall(context, 'Session expeired');
-                            // } else {
-                            //   if (Helper().isvalidElement(addAppointment) &&
-                            //       Helper().isvalidElement(
-                            //           addAppointment['status']) &&
-                            //       (addAppointment['status'] ==
-                            //               'Add appointment Successfully' ||
-                            //           addAppointment['status'] ==
-                            //               'Update Successfully')) {
-                            //     this.setState(() {
-                            //       selectedPatient = null;
-                            //       showAutoComplete = true;
-                            //       defaultTitleDropdownValue = 'Mr';
-                            //       NameController.text = '';
-                            //       contactController.text = '';
-                            //       _radioGenderSelected = 1;
-                            //       // gender
-                            //       dobController.text = '';
-                            //       ageController.text = '';
-                            //       //  _radioVal ='Male';
+                            var addAppointment = await api().addNewAppointment(
+                                access_token, appointment_details);
+                            this.setState(() {
+                              isLoading = false;
+                            });
+                            if (Helper().isvalidElement(addAppointment) &&
+                                Helper()
+                                    .isvalidElement(addAppointment['status']) &&
+                                addAppointment['status'] ==
+                                    'Token is Invalid') {
+                              Helper()
+                                  .appLogoutCall(context, 'Session expeired');
+                            } else {
+                              if (Helper().isvalidElement(addAppointment) &&
+                                  Helper().isvalidElement(
+                                      addAppointment['status']) &&
+                                  (addAppointment['status'] ==
+                                          'Add appointment Successfully' ||
+                                      addAppointment['status'] ==
+                                          'Update Successfully')) {
+                                this.setState(() {
+                                  selectedPatient = null;
+                                  showAutoComplete = true;
+                                  defaultTitleDropdownValue = 'Mr';
+                                  NameController.text = '';
+                                  contactController.text = '';
+                                  _radioGenderSelected = 1;
+                                  // gender
+                                  dobController.text = '';
+                                  ageController.text = '';
+                                  //  _radioVal ='Male';
       
-                            //       _AdultSelected = 1;
-                            //       _AppointmentSelected = 1;
+                                  _AdultSelected = 1;
+                                  _AppointmentSelected = 1;
       
-                            //       // dateController.text = '';
-                            //     });
-                            //     Fluttertoast.showToast(
-                            //         msg: 'Appointment added successfully',
-                            //         toastLength: Toast.LENGTH_SHORT,
-                            //         gravity: ToastGravity.CENTER,
-                            //         timeInSecForIosWeb: 2,
-                            //         backgroundColor: CustomColors.success_color,
-                            //         textColor: Colors.white,
-                            //         fontSize: 15.0);
+                                  // dateController.text = '';
+                                });
+                                Fluttertoast.showToast(
+                                    msg: 'Appointment added successfully',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor: CustomColors.success_color,
+                                    textColor: Colors.white,
+                                    fontSize: 15.0);
       
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               const AppointmentPage()),
-                            //     );
-                            //   } else {
-                            //     Fluttertoast.showToast(
-                            //         msg: 'Please try again',
-                            //         toastLength: Toast.LENGTH_SHORT,
-                            //         gravity: ToastGravity.CENTER,
-                            //         timeInSecForIosWeb: 2,
-                            //         backgroundColor: CustomColors.error_color,
-                            //         textColor: Colors.white,
-                            //         fontSize: 15.0);
-                            //   }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AppointmentPage()),
+                                );
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: 'Please try again',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor: CustomColors.error_color,
+                                    textColor: Colors.white,
+                                    fontSize: 15.0);
+                              }
       
-                            //   //  storage.setItem('diagnosisList', diagnosisList);
+                              //  storage.setItem('diagnosisList', diagnosisList);
       
-                            // }
+                            }
       
                             // print(
                             //     'Appointment_details: ******${Appointment_details}');
