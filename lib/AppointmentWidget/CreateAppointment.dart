@@ -77,8 +77,9 @@ class _CreateAppointmentState extends State<CreateAppointment> {
           );
         },
         initialDate: currentDate,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2023));
+        firstDate: DateTime(DateTime.now().year - 10),
+        lastDate:  DateTime(DateTime.now().year + 10),
+        );
 
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
