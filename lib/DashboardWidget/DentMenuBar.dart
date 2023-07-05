@@ -375,17 +375,17 @@ class _DentMenuBarState extends State<DentMenuBar> {
                           }
                         },
                       ),
-                       ListTile(
-                        title: Text('Medical Allergy'),
-                        leading: Icon(Icons.medication_liquid_outlined),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MedicalAllergy()),
-                          );
-                        },
-                      ),
+                      //  ListTile(
+                      //   title: Text('Medical Allergy'),
+                      //   leading: Icon(Icons.medication_liquid_outlined),
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => const MedicalAllergy()),
+                      //     );
+                      //   },
+                      // ),
                       ListTile(
                         title: Text('Medicine'),
                         leading: Icon(Icons.medical_services_rounded),
