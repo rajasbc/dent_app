@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nigdent/Common/utils.dart';
+import 'package:nigdent/DashboardWidget/DasboardScreen.dart';
+import 'package:nigdent/DashboardWidget/DentMenuBar.dart';
 import 'package:nigdent/api/Apicall.dart';
 import 'package:nigdent/api/UrlPath.dart';
 import 'package:intl/intl.dart';
@@ -39,37 +41,60 @@ class _PatientRegisterReportState extends State<PatientRegisterReport> {
         50 -
         MediaQuery.of(context).padding.top;
     var screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: AppBar(
-          backgroundColor: CustomColors.app_color,
-          title: Text('Patient Report Page'),
+    return WillPopScope(
+       onWillPop: () async {
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+        return true;
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: AppBar(
+            backgroundColor: CustomColors.app_color,
+            title: Text('Patient Report Page'),
+                leading: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DashboardScreen(),
+              ));
+        },
+        child: Icon(
+          Icons.arrow_back,
+          // color: colorAnimated.color,
+          color: Colors.white,
         ),
       ),
-      body: Container(
-        height: screenHeight,
-        width: screenWidth,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
-                // borderRadius: BorderRadius.all(Radius.circular(20))
+          ),
+        ),
+        body: Container(
+          height: screenHeight,
+          width: screenWidth,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent),
+                  // borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                height: screenHeight * 0.08,
+                //  height: screenHeight * 0.08,
+                child: renderDatePicker(),
               ),
-              height: screenHeight * 0.08,
-              //  height: screenHeight * 0.08,
-              child: renderDatePicker(),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
-                // borderRadius: BorderRadius.all(Radius.circular(20))
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent),
+                  // borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                height: screenHeight * 0.92,
+                child: renderReportPending(),
               ),
-              height: screenHeight * 0.92,
-              child: renderReportPending(),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -136,8 +161,8 @@ class _PatientRegisterReportState extends State<PatientRegisterReport> {
     DateTimeRange? newDateRange = await showDateRangePicker(
       context: context,
       initialDateRange: dateRange,
-      firstDate: DateTime(2019),
-      lastDate: DateTime(2024),
+      firstDate:DateTime(DateTime.now().year - 10),
+      lastDate: DateTime(DateTime.now().year + 10),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(

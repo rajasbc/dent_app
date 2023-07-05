@@ -84,8 +84,8 @@ class _MedicineState extends State<Medicine> {
           );
         },
         initialDate: currentDate,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        firstDate:DateTime(DateTime.now().year - 100),
+        lastDate: DateTime(DateTime.now().year + 10),);
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;
